@@ -1,6 +1,6 @@
 import React from "react"
 import { ConnectedRouter } from "connected-react-router"
-import RoutePages from "./RoutePages"
+import RoutePages from "RoutePages"
 
 function App({ history }) {
   return (

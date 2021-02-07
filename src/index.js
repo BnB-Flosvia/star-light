@@ -1,10 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react"
+import ReactDOM from "react-dom"
+import { Provider } from "react-redux"
+
+import configureStore, { history } from "./configureStore"
+import App from "./App"
+
+const store = configureStore()
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  <Provider store={store}>
+    <App history={history} />
+  </Provider>,
+  document.getElementById("root")
+)

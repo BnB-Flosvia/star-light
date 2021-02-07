@@ -15,8 +15,12 @@
     "connected-react-router": "^6.8.0",
     "styled-components": "^5.1.1",
     "redux": "^4.0.5",
+    "react-redux": "^7.2.2",
     "redux-devtools-extension": "^2.13.8",
-    "history": "^4.7.2"
+    "history": "^4.7.2",
+    "saga-slice": "^1.2.1",
+    "lodash-es": "4.17.15",
+    "redux-saga": "^1.1.3"
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",
