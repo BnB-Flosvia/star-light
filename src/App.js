@@ -1,12 +1,12 @@
 import React from "react"
-import { ConnectedRouter } from "connected-react-router"
+import { BrowserRouter } from "react-router-dom"
 import RoutePages from "RoutePages"
 
-function App({ history }) {
+function App() {
   return (
-    <ConnectedRouter history={history}>
+    <BrowserRouter>
       <RoutePages />
-    </ConnectedRouter>
+    </BrowserRouter>
   )
 }
 
