@@ -1,4 +1,5 @@
 import { makeObservable, observable, action } from "mobx"
+import httpClient from "utils/network/httpClient"
 
 export default class CounterStore {
   @observable number = 1
@@ -8,8 +9,10 @@ export default class CounterStore {
     makeObservable(this)
   }
 
-  @action increase = () => {
+  @action increase = async () => {
     this.number += 1
+    const response = await httpClient.get("/todos/1")
+    console.log(response.data)
   }
 
   @action decrease = () => {

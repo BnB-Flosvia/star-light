@@ -63,7 +63,8 @@ const LabelText = styled.div`
 `
 
 const ErrorText = styled.div`
-  display: flex;
+  display: ${(props) => (props.visible ? "flex" : "none")};
+  width: 100%;
   padding-top: 10px;
   ${label2Normal}
   color: ${errorColor};
@@ -75,32 +76,51 @@ export const InputTemplete = ({ labelText, errorText, inputFn, size }) => {
     <>
       {labelText && <LabelText size={size}>{labelText}</LabelText>}
       {inputFn(isError)}
-      {isError && <ErrorText>{errorText}</ErrorText>}
+      <ErrorText visible={isError}>{errorText || "1"}</ErrorText>
     </>
   )
 }
 
-export const OutlineInput = ({ labelText, errorText, placeholderText, size }) => {
+export const OutlineInput = ({
+  labelText,
+  errorText,
+  placeholderText,
+  size,
+  onChange,
+}) => {
   return (
     <InputTemplete
       size={size}
       labelText={labelText}
       errorText={errorText}
       inputFn={(isError) => {
-        return <Input isError={isError} placeholder={placeholderText} size={size} />
+        return (
+          <Input
+            isError={isError}
+            placeholder={placeholderText}
+            size={size}
+            onBlur={(e) => onChange(e.target.value)}
+          />
+        )
       }}
     />
   )
 }
 
-export const PasswordInput = ({ labelText, errorText, placeholderText, size }) => {
+export const PasswordInput = ({
+  labelText,
+  errorText,
+  placeholderText,
+  size,
+  onChange,
+}) => {
   const [isVisible, setIsVisible] = useState()
   const [text, setText] = useState("")
   const [isFocus, setIsFocus] = useState(false)
-
   const secretText = useMemo(() => {
     return "*".repeat(text.length)
   }, [text])
+
   const onKeyDown = useCallback(
     (event) => {
       const { key } = event
@@ -126,6 +146,7 @@ export const PasswordInput = ({ labelText, errorText, placeholderText, size }) =
   }
   const handleInputBlur = () => {
     setIsFocus(() => false)
+    onChange(text)
   }
 
   return (
@@ -136,7 +157,7 @@ export const PasswordInput = ({ labelText, errorText, placeholderText, size }) =
         errorText={errorText}
         inputFn={(isError) => {
           return (
-            <SuffixIconInputContainer isFocus={isFocus}>
+            <SuffixIconInputContainer isFocus={isFocus} isError={errorText != null}>
               <InnerInput
                 size={size}
                 isError={isError}

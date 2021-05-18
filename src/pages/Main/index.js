@@ -1,5 +1,6 @@
 import React from "react"
 import { observer, inject } from "mobx-react"
+import { Link } from "react-router-dom"
 
 // Sample page
 function CounterPage({ number, increase, decrease }) {
@@ -17,6 +18,7 @@ function CounterPage({ number, increase, decrease }) {
       <button type="button" onClick={decrease}>
         -1
       </button>
+      <Link to="/signin">로그인</Link>
     </div>
   )
 }
