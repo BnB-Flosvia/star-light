@@ -22,13 +22,13 @@
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",
-    "build": "cross-env GENERATE_SOURCEMAP=false REACT_APP_ENVIRONMENT=production react-app-rewired build",
-    "build:stage": "cross-env GENERATE_SOURCEMAP=false REACT_APP_ENVIRONMENT=staging react-app-rewired build",
+    "build": "cross-env REACT_APP_ENVIRONMENT=production react-app-rewired build",
+    "build:stage": "cross-env REACT_APP_ENVIRONMENT=staging react-app-rewired build",
     "build:dev": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "storybook": "cross-env REACT_APP_ENVIRONMENT=development start-storybook -p 6006",
-    "build-storybook": "cross-env REACT_APP_ENVIRONMENT=development build-storybook",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --write \"**/*.+(js|jsx|json|md)\""
@@ -46,11 +46,10 @@
   "devDependencies": {
     "@babel/core": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
-    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-essentials": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
     "@storybook/addons": "^5.3.19",
     "@storybook/react": "^5.3.19",
-    "addon-redux": "^1.1.0",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
     "eslint-config-airbnb": "^18.2.0",
@@ -72,25 +71,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ]
     ]
   }
 }
