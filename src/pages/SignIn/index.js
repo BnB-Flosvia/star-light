@@ -1,8 +1,8 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import SignInContent from "pages/SignIn/SignInContent"
-import { observer, inject } from "mobx-react"
 import { withRouter } from "react-router-dom"
+import useSignInPageData from "utils/hooks/signIn/useSignInPageData"
 
 const PageContainer = styled.div`
   display: flex;
@@ -12,7 +12,8 @@ const PageContainer = styled.div`
   align-items: center;
 `
 
-function SignInPage({ isApiCallSuccess, initialize, history }) {
+function SignInPage({ history }) {
+  const { initialize, isApiCallSuccess } = useSignInPageData()
   useEffect(() => {
     return () => {
       initialize()
@@ -33,7 +34,4 @@ function SignInPage({ isApiCallSuccess, initialize, history }) {
   )
 }
 
-export default inject(({ signIn }) => ({
-  isApiCallSuccess: signIn.isApiCallSuccess,
-  initialize: signIn.initialize,
-}))(observer(withRouter(SignInPage)))
+export default withRouter(SignInPage)

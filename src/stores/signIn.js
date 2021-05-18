@@ -99,8 +99,7 @@ export default class SignInStore {
       return
     }
 
-    // post login request
-    // 1. send request
+    // TODO: change login request url
     try {
       this.signInErrorText = null
       this.status = "LOADING"

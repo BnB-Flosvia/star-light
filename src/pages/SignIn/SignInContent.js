@@ -14,7 +14,7 @@ import { OutlineInput, PasswordInput } from "components/Inputs"
 import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"
 import { Link } from "react-router-dom"
-import useSignInData from "utils/hooks/useSignInData"
+import useSignInData from "utils/hooks/signIn/useSignInContentData"
 
 const Container = styled.div`
   display: flex;

@@ -1,7 +1,7 @@
 import { useObserver } from "mobx-react"
 import useStores from "utils/hooks/useStores"
 
-function useSignInData() {
+function useSignInContentData() {
   const { signIn } = useStores()
   return useObserver(() => ({
     setEmail: signIn.setEmail,
@@ -13,4 +13,4 @@ function useSignInData() {
   }))
 }
 
-export default useSignInData
+export default useSignInContentData

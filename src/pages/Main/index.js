@@ -1,30 +1,14 @@
 import React from "react"
-import { observer, inject } from "mobx-react"
 import { Link } from "react-router-dom"
 
-// Sample page
-function CounterPage({ number, increase, decrease }) {
+// Sample code
+export default function MainPage() {
   return (
     <div>
-      <h1>{number}</h1>
-      <button
-        type="button"
-        onClick={() => {
-          increase()
-        }}
-      >
-        +1
-      </button>
-      <button type="button" onClick={decrease}>
-        -1
-      </button>
-      <Link to="/signin">로그인</Link>
+      <h1>임시 메인 페이지</h1>
+      <div>
+        <Link to="/signin">로그인</Link>
+      </div>
     </div>
   )
 }
-
-export default inject(({ counter }) => ({
-  number: counter.number,
-  increase: counter.increase,
-  decrease: counter.decrease,
-}))(observer(CounterPage))
