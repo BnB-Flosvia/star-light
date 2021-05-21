@@ -3,6 +3,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "mobx-react"
 import GlobalFontStyle from "styles/fonts/globalStyle"
+import "antd/dist/antd.css"
 import store from "stores"
 import App from "./App"
 
