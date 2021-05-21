@@ -18,6 +18,17 @@ export default {
   ],
 }
 
-export function DropdownExample() {
+export function ArrowButtonDropdownExample() {
   return <Dropdown menus={["마이페이지", "로그아웃"]} />
+}
+
+export function UserSettingButtonDropdownExample() {
+  return (
+    <Dropdown
+      buttonType="userSetting"
+      menus={["마이페이지", "로그아웃"]}
+      offset={[0, 10]}
+      placement="bottom"
+    />
+  )
 }
