@@ -6,7 +6,7 @@ import {
   errorColor,
   secondaryTextColor,
 } from "styles/colors"
-import { body1Normal, body2Normal, label2Normal } from "styles/textTheme"
+import { body1Normal, body2Normal, label2Normal, body3Normal } from "styles/textTheme"
 import { SearchIconButton, VisibilityIconButton } from "components/IconButtons"
 
 const Input = styled.input`
@@ -15,7 +15,7 @@ const Input = styled.input`
   width: 100%;
   height: fit-content;
   box-sizing: border-box;
-  padding: 14px;
+  padding: ${(props) => (props.size === "small" ? "14px" : "16px")};
   margin: 0;
   align-items: center;
   border: 1px solid ${(props) => (props.isError ? errorColor : primaryTextColor)};
@@ -24,7 +24,7 @@ const Input = styled.input`
     border-color: ${secondaryColor};
     outline: none;
   }
-  ${body2Normal}
+  ${(props) => (props.size === "small" ? body3Normal : body2Normal)}
   ::placeholder {
     color: ${secondaryTextColor};
   }
@@ -59,47 +59,68 @@ const SuffixIconInputContainer = styled.div`
 const LabelText = styled.div`
   display: flex;
   padding-bottom: 10px;
-  ${body1Normal}
+  ${(props) => (props.size === "small" ? body3Normal : body1Normal)}
 `
 
 const ErrorText = styled.div`
-  display: flex;
+  display: ${(props) => (props.visible ? "flex" : "none")};
+  width: 100%;
   padding-top: 10px;
-  ${label2Normal};
+  ${label2Normal}
   color: ${errorColor};
 `
 
-export const InputTemplete = ({ labelText, errorText, inputFn }) => {
+export const InputTemplete = ({ labelText, errorText, inputFn, size }) => {
   const isError = errorText != null
   return (
     <>
-      {labelText && <LabelText>{labelText}</LabelText>}
+      {labelText && <LabelText size={size}>{labelText}</LabelText>}
       {inputFn(isError)}
-      {isError && <ErrorText>{errorText}</ErrorText>}
+      <ErrorText visible={isError}>{errorText || "1"}</ErrorText>
     </>
   )
 }
 
-export const OutlineInput = ({ labelText, errorText, placeholderText }) => {
+export const OutlineInput = ({
+  labelText,
+  errorText,
+  placeholderText,
+  size,
+  onChange,
+}) => {
   return (
     <InputTemplete
+      size={size}
       labelText={labelText}
       errorText={errorText}
       inputFn={(isError) => {
-        return <Input isError={isError} placeholder={placeholderText} />
+        return (
+          <Input
+            isError={isError}
+            placeholder={placeholderText}
+            size={size}
+            onBlur={(e) => onChange(e.target.value)}
+          />
+        )
       }}
     />
   )
 }
 
-export const PasswordInput = ({ labelText, errorText, placeholderText }) => {
+export const PasswordInput = ({
+  labelText,
+  errorText,
+  placeholderText,
+  size,
+  onChange,
+}) => {
   const [isVisible, setIsVisible] = useState()
   const [text, setText] = useState("")
   const [isFocus, setIsFocus] = useState(false)
-
   const secretText = useMemo(() => {
     return "*".repeat(text.length)
   }, [text])
+
   const onKeyDown = useCallback(
     (event) => {
       const { key } = event
@@ -125,17 +146,20 @@ export const PasswordInput = ({ labelText, errorText, placeholderText }) => {
   }
   const handleInputBlur = () => {
     setIsFocus(() => false)
+    onChange(text)
   }
 
   return (
     <>
       <InputTemplete
+        size={size}
         labelText={labelText}
         errorText={errorText}
         inputFn={(isError) => {
           return (
-            <SuffixIconInputContainer isFocus={isFocus}>
+            <SuffixIconInputContainer isFocus={isFocus} isError={errorText != null}>
               <InnerInput
+                size={size}
                 isError={isError}
                 placeholder={placeholderText}
                 value={isVisible ? text : secretText}
@@ -158,7 +182,13 @@ export const PasswordInput = ({ labelText, errorText, placeholderText }) => {
   )
 }
 
-export const SearchInput = ({ labelText, errorText, placeholderText, onSearch }) => {
+export const SearchInput = ({
+  labelText,
+  errorText,
+  placeholderText,
+  onSearch,
+  size,
+}) => {
   const [isFocus, setIsFocus] = useState(false)
   const handleInputFocus = () => {
     setIsFocus(() => true)
@@ -169,12 +199,14 @@ export const SearchInput = ({ labelText, errorText, placeholderText, onSearch })
 
   return (
     <InputTemplete
+      size={size}
       labelText={labelText}
       errorText={errorText}
       inputFn={(isError) => {
         return (
           <SuffixIconInputContainer isFocus={isFocus}>
             <InnerInput
+              size={size}
               isError={isError}
               placeholder={placeholderText}
               onFocus={() => handleInputFocus()}

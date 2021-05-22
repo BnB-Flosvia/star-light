@@ -6,7 +6,14 @@ addDecorator(
   (StoryFn) => (
     <>
       <GlobalFontStyle />
-      <div style={{ margin: '3em' }}>
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        minWidth: "320px", 
+        alignItems: "center",
+        width: "100vw", 
+        height: "100vh",
+      }}>
         {StoryFn()}
       </div>
     </>
