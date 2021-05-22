@@ -6,6 +6,7 @@ import GlobalFontStyle from "styles/fonts/globalStyle"
 import "antd/dist/antd.css"
 import store from "stores"
 import App from "./App"
+import "./configureMock"
 
 ReactDOM.render(
   <>

@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+// import useMainPageData from "utils/hooks/main/useMainPageData"
 
 // Sample code
 export default function MainPage() {
