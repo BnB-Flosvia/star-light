@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "styled-components"
 import NanumGothicRegular from "./NanumGothic.ttf"
+import NanumGothicWoff2 from "./NanumGothic.woff2"
+import NanumGothicWoff from "./NanumGothic.woff"
 
 export default createGlobalStyle`
   @font-face {
@@ -7,8 +9,9 @@ export default createGlobalStyle`
     font-style: normal;
     font-weight: 400;
     src: url("./NanumGothic.eot");
-    src: local(※), url("NanumGothic.woff2") format("woff2"),
-      url("./NanumGothic.woff") format("woff"),
-      url(${NanumGothicRegular}) format("truetype")
+    src: local(""),
+      url(${NanumGothicRegular}) format("truetype"),
+      url(${NanumGothicWoff2}) format("woff2"),
+      url(${NanumGothicWoff}) format("woff")
   }
 `
