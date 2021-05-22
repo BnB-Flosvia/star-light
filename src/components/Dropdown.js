@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 import { usePopper } from "react-popper"
-// import { UserSettingButton } from "components/Buttons"
+import { UserSettingButton } from "components/Buttons"
 import { DropdownIconButton } from "components/IconButtons"
 import {
   backgroundColor2,
@@ -10,6 +10,12 @@ import {
   primaryTextColor,
 } from "styles/colors"
 import { label1Normal } from "styles/textTheme"
+import { useClickOutside } from "utils/hooks/useClickOutside"
+
+const Container = styled.div`
+  position: relative;
+  width: fit-content;
+`
 
 const DropdownContainer = styled.div`
   display: "flex";
@@ -44,15 +50,27 @@ const DropdownItem = styled.div`
   }
 `
 
+function DropdownButton({ buttonType, ...props }) {
+  if (buttonType === "userSetting") {
+    return <UserSettingButton {...props} />
+  }
+  return <DropdownIconButton {...props} />
+}
+
 export default function Dropdown({
-  /* buttonType, */ menus,
-  placement = "bottom",
-  // offset,
+  buttonType,
+  menus,
+  placement = "bottom-end",
+  offset = [0, 0],
 }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const [referenceRef, setReferenceRef] = useState(null)
   const [popperRef, setPopperRef] = useState(null)
+
+  const [clickOutsideRef] = useClickOutside(() => {
+    setIsOpen(false)
+  })
 
   const { styles, attributes } = usePopper(referenceRef, popperRef, {
     placement,
@@ -61,7 +79,7 @@ export default function Dropdown({
         name: "offset",
         enabled: true,
         options: {
-          offset: [-40, 10],
+          offset,
         },
       },
     ],
@@ -70,31 +88,16 @@ export default function Dropdown({
   const onButtonClick = useCallback(() => {
     setIsOpen((_isOpen) => !_isOpen)
   }, [])
-  /*
-  const DropdownButton = () => {
-    if (buttonType === "userSetting") {
-      return <UserSettingButton onClick={() => onButtonClick()} ref={setReferenceRef} />
-    }
-    return (
-      <DropdownIconButton
-        isOpen={isOpen}
-        onClick={() => onButtonClick()}
-        ref={setReferenceRef}
-      />
-    )
-  }
-  */
-
-  console.log(styles.popper)
-  console.log(attributes.popper)
 
   return (
-    <div>
-      <DropdownIconButton
-        isOpen={isOpen}
-        onClick={() => onButtonClick()}
-        ref={setReferenceRef}
-      />
+    <Container ref={clickOutsideRef}>
+      <div ref={setReferenceRef}>
+        <DropdownButton
+          buttonType={buttonType}
+          isOpen={isOpen}
+          onClick={() => onButtonClick()}
+        />
+      </div>
       {isOpen && (
         <div ref={setPopperRef} style={styles.popper} {...attributes.popper}>
           <DropdownContainer>
@@ -104,6 +107,6 @@ export default function Dropdown({
           </DropdownContainer>
         </div>
       )}
-    </div>
+    </Container>
   )
 }

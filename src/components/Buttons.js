@@ -10,24 +10,6 @@ import {
   darkPrimaryColor,
 } from "styles/colors"
 
-const CircleButtonContainer = styled.button`
-  display: flex;
-  width: 30px;
-  height: 30px;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 15px;
-  justify-content: center;
-  align-items: center;
-  background: ${borderColor};
-  &:hover {
-    background: ${disableColor};
-  }
-  svg {
-    fill: #fff;
-  }
-`
-
 const Button = styled.button`
   display: flex;
   width: 100%;
@@ -44,6 +26,24 @@ const Button = styled.button`
   }
   ${body1Bold}
   color: #fff;
+`
+
+const CircleButtonContainer = styled.button`
+  display: flex;
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  background: ${borderColor};
+  &:hover {
+    background: ${disableColor};
+  }
+  svg {
+    fill: #fff;
+  }
 `
 
 export const FullWidthButton = styled(Button)`

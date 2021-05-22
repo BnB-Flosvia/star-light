@@ -35,10 +35,9 @@ const MediumButtonContainer = styled(SmallButtonContainer)`
 `
 
 // 24*24 size
-export const DropdownIconButton = ({ isOpen = false, onClick, ref }) => {
+export const DropdownIconButton = ({ isOpen = false, onClick }) => {
   return (
     <SmallButtonContainer
-      ref={ref}
       onClick={() => {
         if (typeof onClick === "function") {
           onClick()

@@ -114,6 +114,33 @@ export const PasswordInput = ({
   size,
   onChange,
 }) => {
+  return (
+    <InputTemplete
+      size={size}
+      labelText={labelText}
+      errorText={errorText}
+      inputFn={(isError) => {
+        return (
+          <Input
+            type="password"
+            isError={isError}
+            placeholder={placeholderText}
+            size={size}
+            onBlur={(e) => onChange(e.target.value)}
+          />
+        )
+      }}
+    />
+  )
+}
+
+export const CustomPasswordInput = ({
+  labelText,
+  errorText,
+  placeholderText,
+  size,
+  onChange,
+}) => {
   const [isVisible, setIsVisible] = useState()
   const [text, setText] = useState("")
   const [isFocus, setIsFocus] = useState(false)

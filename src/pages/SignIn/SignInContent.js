@@ -15,6 +15,7 @@ import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"
 import { Link } from "react-router-dom"
 import useSignInData from "utils/hooks/signIn/useSignInContentData"
+import { CircleLineSpin } from "components/Spin"
 
 const Container = styled.div`
   display: flex;
@@ -86,6 +87,7 @@ export default function SignInContent() {
 
 const InputContentSection = ({ isSmallMode }) => {
   const {
+    isLoading,
     signInRequest,
     setPassword,
     setEmail,
@@ -93,19 +95,20 @@ const InputContentSection = ({ isSmallMode }) => {
     pwdFormatErrorText,
     emailFormatErrorText,
   } = useSignInData()
-
   const onEmailChange = useCallback(
     (newEmail) => {
       setEmail(newEmail)
     },
     [setEmail]
   )
+
   const onPwdChange = useCallback(
     (newPwd) => {
       setPassword(newPwd)
     },
     [setPassword]
   )
+
   const signIn = useCallback(() => {
     signInRequest()
   }, [signInRequest])
@@ -129,7 +132,11 @@ const InputContentSection = ({ isSmallMode }) => {
         <SignInErrorText isSmall={isSmallMode}>{signInErrorText}</SignInErrorText>
       )}
       <FullWidthButton onClick={() => signIn()} size={isSmallMode ? "small" : "medium"}>
-        로그인
+        {isLoading ? (
+          <CircleLineSpin size={isSmallMode ? "small" : "medium"} />
+        ) : (
+          <span>로그인</span>
+        )}
       </FullWidthButton>
     </>
   )

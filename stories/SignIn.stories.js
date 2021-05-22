@@ -1,5 +1,5 @@
 import React from "react"
-import SignInContent from "src/pages/signIn/SignInContent"
+import SignInContent from "src/pages/SignIn/SignInContent"
 
 export default {
   title: "SignIn",

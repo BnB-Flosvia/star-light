@@ -2,7 +2,7 @@ import queryStringify from "utils/queryString"
 import axios from "axios"
 import { StatusCodes } from "http-status-codes"
 
-const baseApiUrl = "https://jsonplaceholder.typicode.com"
+export const baseApiUrl = "https://baseurl.com"
 
 const mapToQueryParams = (queryParams = {}) => {
   const result = queryStringify(queryParams)

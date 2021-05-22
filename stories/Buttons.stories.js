@@ -1,5 +1,6 @@
 import React from "react"
 import { FullWidthButton, SmallButton, UserSettingButton } from "src/components/Buttons"
+import { CircleLineSpin } from "src/components/Spin"
 
 export default {
   title: "Buttons",
@@ -64,5 +65,30 @@ export function CircularButton() {
     >
       circular button
     </UserSettingButton>
+  )
+}
+
+export function SpanningButton() {
+  return (
+    <FullWidthButton
+      onClick={() => {
+        alert("full width small button click!")
+      }}
+    >
+      <CircleLineSpin spinning />
+    </FullWidthButton>
+  )
+}
+
+export function SpanningSmallButton() {
+  return (
+    <FullWidthButton
+      onClick={() => {
+        alert("full width small button click!")
+      }}
+      size="small"
+    >
+      <CircleLineSpin spinning size="small" />
+    </FullWidthButton>
   )
 }
