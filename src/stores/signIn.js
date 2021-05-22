@@ -48,6 +48,11 @@ export default class SignInStore {
   }
 
   @computed
+  get isLoading() {
+    return this.status === "LOADING"
+  }
+
+  @computed
   get isApiCallError() {
     return this.status === "ERROR"
   }
@@ -99,19 +104,19 @@ export default class SignInStore {
       return
     }
 
-    // TODO: change login request url
     try {
       this.signInErrorText = null
       this.status = "LOADING"
-      const response = await httpClient.post("/posts", {
+      const response = await httpClient.post("/user/login", {
         email: this.email,
         password: this.password,
       })
 
-      const { accessToken, refreshToken } = response
+      const { data = {} } = response
+      const { access, refresh } = data
 
-      localStorage.setItem("accessToken", accessToken)
-      localStorage.setItem("refreshToken", refreshToken)
+      localStorage.setItem("accessToken", access)
+      localStorage.setItem("refreshToken", refresh)
 
       this.status = "SUCCESS"
     } catch (error) {
@@ -126,3 +131,4 @@ autorun(() => store.emailValidated)
 autorun(() => store.pwdValidated)
 autorun(() => store.isApiCallError)
 autorun(() => store.isApiCallSuccess)
+autorun(() => store.isLoading)

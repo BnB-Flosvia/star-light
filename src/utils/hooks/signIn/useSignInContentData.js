@@ -4,6 +4,7 @@ import useStores from "utils/hooks/useStores"
 function useSignInContentData() {
   const { signIn } = useStores()
   return useObserver(() => ({
+    isLoading: signIn.isLoading,
     setEmail: signIn.setEmail,
     setPassword: signIn.setPassword,
     signInRequest: signIn.signInRequest,
