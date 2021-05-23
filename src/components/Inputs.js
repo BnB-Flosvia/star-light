@@ -6,7 +6,7 @@ import {
   errorColor,
   secondaryTextColor,
 } from "styles/colors"
-import { body1Normal, body2Normal, label2Normal, body3Normal } from "styles/textTheme"
+import { body2Normal, label2Normal, body3Normal } from "styles/textTheme"
 import { SearchIconButton, VisibilityIconButton } from "components/IconButtons"
 
 const Input = styled.input`
@@ -58,8 +58,9 @@ const SuffixIconInputContainer = styled.div`
 
 const LabelText = styled.div`
   display: flex;
+  width: 100%;
   padding-bottom: 10px;
-  ${(props) => (props.size === "small" ? body3Normal : body1Normal)}
+  ${(props) => (props.size === "small" ? body3Normal : body2Normal)}
 `
 
 const ErrorText = styled.div`
@@ -76,7 +77,7 @@ export const InputTemplete = ({ labelText, errorText, inputFn, size }) => {
     <>
       {labelText && <LabelText size={size}>{labelText}</LabelText>}
       {inputFn(isError)}
-      <ErrorText visible={isError}>{errorText || "1"}</ErrorText>
+      <ErrorText visible={isError}>{errorText || ""}</ErrorText>
     </>
   )
 }

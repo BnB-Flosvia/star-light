@@ -10,9 +10,6 @@ export default function MainPage() {
       <div>
         <Link to="/signin">로그인</Link>
       </div>
-      <div>
-        <Link to="/signup">회원가입</Link>
-      </div>
     </div>
   )
 }

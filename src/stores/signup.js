@@ -5,12 +5,13 @@ import { isEmpty } from "lodash-es"
 
 const pwdEmptyText = "비밀번호를 입력해주세요."
 const emailEmptyText = "이메일을 입력해주세요."
+const nicknameEmptyText = "닉네임을 입력해주세요."
 const pwdFormatErrorText =
   "8자리 이상, 영문 대소문자, 숫자 및 특수문자를 사용하여야 합니다."
+const pwdConfirmErrorText = "입력한 비밀번호가 같지 않습니다."
 const emailFormatErrorText = "올바르지 않은 이메일 형식입니다."
-const signInErrorText = "가입하지 않은 아이디이거나, 올바르지 않은 비밀번호 입니다."
 
-export default class SignInStore {
+export default class SignUpStore {
   // loading, success, error
   @observable status = ""
 
@@ -18,11 +19,17 @@ export default class SignInStore {
 
   @observable password = ""
 
+  @observable passwordConfirm = ""
+
+  @observable nickname = ""
+
   @observable emailFormatErrorText = null
+
+  @observable pwdConfirmErrorText = null
 
   @observable pwdFormatErrorText = null
 
-  @observable signInErrorText = null
+  @observable nicknameErrorText = null
 
   // MobX version is after 6, need makeObservalbe call
   constructor() {
@@ -67,9 +74,12 @@ export default class SignInStore {
     this.status = ""
     this.email = ""
     this.password = ""
+    this.passwordConfirm = ""
+    this.nickname = ""
     this.emailFormatErrorText = null
     this.pwdFormatErrorText = null
-    this.signInErrorText = null
+    this.pwdConfirmErrorText = null
+    this.nicknameErrorText = null
   }
 
   @action setEmail = (newEmail) => {
@@ -84,50 +94,86 @@ export default class SignInStore {
     }
   }
 
-  @action signInRequest = async () => {
+  @action setPasswordConfirm = (newPwd) => {
+    if (newPwd !== this.passwordConfirm) {
+      this.passwordConfirm = newPwd
+    }
+  }
+
+  @action setNickname = (newNickname) => {
+    if (newNickname !== this.nickname) {
+      this.nickname = newNickname
+    }
+  }
+
+  @action signUpRequest = async () => {
     if (isEmpty(this.email)) {
+      // case 1. set email empty text
       this.emailFormatErrorText = emailEmptyText
     } else if (!this.emailValidated) {
+      // case 2. set email format is not correct text
       this.emailFormatErrorText = emailFormatErrorText
     } else {
+      // case 3. email validated
       this.emailFormatErrorText = null
     }
 
     if (isEmpty(this.password)) {
+      // case 1. set pwd empty text
       this.pwdFormatErrorText = pwdEmptyText
     } else if (!this.pwdValidated) {
+      // case 2. set pwd format error text
       this.pwdFormatErrorText = pwdFormatErrorText
     } else {
+      // case 4. pwd validated
       this.pwdFormatErrorText = null
     }
 
-    if (this.emailFormatErrorText != null || this.pwdFormatErrorText != null) {
+    if (this.password !== this.passwordConfirm) {
+      // case 3. set pwd is not confirmed text
+      this.pwdConfirmErrorText = pwdConfirmErrorText
+    } else {
+      this.pwdConfirmErrorText = null
+    }
+
+    if (isEmpty(this.nickname)) {
+      this.nicknameErrorText = nicknameEmptyText
+    } else {
+      this.nicknameErrorText = null
+    }
+
+    const isValid =
+      this.emailFormatErrorText == null &&
+      this.pwdFormatErrorText == null &&
+      this.nicknameErrorText == null &&
+      this.pwdConfirmErrorText == null
+
+    if (!isValid) {
       return
     }
 
     try {
-      this.signInErrorText = null
       this.status = "LOADING"
-      const response = await httpClient.post("/user/login/", {
+      await httpClient.post("/user/register/", {
         email: this.email,
         password: this.password,
+        passwordConfirm: this.passwordConfirm,
+        userName: this.nickname,
       })
-
-      const { data = {} } = response
-      const { access, refresh } = data
-
-      localStorage.setItem("accessToken", access)
-      localStorage.setItem("refreshToken", refresh)
 
       this.status = "SUCCESS"
     } catch (error) {
       this.status = "ERROR"
-      this.signInErrorText = signInErrorText
+      // TODO: show error toast
+      console.log("case 400, throw error?")
+      console.log(error)
+      // case 4. email duplicated
+      // check nickname duplication
     }
   }
 }
 
-const store = new SignInStore()
+const store = new SignUpStore()
 autorun(() => store.emailValidated)
 autorun(() => store.pwdValidated)
 autorun(() => store.isApiCallError)
