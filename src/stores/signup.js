@@ -158,7 +158,7 @@ export default class SignUpStore {
         email: this.email,
         password: this.password,
         passwordConfirm: this.passwordConfirm,
-        userName: this.nickname,
+        username: this.nickname,
       })
 
       this.status = "SUCCESS"
