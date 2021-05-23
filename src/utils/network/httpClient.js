@@ -2,7 +2,7 @@ import queryStringify from "utils/queryString"
 import axios from "axios"
 import { StatusCodes } from "http-status-codes"
 
-export const baseApiUrl = "https://baseurl.com"
+axios.defaults.baseURL = `http://${process.env.REACT_APP_HOST}/api/v1`
 
 const mapToQueryParams = (queryParams = {}) => {
   const result = queryStringify(queryParams)
@@ -15,7 +15,7 @@ const mapToQueryParams = (queryParams = {}) => {
 }
 
 export async function refreshToken() {
-  const url = `${baseApiUrl}/refresh`
+  const url = "/user/refresh/"
   const token = localStorage.getItem("refreshToken")
   const options = {
     url,
@@ -41,7 +41,7 @@ const fetchRequest = async ({
   headers = {},
   requiredToken = false,
 }) => {
-  const url = `${baseApiUrl}${path}${mapToQueryParams(query || {})}`
+  const url = `${path}${mapToQueryParams(query || {})}`
   const options = {
     url,
     method,

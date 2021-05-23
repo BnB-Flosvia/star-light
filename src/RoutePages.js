@@ -2,6 +2,7 @@ import React from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
 import MainPage from "pages/Main"
 import SignInPage from "pages/SignIn"
+import SignUpPage from "pages/SignUp"
 import RouteContainer from "./RouteContainer"
 
 export default function RoutePages() {
@@ -15,6 +16,9 @@ export default function RoutePages() {
       </RouteContainer>
       <RouteContainer path="/signin" exact fullSize>
         <SignInPage />
+      </RouteContainer>
+      <RouteContainer path="/signup" exact fullSize>
+        <SignUpPage />
       </RouteContainer>
     </Switch>
   )

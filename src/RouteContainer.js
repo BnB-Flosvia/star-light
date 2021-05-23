@@ -4,6 +4,10 @@ import styled, { createGlobalStyle } from "styled-components"
 import { Redirect, Route } from "react-router-dom"
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    min-width: 320px;
+  }
+  
   * {
     user-select: none;
   }

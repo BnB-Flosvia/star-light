@@ -72,14 +72,14 @@ export default function SignInContent() {
 
   return (
     <Container>
-      {isSmallMode ? <SmallLogo /> : <MediumLogo />}
+      <Link to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</Link>
       <TopLabelText isSmall={isSmallMode}>
         Star Light 서비스를 통해 나만 알고 있는 갓띵곡을 공유해보세요!
       </TopLabelText>
       <InputContentSection isSmallMode={isSmallMode} />
       <LinkTextSection isSmall={isSmallMode}>
         <LinkText to="/forgotpassword">비밀번호를 잊으셨나요?</LinkText>
-        <LinkText to="signup">회원가입하기</LinkText>
+        <LinkText to="/signup">회원가입하기</LinkText>
       </LinkTextSection>
     </Container>
   )
