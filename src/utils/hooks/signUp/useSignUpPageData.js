@@ -5,6 +5,7 @@ function useSignUpPageData() {
   const { signUp } = useStores()
   return useObserver(() => ({
     isApiCallSuccess: signUp.isApiCallSuccess,
+    isApiCallError: signUp.isApiCallError,
     initialize: signUp.initialize,
   }))
 }
