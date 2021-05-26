@@ -9,12 +9,14 @@ import {
   selectedBackgroundColor,
   primaryTextColor,
 } from "styles/colors"
-import { label1Normal } from "styles/textTheme"
+import { body2Normal, body3Normal } from "styles/textTheme"
 import { useClickOutside } from "utils/hooks/useClickOutside"
+import { useMediaQuery } from "react-responsive"
 
 const Container = styled.div`
   position: relative;
   width: fit-content;
+  z-index: 1;
 `
 
 const DropdownContainer = styled.div`
@@ -37,14 +39,14 @@ const DropdownContainer = styled.div`
 
 const DropdownItem = styled.div`
   display: flex;
-  width: 80px;
-  height: 20px;
+  white-space: nowrap;
+  padding: 12px 16px;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   text-align: center;
   background-color: ${backgroundColor2};
-  ${label1Normal}
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)};
   &:hover {
     background-color: ${selectedBackgroundColor};
   }
@@ -63,8 +65,11 @@ export default function Dropdown({
   placement = "bottom-end",
   offset = [0, 0],
 }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const isSmallMode = useMediaQuery({
+    query: "(max-width: 768px)",
+  })
 
+  const [isOpen, setIsOpen] = useState(false)
   const [referenceRef, setReferenceRef] = useState(null)
   const [popperRef, setPopperRef] = useState(null)
 
@@ -101,9 +106,14 @@ export default function Dropdown({
       {isOpen && (
         <div ref={setPopperRef} style={styles.popper} {...attributes.popper}>
           <DropdownContainer>
-            {menus.map((menu) => (
-              <DropdownItem>{menu}</DropdownItem>
-            ))}
+            {menus.map((menu) => {
+              const { onClick, name } = menu
+              return (
+                <DropdownItem isSmall={isSmallMode} onClick={() => onClick()}>
+                  {name}
+                </DropdownItem>
+              )
+            })}
           </DropdownContainer>
         </div>
       )}

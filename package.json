@@ -29,7 +29,8 @@
     "http-status-codes": "^2.1.4",
     "antd": "4.15.6",
     "@ant-design/icons": "latest",
-    "axios-mock-adapter": "^1.19.0"
+    "axios-mock-adapter": "^1.19.0",
+    "react-perfect-scrollbar": "^1.5.8"
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",

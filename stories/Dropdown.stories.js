@@ -19,14 +19,24 @@ export default {
 }
 
 export function ArrowButtonDropdownExample() {
-  return <Dropdown menus={["마이페이지", "로그아웃"]} />
+  return (
+    <Dropdown
+      menus={[
+        { name: "마이페이지", onClick: () => {} },
+        { name: "로그아웃", onClick: () => {} },
+      ]}
+    />
+  )
 }
 
 export function UserSettingButtonDropdownExample() {
   return (
     <Dropdown
       buttonType="userSetting"
-      menus={["마이페이지", "로그아웃"]}
+      menus={[
+        { name: "마이페이지", onClick: () => {} },
+        { name: "로그아웃", onClick: () => {} },
+      ]}
       offset={[0, 10]}
       placement="bottom"
     />
