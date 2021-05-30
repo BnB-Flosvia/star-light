@@ -17,7 +17,7 @@ import { Link, withRouter } from "react-router-dom"
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: ${(props) => (props.isSmall ? "80px" : "100px")};
+  flex: ${(props) => (props.isSmall ? "0 0 80px" : "0 0 100px")};
   background: ${backgroundColor1};
   align-items: center;
   justify-content: space-between;

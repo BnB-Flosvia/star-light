@@ -15,7 +15,7 @@ import PerfectScrollBar from "react-perfect-scrollbar"
 const Container = styled.div`
   display: flex;
   width: 100%;
-  height: ${(props) => (props.isSmall ? "45px" : "60px")};
+  flex: ${(props) => (props.isSmall ? "0 0 45px" : "0 0 60px")};
   align-items: center;
   justify-content: center;
   overflow: hidden;
