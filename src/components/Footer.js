@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   flex-flow: column;
   width: 100%;
-  height: ${(props) => (props.isSmall ? "100px" : "120px")};
+  flex: ${(props) => (props.isSmall ? "0 0 100px" : "0 0 120px")};
   align-items: center;
   justify-content: center;
   background: ${dartBackgroundColor};
