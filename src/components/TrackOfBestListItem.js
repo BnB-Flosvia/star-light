@@ -59,6 +59,10 @@ const ContentWrapper = styled.div`
     ${label3Normal}
     color: ${highlightTextColor};
     & > span {
+      white-space: nowrap;
+    }
+    .nickname {
+      white-space: nowrap;
       font-weight: 700;
     }
   }
@@ -86,7 +90,8 @@ export default function TrackOfBestListItem({
           {icon}: {summaryContent}
         </div>
         <div className="writerSection">
-          <span>{nickname}</span>님의 추천곡 🎧
+          <span className="nickname">{nickname}</span>
+          <span>님의 추천곡 🎧</span>
         </div>
       </ContentWrapper>
     </ItemContainer>
