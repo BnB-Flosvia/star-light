@@ -60,19 +60,19 @@ const LinkText = styled(Link)`
 const GridContainer = styled.div`
   display: grid;
   padding: ${(props) =>
-    props.isSmall ? "0 20px 24px" : props.isMedium ? "0 48px 30px" : "0 54px 36px"};
+    props.isSmall ? "0 10px 24px" : props.isMedium ? "0 48px 30px" : "0 54px 36px"};
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 `
 
 export default function TrackOfBestSection() {
   const { trackOfBestList } = useTrackOfBestData()
 
   const isSmallMode = useMediaQuery({
-    query: "(max-width: 360px)",
+    query: "(max-width: 420px)",
   })
   const isMediumMode = useMediaQuery({
-    query: "(min-width: 360px) and (max-width: 768px)",
+    query: "(min-width: 420px) and (max-width: 768px)",
   })
 
   return (

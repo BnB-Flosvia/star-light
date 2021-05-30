@@ -13,7 +13,6 @@ const ItemContainer = styled.div`
   display: flex;
   padding: 20px;
   border: 1px solid ${secondaryTextColor};
-  max-width: 450px;
   background-color: ${lightBackgroundColor};
   &:hover {
     background-color: ${backgroundColor1};
