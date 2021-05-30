@@ -5,6 +5,6 @@ export default {
   title: "Footer",
 }
 
-export function HeaderExample() {
+export function FooterExample() {
   return <Footer />
 }

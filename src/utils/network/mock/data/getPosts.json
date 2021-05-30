@@ -1,18 +1,42 @@
 [
   {
     "id": 1,
-    "username": "테스터",
-    "artist": "test",
-    "songName": "test",
+    "username": "킹갓제너럴",
+    "artist": "Ed Shareen",
+    "songName": "Thinking Out Loud",
     "coverImage": null,
-    "choseReason": "datat"
+    "simplePoint": "이건 정말 갓띵곡입니다 여러분 들어주십샤 제발",
+    "choseReason": "이유이유",
+    "tag": ["tag1", "tag2"]
   },
   {
     "id": 2,
-    "username": "테스터",
-    "artist": "tet",
-    "songName": "tete",
+    "username": "백수나부랭",
+    "artist": "백현 (BAEKHYUN)",
+    "songName": "놀이공원",
     "coverImage": null,
-    "choseReason": null
+    "simplePoint": "이건 정말 갓띵곡입니다 여러분 들어",
+    "choseReason": "이유이유",
+    "tag": ["tag1", "tag2"]
+  },
+  {
+    "id": 3,
+    "username": "백수나부랭",
+    "artist": "백현 (BAEKHYUN)",
+    "songName": "놀이공원",
+    "coverImage": null,
+    "simplePoint": "이건 정말 갓띵곡입니다 여러분 들어",
+    "choseReason": "이유이유",
+    "tag": ["tag1", "tag2"]
+  },
+  {
+    "id": 4,
+    "username": "백수나부랭",
+    "artist": "백현 (BAEKHYUN)",
+    "songName": "놀이공원",
+    "coverImage": null,
+    "simplePoint": "이건 정말 갓띵곡입니다 여러분 들어",
+    "choseReason": "이유이유",
+    "tag": ["tag1", "tag2"]
   }
 ]
