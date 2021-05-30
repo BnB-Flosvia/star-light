@@ -8,8 +8,8 @@ import { primaryTextColor } from "styles/colors"
 export const title1Normal = css`
   font-family: "NanumGothic";
   font-weight: 400;
-  font-size: 18px;
-  line-height: 18px;
+  font-size: 20px;
+  line-height: 20px;
   color: ${primaryTextColor};
 `
 
@@ -20,6 +20,38 @@ export const title1Bold = css`
 
 export const title1ExtraBold = css`
   ${title1Normal}
+  font-weight: 800;
+`
+
+export const title2Normal = css`
+  ${title1Normal}
+  font-size: 24px;
+  line-height: 24px;
+`
+
+export const title2Bold = css`
+  ${title2Normal}
+  font-weight: 700;
+`
+
+export const title2ExtraBold = css`
+  ${title2Normal}
+  font-weight: 800;
+`
+
+export const title3Normal = css`
+  ${title2Normal}
+  font-size: 36px;
+  line-height: 36px;
+`
+
+export const title3Bold = css`
+  ${title3Normal}
+  font-weight: 700;
+`
+
+export const title3ExtraBold = css`
+  ${title3Normal}
   font-weight: 800;
 `
 
@@ -108,5 +140,21 @@ export const label2Bold = css`
 
 export const label2ExtraBold = css`
   ${label2Normal}
+  font-weight: 800;
+`
+
+export const label3Normal = css`
+  ${body1Normal}
+  font-size: 11px;
+  line-height: 11px;
+`
+
+export const label3Bold = css`
+  ${label3Normal}
+  font-weight: 700;
+`
+
+export const label3ExtraBold = css`
+  ${label3Normal}
   font-weight: 800;
 `

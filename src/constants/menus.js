@@ -2,7 +2,7 @@ export const menus = [
   {
     id: 1,
     name: "나만 아는 갓띵곡",
-    path: "/musicOfBest",
+    path: "/trackOfBest",
   },
   {
     id: 2,

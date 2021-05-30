@@ -15,6 +15,7 @@ export const highlightTextColor = "#ac3b61"
  * Background colors
  */
 
+export const lightBackgroundColor = "#f3ebe7"
 export const backgroundColor1 = "#eee2dc"
 export const backgroundColor2 = "#edc7b7"
 export const selectedBackgroundColor = "#e9ab91"
@@ -41,6 +42,10 @@ export const secondaryColor = "#a9c1f5"
 export const interactionColor = "#d9e6ff"
 // primary9
 export const darkPrimaryColor = "#1d254f"
+// primary7
+export const darkPrimaryColor2 = "#43569C"
+// primary8
+export const darkPrimaryColor3 = "#2D3A75"
 
 export const backgroundPrimaryColor2 = "#f0f6ff"
 
