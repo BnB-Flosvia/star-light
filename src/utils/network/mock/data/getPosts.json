@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "username": "테스터",
+    "artist": "test",
+    "songName": "test",
+    "coverImage": null,
+    "choseReason": "datat"
+  },
+  {
+    "id": 2,
+    "username": "테스터",
+    "artist": "tet",
+    "songName": "tete",
+    "coverImage": null,
+    "choseReason": null
+  }
+]
