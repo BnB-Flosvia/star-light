@@ -13,6 +13,7 @@ import {
 import { borderColor } from "styles/colors"
 import useTrackOfBestData from "utils/hooks/main/useTrackOfBestData"
 import { useMediaQuery } from "react-responsive"
+import { Link } from "react-router-dom"
 
 const Container = styled.div`
   display: flex;
@@ -34,12 +35,26 @@ const HeaderSection = styled.div`
     padding: 1em 16px 2em;
   }
   .subtitle {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
     ${(props) =>
       props.isSmall ? body3Normal : props.isMedium ? body2Normal : title1Normal}
     padding: 1em 16px;
     border-bottom: 1px solid ${borderColor};
     border-top: 1px solid ${borderColor};
   }
+`
+
+const LinkText = styled(Link)`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-left: 2em;
+  text-decoration: underline;
+  ${(props) =>
+    props.isSmall ? label2Normal : props.isMedium ? body3Normal : body2Normal}
 `
 
 const GridContainer = styled.div`
@@ -67,18 +82,23 @@ export default function TrackOfBestSection() {
         <div className="sectionSubtitle">
           혼자 듣기 아까운 숨겨진 명곡을 사람들과 공유해보세요!
         </div>
-        <div className="subtitle">✨현재 20개의 띵곡이 등록되었어요!</div>
+        <div className="subtitle">
+          <span>✨현재 20개의 띵곡이 등록되었어요!</span>
+          <LinkText isSmall={isSmallMode} isMedium={isMediumMode} to="/trackOfBest">
+            전체 보러가기
+          </LinkText>
+        </div>
       </HeaderSection>
       <GridContainer isSmall={isSmallMode} isMedium={isMediumMode}>
         {trackOfBestList.map((item) => {
-          const { songName, artist, simplePoint, username, tag } = item
+          const { songName, artist, simplePoint, username, coverImage } = item
           return (
             <TrackOfBestListItem
               title={songName}
               artist={artist}
               summaryContent={simplePoint}
               nickname={username}
-              tags={tag}
+              imageUrl={coverImage}
             />
           )
         })}

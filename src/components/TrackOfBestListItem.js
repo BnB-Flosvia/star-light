@@ -1,27 +1,38 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { primaryTextColor } from "styles/colors"
+import {
+  interactionColor,
+  secondaryTextColor,
+  backgroundColor1,
+  highlightTextColor,
+  lightBackgroundColor,
+} from "styles/colors"
 import { body1Bold, body3Normal, label3Normal } from "styles/textTheme"
 
 const ItemContainer = styled.div`
   display: flex;
   padding: 20px;
-  border: 1px solid ${primaryTextColor};
+  border: 1px solid ${secondaryTextColor};
   max-width: 450px;
+  background-color: ${lightBackgroundColor};
+  &:hover {
+    background-color: ${backgroundColor1};
+  }
 `
 
-const imageUrl = (props) =>
+const backgroundImage = (props) =>
   css`
-    content: url(${props.imgUrl});
+    background-image: url(${props.imgUrl});
   `
 
 const ImageContainer = styled.div`
   width: 100%;
   &:after {
-    ${imageUrl}
+    content: "";
     display: block;
     padding-bottom: 100%;
-    background: lightblue;
+    ${(props) => (props.imgUrl ? backgroundImage : null)};
+    background-color: ${interactionColor};
   }
 `
 
@@ -47,6 +58,7 @@ const ContentWrapper = styled.div`
     flex: 1;
     align-items: flex-end;
     ${label3Normal}
+    color: ${highlightTextColor};
     & > span {
       font-weight: 700;
     }
@@ -58,14 +70,16 @@ export default function TrackOfBestListItem({
   artist,
   summaryContent,
   nickname,
+  imageUrl,
   // tags = [],
 }) {
   // TODO: check user type => set correct icon
   // This is default user icon
   const icon = "🦄"
+
   return (
     <ItemContainer>
-      <ImageContainer imgUrl="https://i1.sndcdn.com/avatars-zEdpVq2f7k6eILLR-zzNFQQ-t240x240.jpg" />
+      <ImageContainer imgUrl={imageUrl} />
       <ContentWrapper>
         <div className="title">{title}</div>
         <div className="artist">{artist}</div>
@@ -73,7 +87,7 @@ export default function TrackOfBestListItem({
           {icon}: {summaryContent}
         </div>
         <div className="writerSection">
-          <span>{nickname}</span>님의 추천곡
+          <span>{nickname}</span>님의 추천곡 🎧
         </div>
       </ContentWrapper>
     </ItemContainer>

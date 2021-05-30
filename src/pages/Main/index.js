@@ -3,7 +3,7 @@ import styled from "styled-components"
 import TrackOfBestSection from "pages/Main/TrackOfBestSection"
 import useMainPageData from "utils/hooks/main/useMainPageData"
 import { Spin } from "antd"
-import { backgroundColor1 } from "styles/colors"
+import { lightBackgroundColor } from "styles/colors"
 
 const RowContainer = styled.div`
   flex: 1;
@@ -13,8 +13,7 @@ const RowContainer = styled.div`
   height: 100%;
   justify-content: flex-start;
   align-items: flex-start;
-  background: ${backgroundColor1};
-  opacity: 0.8;
+  background: ${lightBackgroundColor};
 `
 
 const SpinWrapper = styled.div`
