@@ -42,6 +42,10 @@ const ContentWrapper = styled.div`
   padding: 6px 0px 6px 20px;
   .title {
     ${body1Bold}
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding-bottom: 8px;
   }
   .artist {
