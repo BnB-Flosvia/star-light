@@ -3,6 +3,7 @@ import styled from "styled-components"
 import SignInContent from "pages/SignIn/SignInContent"
 import { withRouter } from "react-router-dom"
 import useSignInPageData from "utils/hooks/signIn/useSignInPageData"
+import { backgroundPrimaryColor1 } from "styles/colors"
 
 const PageContainer = styled.div`
   display: flex;
@@ -10,6 +11,7 @@ const PageContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  background: ${backgroundPrimaryColor1};
 `
 
 function SignInPage({ history }) {

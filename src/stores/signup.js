@@ -2,13 +2,14 @@ import { makeObservable, observable, action, computed, autorun } from "mobx"
 import httpClient from "utils/network/httpClient"
 import * as EmailValidator from "email-validator"
 import { isEmpty } from "lodash-es"
+import { StatusCodes } from "http-status-codes"
 
 const pwdEmptyText = "비밀번호를 입력해주세요."
 const emailEmptyText = "이메일을 입력해주세요."
 const nicknameEmptyText = "닉네임을 입력해주세요."
 const pwdFormatErrorText =
   "8자리 이상, 영문 대소문자, 숫자 및 특수문자를 사용하여야 합니다."
-const pwdConfirmErrorText = "입력한 비밀번호가 같지 않습니다."
+const pwdConfirmErrorText = "입력한 비밀번호와 같지 않습니다. 다시 확인해주세요."
 const emailFormatErrorText = "올바르지 않은 이메일 형식입니다."
 
 export default class SignUpStore {
@@ -158,17 +159,25 @@ export default class SignUpStore {
         email: this.email,
         password: this.password,
         passwordConfirm: this.passwordConfirm,
-        userName: this.nickname,
+        username: this.nickname,
       })
 
       this.status = "SUCCESS"
     } catch (error) {
       this.status = "ERROR"
-      // TODO: show error toast
-      console.log("case 400, throw error?")
-      console.log(error)
-      // case 4. email duplicated
-      // check nickname duplication
+      if (error?.response?.status === StatusCodes.BAD_REQUEST) {
+        const errorMessage = error?.response?.data
+        // Check email duplicated error
+        if (!isEmpty(errorMessage.email)) {
+          const [emailErrorMessage] = errorMessage.email
+          this.emailFormatErrorText = emailErrorMessage
+        }
+        // Check nickname duplicated error
+        if (!isEmpty(errorMessage.username)) {
+          const [nicknameErrorMessage] = errorMessage.username
+          this.nicknameErrorText = nicknameErrorMessage
+        }
+      }
     }
   }
 }

@@ -41,3 +41,7 @@ export const secondaryColor = "#a9c1f5"
 export const interactionColor = "#d9e6ff"
 // primary9
 export const darkPrimaryColor = "#1d254f"
+
+export const backgroundPrimaryColor2 = "#f0f6ff"
+
+export const backgroundPrimaryColor1 = "#f0f7ff"

@@ -9,7 +9,7 @@ import {
   body2Bold,
   body3Bold,
 } from "styles/textTheme"
-import { primaryColor, dividerColor, errorColor } from "styles/colors"
+import { primaryColor, errorColor, dividerColor } from "styles/colors"
 import { OutlineInput, PasswordInput } from "components/Inputs"
 import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"

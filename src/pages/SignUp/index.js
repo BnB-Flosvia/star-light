@@ -3,6 +3,8 @@ import styled from "styled-components"
 import SignUpContent from "pages/SignUp/SignUpContent"
 import { withRouter } from "react-router-dom"
 import useSignUpPageData from "utils/hooks/signUp/useSignUpPageData"
+import { backgroundPrimaryColor1 } from "styles/colors"
+import { message } from "antd"
 
 const PageContainer = styled.div`
   display: flex;
@@ -10,10 +12,11 @@ const PageContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  background: ${backgroundPrimaryColor1};
 `
 
 function SignUpPage({ history }) {
-  const { initialize, isApiCallSuccess } = useSignUpPageData()
+  const { initialize, isApiCallSuccess, isApiCallError } = useSignUpPageData()
   useEffect(() => {
     return () => {
       initialize()
@@ -24,8 +27,15 @@ function SignUpPage({ history }) {
   useEffect(() => {
     if (isApiCallSuccess) {
       history.push("/main")
+      message.success("회원가입이 완료되었습니다.")
     }
   }, [isApiCallSuccess, history])
+
+  useEffect(() => {
+    if (isApiCallError) {
+      message.error("요청에 실패하였습니다.")
+    }
+  }, [isApiCallError])
 
   return (
     <PageContainer>

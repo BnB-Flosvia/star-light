@@ -47,36 +47,37 @@ const fetchRequest = async ({
     method,
     headers,
   }
-
-  if (body != null) {
-    options.headers["Content-Type"] = "application/json;charset=utf-8"
-    options.data = body
-  }
-
-  if (requiredToken) {
-    const accessToken = localStorage.getItem("accessToken")
-    options.header = {
-      ...options.header,
-      token: accessToken,
+  try {
+    if (body != null) {
+      options.headers["Content-Type"] = "application/json;charset=utf-8"
+      options.data = body
     }
-  }
 
-  let response = await axios(options)
+    if (requiredToken) {
+      const accessToken = localStorage.getItem("accessToken")
+      options.header = {
+        ...options.header,
+        token: accessToken,
+      }
+    }
 
-  if (response.status === StatusCodes.UNAUTHORIZED) {
-    const newAccessToken = await refreshToken()
-    options.headers.token = newAccessToken
-    response = await axios(options)
-  }
-
-  if (response.status === StatusCodes.OK || response.status === StatusCodes.CREATED) {
+    const response = await axios(options)
     if (response.data != null) {
       return { data: response.data }
     }
-    return {}
-  }
 
-  throw Error(response)
+    return {}
+  } catch (error) {
+    if (error.response.status === StatusCodes.UNAUTHORIZED) {
+      const newAccessToken = await refreshToken()
+      options.headers.token = newAccessToken
+      const response = await axios(options)
+      if (response.data != null) {
+        return { data: response.data }
+      }
+    }
+    throw error
+  }
 }
 
 export default {
