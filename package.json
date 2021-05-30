@@ -30,7 +30,8 @@
     "antd": "4.15.6",
     "@ant-design/icons": "latest",
     "axios-mock-adapter": "^1.19.0",
-    "react-perfect-scrollbar": "^1.5.8"
+    "react-perfect-scrollbar": "^1.5.8",
+    "jwt-decode-es": "^3.0.9"
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",

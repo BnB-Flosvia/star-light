@@ -1,6 +1,8 @@
 import queryStringify from "utils/queryString"
 import axios from "axios"
 import { StatusCodes } from "http-status-codes"
+import { isEmpty } from "lodash-es"
+import { refreshAccessToken } from "authProvider"
 
 axios.defaults.baseURL = `http://${process.env.REACT_APP_HOST}/api/v1`
 
@@ -12,25 +14,6 @@ const mapToQueryParams = (queryParams = {}) => {
   }
 
   return result || ""
-}
-
-export async function refreshToken() {
-  const url = "/user/refresh/"
-  const token = localStorage.getItem("refreshToken")
-  const options = {
-    url,
-    method: "GET",
-    headers: {
-      token,
-    },
-  }
-  const response = await axios(options)
-
-  if (response.status === StatusCodes.OK && response.data != null) {
-    return response.data
-  }
-
-  throw Error(response)
 }
 
 const fetchRequest = async ({
@@ -55,6 +38,11 @@ const fetchRequest = async ({
 
     if (requiredToken) {
       const accessToken = localStorage.getItem("accessToken")
+
+      if (accessToken == null || isEmpty(accessToken)) {
+        throw Error("Not Exist Session")
+      }
+
       options.header = {
         ...options.header,
         token: accessToken,
@@ -62,19 +50,20 @@ const fetchRequest = async ({
     }
 
     const response = await axios(options)
-    if (response.data != null) {
+    if (response?.data != null) {
       return { data: response.data }
     }
-
     return {}
   } catch (error) {
-    if (error.response.status === StatusCodes.UNAUTHORIZED) {
-      const newAccessToken = await refreshToken()
+    if (error?.response?.status === StatusCodes.UNAUTHORIZED) {
+      const newAccessToken = await refreshAccessToken()
+
       options.headers.token = newAccessToken
       const response = await axios(options)
-      if (response.data != null) {
+      if (response?.data != null) {
         return { data: response.data }
       }
+      return {}
     }
     throw error
   }
