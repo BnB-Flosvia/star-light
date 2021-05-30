@@ -1,7 +1,10 @@
 # Star Light
 - This is a web service for 
-- React + MobX + Styled-component + Axios, Swr
-- Storybook + Jest for testing
+- React + MobX + Styled-component + Axios
+- Using Storybook for testing
+- TODO: react-testing-library, Jest testing
+
+> [star light page:development web](star-light-web-dev.eba-mz52msmv.ap-northeast-2.elasticbeanstalk.com)
 
 ## Usage
 ### Clone repository
@@ -19,19 +22,19 @@
 - `npm start`
 - `npx cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start`
   - You can change the environment. Servers connected to each environment are different.
-  - REACT_APP_ENVIRONMENT = production, development, staging
+  - REACT_APP_ENVIRONMENT = production, development
 
 ### Run code lint check
 - check code style (no fix, only check)
 - `npm run lint`
 
 ### Run production build
-- `npm start build`
+- `npm run build`
 
 ## Todo
 
 ## Reference
-- [Star light design - Figma]()
+- [Star light design - Figma](https://www.figma.com/file/NyRHXYp1ydVb9l4yoHmDtH/Star-Light-Web?node-id=0%3A1)
   - If you need authorization for figma design, notify this email => "dkdudkc22@gmail.com"
-- [Star light projectStoryboard v0.4]()
-- [Star light project Requirements Specification]()
+- [Star light Storyboard v0.6](https://docs.google.com/presentation/d/1Sp_AaRGX0Djxg1bEWvEA5sCDMwHlt4ju8T6O6NrWqA0/edit?usp=sharing)
+- [Star light Requirements Specification](https://hackmd.io/HwCwBPuvQR-Teo6EjRtAIg?view)
