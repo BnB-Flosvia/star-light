@@ -1,10 +1,11 @@
 # Star Light
-- This is a web service for 
+- This is a web service for share your favorite songs with people
 - React + MobX + Styled-component + Axios
 - Using Storybook for testing
 - TODO: react-testing-library, Jest testing
 
-> [star light page:development web](star-light-web-dev.eba-mz52msmv.ap-northeast-2.elasticbeanstalk.com)
+## Service Url
+> [star light page:development web](http://star-light-web-dev.eba-mz52msmv.ap-northeast-2.elasticbeanstalk.com)
 
 ## Usage
 ### Clone repository
