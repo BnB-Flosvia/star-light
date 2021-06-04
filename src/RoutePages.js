@@ -3,6 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom"
 import MainPage from "pages/Main"
 import SignInPage from "pages/SignIn"
 import SignUpPage from "pages/SignUp"
+import TrackOfBestPage from "pages/TrackOfBest"
+import TrackOfBestDetailPage from "pages/TrackOfBestDetail"
 import RouteContainer from "./RouteContainer"
 
 export default function RoutePages() {
@@ -19,6 +21,12 @@ export default function RoutePages() {
       </RouteContainer>
       <RouteContainer path="/signup" exact fullSize>
         <SignUpPage />
+      </RouteContainer>
+      <RouteContainer path="/trackOfBest" exact>
+        <TrackOfBestPage />
+      </RouteContainer>
+      <RouteContainer path="/trackOfBest/:id" exact>
+        <TrackOfBestDetailPage />
       </RouteContainer>
     </Switch>
   )

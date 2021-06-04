@@ -2,10 +2,16 @@ import AppStore from "./app"
 import MainStore from "./main"
 import SignInStore from "./signIn"
 import SignUpStore from "./signup"
+import TrackOfBestStore from "./trackOfBest"
 
-export default {
-  app: new AppStore(),
-  main: new MainStore(),
-  signIn: new SignInStore(),
-  signUp: new SignUpStore(),
+class RootStore {
+  constructor() {
+    this.app = new AppStore(this)
+    this.main = new MainStore(this)
+    this.signIn = new SignInStore(this)
+    this.signUp = new SignUpStore(this)
+    this.trackOfBest = new TrackOfBestStore(this)
+  }
 }
+
+export default RootStore

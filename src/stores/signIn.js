@@ -25,8 +25,9 @@ export default class SignInStore {
   @observable signInErrorText = null
 
   // MobX version is after 6, need makeObservalbe call
-  constructor() {
+  constructor(root) {
     makeObservable(this)
+    this.root = root
   }
 
   @computed
@@ -113,11 +114,16 @@ export default class SignInStore {
         password: this.password,
       })
 
-      const { data = {} } = response
-      const { access, refresh } = data
+      const { data } = response
+      const { access, refresh } = data || {}
 
       localStorage.setItem("accessToken", access)
       localStorage.setItem("refreshToken", refresh)
+
+      const { data: nicknameData } = await httpClient.getWithToken("/user/me/")
+      const { nickname } = nicknameData || {}
+      const { setNickname } = this.root.app
+      setNickname(nickname)
 
       this.status = "SUCCESS"
     } catch (error) {

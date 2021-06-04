@@ -8,6 +8,7 @@ import {
   lightBackgroundColor,
 } from "styles/colors"
 import { body1Bold, body3Normal, label3Normal } from "styles/textTheme"
+import { withRouter } from "react-router-dom"
 
 const ItemContainer = styled.div`
   display: flex;
@@ -22,6 +23,8 @@ const ItemContainer = styled.div`
 const backgroundImage = (props) =>
   css`
     background-image: url(${props.imgUrl});
+    background-repeat: no-repeat;
+    background-size: cover;
   `
 
 const ImageContainer = styled.div`
@@ -72,12 +75,14 @@ const ContentWrapper = styled.div`
   }
 `
 
-export default function TrackOfBestListItem({
+function TrackOfBestListItem({
+  id,
   title,
   artist,
   summaryContent,
   nickname,
   imageUrl,
+  history,
   // tags = [],
 }) {
   // TODO: check user type => set correct icon
@@ -85,7 +90,11 @@ export default function TrackOfBestListItem({
   const icon = "🦄"
 
   return (
-    <ItemContainer>
+    <ItemContainer
+      onClick={() => {
+        history.push(`/trackOfBest/${id}`)
+      }}
+    >
       <ImageContainer imgUrl={imageUrl} />
       <ContentWrapper>
         <div className="title">{title}</div>
@@ -101,3 +110,5 @@ export default function TrackOfBestListItem({
     </ItemContainer>
   )
 }
+
+export default withRouter(TrackOfBestListItem)

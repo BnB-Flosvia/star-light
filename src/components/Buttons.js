@@ -1,14 +1,22 @@
 import React from "react"
 import styled from "styled-components"
 import { PersonOutline } from "@material-ui/icons"
-import { body1Bold, body2Bold, body3Bold } from "styles/textTheme"
+import {
+  body1Bold,
+  body2Bold,
+  body3Bold,
+  body2Normal,
+  body3Normal,
+} from "styles/textTheme"
 import {
   borderColor,
   disableColor,
   primaryColor,
+  primaryTextColor,
   interactionColor,
   darkPrimaryColor,
 } from "styles/colors"
+import { Link } from "react-router-dom"
 
 const Button = styled.button`
   display: flex;
@@ -58,6 +66,23 @@ export const SmallButton = styled(Button)`
   background: ${darkPrimaryColor};
   ${body3Bold}
   color: #fff;
+`
+
+export const RoundedLinkButton = styled(Link)`
+  display: flex;
+  padding: 12px 24px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 24px;
+  background: ${darkPrimaryColor};
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)};
+  color: #fff;
+  &:hover {
+    font-weight: bold;
+    color: ${primaryTextColor};
+    background: ${interactionColor};
+  }
 `
 
 export const UserSettingButton = ({ onClick, ref }) => {

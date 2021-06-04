@@ -1,18 +1,15 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  backgroundColor1,
-  darkPrimaryColor,
-  primaryTextColor,
-  interactionColor,
-} from "styles/colors"
+import { backgroundColor1 } from "styles/colors"
 import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
 import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
 import { useMediaQuery } from "react-responsive"
 import { logout, checkLocalToken } from "authProvider"
 import Dropdown from "components/Dropdown"
-import { body2Normal, body3Normal } from "styles/textTheme"
+import { body2Normal } from "styles/textTheme"
 import { Link, withRouter } from "react-router-dom"
+import useAppData from "utils/hooks/useAppData"
+import { RoundedLinkButton } from "./Buttons"
 
 const Container = styled.div`
   display: flex;
@@ -41,23 +38,6 @@ const UserMenuSection = styled.div`
   }
 `
 
-const LoginButton = styled(Link)`
-  display: flex;
-  padding: 12px 24px;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  border-radius: 24px;
-  background: ${darkPrimaryColor};
-  ${(props) => (props.isSmall ? body3Normal : body2Normal)};
-  color: #fff;
-  &:hover {
-    font-weight: bold;
-    color: ${primaryTextColor};
-    background: ${interactionColor};
-  }
-`
-
 const LogoLink = styled(Link)`
   display: flex;
   align-items: center;
@@ -69,7 +49,7 @@ function Header({ history }) {
   // This is default user icon
   const icon = "🦄"
   // TODO: get user nickname
-  const nickname = "메론소다"
+  const { nickname } = useAppData()
   const isSmallMode = useMediaQuery({
     query: "(max-width: 768px)",
   })
@@ -114,9 +94,9 @@ function Header({ history }) {
         ) : (
           <>
             {!isSmallMode && (
-              <LoginButton to="/signin" isSmall={isSmallMode}>
+              <RoundedLinkButton to="/signin" isSmall={isSmallMode}>
                 로그인
-              </LoginButton>
+              </RoundedLinkButton>
             )}
           </>
         )}

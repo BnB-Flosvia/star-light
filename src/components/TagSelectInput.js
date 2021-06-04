@@ -2,14 +2,14 @@ import React from "react"
 import styled from "styled-components"
 import { Select, Tag } from "antd"
 import { body2Normal } from "styles/textTheme"
-import { secondaryTextColor, primaryColor } from "styles/colors"
+import { primaryColor, primaryTextColor } from "styles/colors"
 import { ArrowDropDown } from "@material-ui/icons"
 
 const Container = styled.div`
   .ant-select-selector {
-    border: 1px solid ${secondaryTextColor} !important;
+    border: 1px solid ${primaryTextColor} !important;
     border-radius: 4px !important;
-    padding: 6px 10px;
+    padding: 4px 10px;
   }
 
   .ant-tag {
@@ -30,7 +30,7 @@ const IconContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  padding-right: 3px;
+  padding-right: 12px;
 `
 
 function tagRender(props) {
@@ -56,10 +56,11 @@ export default function TagSelectInput({
   placeholder = "",
   value = [],
   notFoundContent,
+  onChange,
+  width,
 }) {
   function handleChange(newValue) {
-    console.log(typeof newValue)
-    console.log(newValue)
+    onChange(newValue)
   }
 
   return (
@@ -69,12 +70,12 @@ export default function TagSelectInput({
         showArrow
         tagRender={tagRender}
         defaultValue={value}
-        style={{ width: 400 }}
+        style={{ width }}
         options={options}
         size="large"
         suffixIcon={
           <IconContainer>
-            <ArrowDropDown style={{ color: `${secondaryTextColor}` }} />
+            <ArrowDropDown style={{ color: `${primaryTextColor}` }} />
           </IconContainer>
         }
         placeholder={placeholder}
