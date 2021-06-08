@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { body2Normal } from "styles/textTheme"
-import { primaryColor, primaryTextColor, interactionColor } from "styles/colors"
+import { primaryColor, primaryTextColor } from "styles/colors"
 
 const Container = styled.div`
   display: flex;
@@ -23,10 +23,6 @@ const Button = styled.div`
   color: ${(props) => (props.isSelected ? "#fff" : primaryTextColor)};
   font-weight: ${(props) => (props.isSelected ? "700" : "400")};
   background: ${(props) => (props.isSelected ? primaryColor : "none")};
-  &:hover {
-    background: ${interactionColor};
-    font-weight: 700;
-  }
 `
 
 export default function RadioButton({ items, selectedId, onChange }) {

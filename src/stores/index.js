@@ -1,4 +1,5 @@
 import AppStore from "./app"
+import CreateTrackOfBestStore from "./createTrackOfBest"
 import MainStore from "./main"
 import SignInStore from "./signIn"
 import SignUpStore from "./signup"
@@ -11,6 +12,7 @@ class RootStore {
     this.signIn = new SignInStore(this)
     this.signUp = new SignUpStore(this)
     this.trackOfBest = new TrackOfBestStore(this)
+    this.createTrackOfBest = new CreateTrackOfBestStore(this)
   }
 }
 

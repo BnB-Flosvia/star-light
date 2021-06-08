@@ -2,9 +2,10 @@ import React, { useEffect } from "react"
 import { withRouter } from "react-router-dom"
 import styled from "styled-components"
 import useTrackOfBestPageData from "utils/hooks/trackOfBest/useTrackOfBestPageData"
-import { lightBackgroundColor } from "styles/colors"
+import { lightBackgroundColor, primaryTextColor } from "styles/colors"
 import { PageLoading } from "components/Spin"
 import TrackOfBestListItem from "components/TrackOfBestListItem"
+import { title1Normal } from "styles/textTheme"
 import HeaderSection from "./HeaderSection"
 
 const RowContainer = styled.div`
@@ -25,6 +26,17 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 `
 
+const LineLargeButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${title1Normal}
+  height: 60px;
+  width: 300px;
+  background: none;
+  border: 1px solid ${primaryTextColor};
+`
+
 function TrackOfBestPage() {
   const {
     isLoading,
@@ -36,9 +48,10 @@ function TrackOfBestPage() {
     // selectedTagList,
     selectedOrderType,
     fetchRequest,
-    fetchFilteredListRequest,
     updateSelectedTagList,
     setOrderType,
+    // setOffset,
+    offset,
   } = useTrackOfBestPageData()
 
   useEffect(() => {
@@ -50,18 +63,12 @@ function TrackOfBestPage() {
 
   useEffect(() => {
     if (selectedOrderType != null) {
-      fetchFilteredListRequest()
+      fetchRequest({ offset: 0 })
     }
-  }, [selectedOrderType, fetchFilteredListRequest])
+  }, [selectedOrderType, fetchRequest])
 
-  let content
-  if (isLoading) {
-    content = <PageLoading />
-  } else if (isError) {
-    // TODO: Add error page
-    content = <div>에러가 발생했습니다!</div>
-  } else if (isSuccess) {
-    content = (
+  function defaultContent() {
+    return (
       <>
         <HeaderSection
           tagOptions={tagList.map((item) => {
@@ -69,7 +76,7 @@ function TrackOfBestPage() {
           })}
           onTagChange={(newList) => updateSelectedTagList(newList)}
           onSearch={() => {
-            fetchFilteredListRequest()
+            fetchRequest({ offset: 0 })
           }}
           orderType={selectedOrderType}
           onOrderChange={(id) => {
@@ -91,8 +98,25 @@ function TrackOfBestPage() {
             )
           })}
         </GridContainer>
+        <LineLargeButton
+          onClick={() => {
+            fetchRequest({ offset: offset + 1 })
+          }}
+        >
+          더보기
+        </LineLargeButton>
       </>
     )
+  }
+
+  let content
+  if (isLoading) {
+    content = <PageLoading />
+  } else if (isError) {
+    // TODO: Add error page
+    content = <div>에러가 발생했습니다!</div>
+  } else if (isSuccess) {
+    content = defaultContent()
   }
 
   return <RowContainer>{content}</RowContainer>

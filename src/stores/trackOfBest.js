@@ -2,6 +2,8 @@ import { makeObservable, observable, action, computed, autorun } from "mobx"
 import httpClient from "utils/network/httpClient"
 import { isEmpty } from "lodash-es"
 
+const defaultLimit = 10
+
 export default class TrackOfBestStore {
   @observable status = ""
 
@@ -12,6 +14,8 @@ export default class TrackOfBestStore {
   @observable selectedTagList = []
 
   @observable selectedOrderType = null
+
+  @observable offset = 0
 
   // MobX version is after 6, need makeObservalbe call
   constructor() {
@@ -39,19 +43,7 @@ export default class TrackOfBestStore {
     this.tagList = []
     this.selectedTagList = []
     this.selectedOrderType = null
-  }
-
-  @action fetchRequest = async () => {
-    try {
-      this.status = "LOADING"
-      const { data: trackOfBestListData } = await httpClient.get("/post/")
-      const { data: tagListData } = await httpClient.get("/post/tag/")
-      this.trackOfBestList = trackOfBestListData
-      this.tagList = tagListData
-      this.status = "SUCCESS"
-    } catch (error) {
-      this.status = "ERROR"
-    }
+    this.offset = 0
   }
 
   @action setOrderType = (id) => {
@@ -62,18 +54,29 @@ export default class TrackOfBestStore {
     this.selectedTagList = [...newList]
   }
 
-  @action fetchFilteredListRequest = async () => {
+  @action setOffset = (newOffset) => {
+    this.offset = newOffset
+  }
+
+  @action fetchRequest = async ({ offset }) => {
     try {
       this.status = "LOADING"
       const filter = {
         tags: !isEmpty(this.selectedTagList) ? this.selectedTagList.join(",") : undefined,
-        order: this.selectedOrderType,
+        sort: this.selectedOrderType,
+        limit: defaultLimit,
+        offset,
       }
+
+      // fetch trackOfBest list
       const { data: trackOfBestListData } = await httpClient.get("/post/", filter)
-      this.trackOfBestList = trackOfBestListData
+      // fetch tag list
+      const { data: tagListData } = await httpClient.get("/post/tag/")
+
+      this.trackOfBestList = [...this.trackOfBestList, ...trackOfBestListData]
+      this.tagList = tagListData
       this.status = "SUCCESS"
     } catch (error) {
-      console.log(error)
       this.status = "ERROR"
     }
   }

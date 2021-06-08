@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback, useMemo, useState } from "react"
 import styled from "styled-components"
 import {
@@ -83,11 +84,14 @@ export const InputTemplete = ({ labelText, errorText, inputFn, size }) => {
 }
 
 export const OutlineInput = ({
+  value,
+  defaultValue,
   labelText,
   errorText,
   placeholderText,
   size,
   onChange,
+  readOnly,
 }) => {
   return (
     <InputTemplete
@@ -101,6 +105,8 @@ export const OutlineInput = ({
             placeholder={placeholderText}
             size={size}
             onBlur={(e) => onChange(e.target.value)}
+            readOnly={readOnly}
+            {...(value != null ? { value } : { defaultValue })}
           />
         )
       }}
