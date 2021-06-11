@@ -85,6 +85,18 @@ export const RoundedLinkButton = styled(Link)`
   }
 `
 
+export const LineSmallButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 30px;
+  border: ${(props) =>
+    props.color ? `1px solid ${props.color}` : `1px solid ${primaryTextColor}`};
+  ${body2Normal}
+  color: ${(props) => (props.color ? props.color : primaryTextColor)};
+  border-radius: 24px;
+`
+
 export const UserSettingButton = ({ onClick, ref }) => {
   return (
     <CircleButtonContainer onClick={() => onClick()} ref={ref}>

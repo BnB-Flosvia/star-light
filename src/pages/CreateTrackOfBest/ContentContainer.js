@@ -8,6 +8,7 @@ import { title1Normal, title2Normal, body3Normal } from "styles/textTheme"
 
 const Container = styled.div`
   display: flex;
+  flex-flow: column;
   max-width: 720px;
 `
 
@@ -16,21 +17,23 @@ const HeaderSection = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 40px 0 32px 0;
+  padding: 32px 0;
   ${title2Normal}
 `
 
 const SectionContainer = styled.div`
   display: flex;
+  flex-flow: column;
   border-top: 1px solid ${borderColor};
   padding: 30px 40px;
   .title {
     ${title1Normal}
-    padding: ${(props) => (props.hasSubtitle ? "12px" : "20px")};
+    padding-bottom: ${(props) => (props.hasSubtitle ? "12px" : "20px")};
   }
   .subtitle {
     ${body3Normal}
     color: ${secondaryTextColor};
+    padding-bottom: ${(props) => (props.hasSubtitle ? "12px" : "20px")};
   }
 `
 
@@ -38,7 +41,12 @@ const RowContainer = styled.div`
   display: flex;
   width: 100%;
   & > :not(:last-child) {
-    padding-right: 20px;
+    margin-right: 20px;
+  }
+  .input {
+    display: flex;
+    width: 300px;
+    flex-flow: column;
   }
 `
 
@@ -50,7 +58,7 @@ const CoverImageContent = () => {
   return <div />
 }
 
-export default function ContentContainer({ onChange, form }) {
+export default function ContentContainer({ onChange, form, tagOptions = [] }) {
   const contentList = [
     {
       title: "가수명 / 곡제목",
@@ -58,15 +66,17 @@ export default function ContentContainer({ onChange, form }) {
         return (
           <RowContainer>
             <OutlineInput
+              className="input"
               labelText="가수명"
               placeholderText="가수명 입력"
-              errorText="에러메시지입니다."
+              errorText={form.fields.artist.error}
               onChange={(value) => onChange("artist", value)}
             />
             <OutlineInput
+              className="input"
               labelText="곡제목"
               placeholderText="곡제목 입력"
-              errorText="에러메시지입니다."
+              errorText={form.fields.songName.error}
               onChange={(value) => onChange("songName", value)}
             />
           </RowContainer>
@@ -81,7 +91,7 @@ export default function ContentContainer({ onChange, form }) {
         return (
           <OutlineInput
             placeholderText="내용 입력"
-            errorText="에러메시지입니다."
+            errorText={form.fields.simplePoint.error}
             onChange={(value) => onChange("simplePoint", value)}
           />
         )
@@ -90,7 +100,12 @@ export default function ContentContainer({ onChange, form }) {
     {
       title: "이 곡이 띵곡인 이유",
       contentBuilder: () => {
-        return <ContentEditor onChange={(value) => onChange("choseReason", value)} />
+        return (
+          <ContentEditor
+            onChange={(value) => onChange("choseReason", value)}
+            errorText={form.fields.choseReason.error}
+          />
+        )
       },
     },
     {
@@ -110,7 +125,9 @@ export default function ContentContainer({ onChange, form }) {
       contentBuilder: () => {
         return (
           <TagSelectInput
-            options={[]}
+            options={tagOptions.map((item) => {
+              return { value: item }
+            })}
             placeholder="태그를 선택해주세요"
             notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
             width={400}
@@ -129,7 +146,7 @@ export default function ContentContainer({ onChange, form }) {
       {contentList.map((item) => {
         const { title, subtitle, contentBuilder } = item
         return (
-          <SectionContainer>
+          <SectionContainer hasSubtitle={subtitle != null}>
             <span className="title">{title}</span>
             {subtitle && <span className="subtitle">{subtitle}</span>}
             {contentBuilder()}

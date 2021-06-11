@@ -26,7 +26,7 @@ export default function RoutePages() {
       <RouteContainer path="/trackOfBest" exact>
         <TrackOfBestPage />
       </RouteContainer>
-      <RouteContainer path="/trackOfBest/register" exact>
+      <RouteContainer path="/trackOfBest/register" exact hiddenFooter>
         <CreateTrackOfBestPage />
       </RouteContainer>
       <RouteContainer path="/trackOfBest/edit" exact>

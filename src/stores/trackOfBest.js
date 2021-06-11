@@ -58,14 +58,14 @@ export default class TrackOfBestStore {
     this.offset = newOffset
   }
 
-  @action fetchRequest = async ({ offset }) => {
+  @action fetchRequest = async (offset) => {
     try {
       this.status = "LOADING"
       const filter = {
         tags: !isEmpty(this.selectedTagList) ? this.selectedTagList.join(",") : undefined,
         sort: this.selectedOrderType,
         limit: defaultLimit,
-        offset,
+        offset: offset != null ? offset : this.offset,
       }
 
       // fetch trackOfBest list

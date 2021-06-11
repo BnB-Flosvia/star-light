@@ -11,6 +11,8 @@ function useCreateTrackOfBestPageData() {
     onFormFieldChange: createTrackOfBest.onFormFieldChange,
     onSubmit: createTrackOfBest.onSubmit,
     initialize: createTrackOfBest.initialize,
+    fetchRequest: createTrackOfBest.fetchRequest,
+    tagList: createTrackOfBest.tagList,
   }))
 }
 

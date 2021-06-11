@@ -9,6 +9,8 @@ let mock = {
   restore: () => {},
 }
 
+const getTrackOfBestUrl = new RegExp(`/post/*`)
+
 const fetchMock = {
   enable() {
     mock = new MockAdapter(axios, { delayResponse: 1000 })
@@ -20,9 +22,8 @@ const fetchMock = {
     mock.onPost("/user/register/").reply(200)
 
     // trackOfBest
-    mock.onGet("/post/").reply(200, getPosts)
-    mock.onGet("/post/?tags=Tag1").reply(200, getPosts)
     mock.onGet("/post/tag/").reply(200, getTags)
+    mock.onGet(getTrackOfBestUrl).reply(200, getPosts)
     mock.onGet("/user/me/").reply(200, getUserData)
 
     // createTrackOfBest

@@ -53,6 +53,7 @@ export default function RouteContainer({
   children,
   component,
   requiredLogin,
+  hiddenFooter,
   ...props
 }) {
   const childComponent = children || component || <div />
@@ -87,7 +88,7 @@ export default function RouteContainer({
               <Header />
               <NavigationBar isFixed={false} />
               <ContentContainer>{childComponent}</ContentContainer>
-              <Footer />
+              {!hiddenFooter && <Footer />}
             </>
           )}
         </ScrollContainer>

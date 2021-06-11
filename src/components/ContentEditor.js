@@ -51,6 +51,7 @@ export default function ContentEditor({ onChange, value }) {
         height="200px"
         initialEditType="markdown"
         onBlur={() => handleContentClick()}
+        ref={editorRef}
         hideModeSwitch
       />
     </Container>

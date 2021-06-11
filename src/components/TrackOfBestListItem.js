@@ -75,7 +75,24 @@ const ContentWrapper = styled.div`
   }
 `
 
+const LoadingItem = styled.div`
+  display: flex;
+  padding: 20px;
+  border: 1px solid ${secondaryTextColor};
+  background-color: ${lightBackgroundColor};
+  .container {
+    width: 100%;
+    &:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+      background-color: #ddd;
+    }
+  }
+`
+
 function TrackOfBestListItem({
+  isLoading,
   id,
   title,
   artist,
@@ -88,6 +105,15 @@ function TrackOfBestListItem({
   // TODO: check user type => set correct icon
   // This is default user icon
   const icon = "🦄"
+
+  if (isLoading) {
+    return (
+      <LoadingItem>
+        <div className="container" />
+        <div className="container" />
+      </LoadingItem>
+    )
+  }
 
   return (
     <ItemContainer

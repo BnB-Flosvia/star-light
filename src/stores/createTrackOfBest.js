@@ -51,6 +51,9 @@ class CreateTrackOfBestStore {
   @observable
   form = defaultFormValue
 
+  @observable
+  tagList = []
+
   // MobX version is after 6, need makeObservalbe call
   constructor() {
     makeObservable(this)
@@ -91,6 +94,19 @@ class CreateTrackOfBestStore {
   }
 
   @action
+  fetchRequest = async () => {
+    try {
+      this.status = "LOADING"
+      // fetch tag list
+      const { data } = await httpClient.get("/post/tag/")
+      this.tagList = data
+      this.status = "SUCCESS"
+    } catch (error) {
+      this.status = "ERROR"
+    }
+  }
+
+  @action
   onSubmit = async () => {
     const fields = Object.keys(toJS(this.form).fields)
     const validation = new Validator(
@@ -104,7 +120,7 @@ class CreateTrackOfBestStore {
 
     // Check all form fields validation result
     if (!this.form.meta.isValid) {
-      this.form.meta.error = "입력한 내용을 다시 확인해주세요."
+      this.form.meta.error = "모든 내용을 올바르게 입력했는지 확인해주세요."
     }
 
     try {

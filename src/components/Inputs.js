@@ -72,14 +72,14 @@ const ErrorText = styled.div`
   color: ${errorColor};
 `
 
-export const InputTemplete = ({ labelText, errorText, inputFn, size }) => {
+export const InputTemplete = ({ labelText, errorText, inputFn, size, className }) => {
   const isError = errorText != null
   return (
-    <>
+    <div className={className}>
       {labelText && <LabelText size={size}>{labelText}</LabelText>}
       {inputFn(isError)}
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>
-    </>
+    </div>
   )
 }
 
@@ -92,9 +92,11 @@ export const OutlineInput = ({
   size,
   onChange,
   readOnly,
+  className,
 }) => {
   return (
     <InputTemplete
+      className={className}
       size={size}
       labelText={labelText}
       errorText={errorText}

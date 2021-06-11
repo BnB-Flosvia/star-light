@@ -14,6 +14,7 @@ import { borderColor } from "styles/colors"
 import useTrackOfBestData from "utils/hooks/main/useTrackOfBestData"
 import { useMediaQuery } from "react-responsive"
 import { Link } from "react-router-dom"
+import range from "utils/range"
 
 const Container = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ const GridContainer = styled.div`
 `
 
 function TrackOfBestSection() {
-  const { trackOfBestList } = useTrackOfBestData()
+  const { isLoading, trackOfBestList } = useTrackOfBestData()
 
   const isSmallMode = useMediaQuery({
     query: "(max-width: 420px)",
@@ -90,19 +91,23 @@ function TrackOfBestSection() {
         </div>
       </HeaderSection>
       <GridContainer isSmall={isSmallMode} isMedium={isMediumMode}>
-        {trackOfBestList.map((item) => {
-          const { id, songName, artist, simplePoint, username, coverImage } = item
-          return (
-            <TrackOfBestListItem
-              id={id}
-              title={songName}
-              artist={artist}
-              summaryContent={simplePoint}
-              nickname={username}
-              imageUrl={coverImage}
-            />
-          )
-        })}
+        {isLoading
+          ? range(1, 5).map((_) => {
+              return <TrackOfBestListItem isLoading />
+            })
+          : trackOfBestList.map((item) => {
+              const { id, songName, artist, simplePoint, username, coverImage } = item
+              return (
+                <TrackOfBestListItem
+                  id={id}
+                  title={songName}
+                  artist={artist}
+                  summaryContent={simplePoint}
+                  nickname={username}
+                  imageUrl={coverImage}
+                />
+              )
+            })}
       </GridContainer>
     </Container>
   )
