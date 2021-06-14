@@ -35,6 +35,7 @@ const DropdownContainer = styled.div`
   & > :not(:last-child) {
     border-bottom: 1px solid ${primaryTextColor};
   }
+  z-index: 1;
 `
 
 const DropdownItem = styled.div`

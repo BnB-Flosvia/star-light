@@ -6,14 +6,16 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "mobx-react"
 import GlobalFontStyle from "styles/fonts/globalStyle"
-import store from "stores"
+import RootStore from "stores"
 import App from "./App"
 import "./configureMock"
+
+const rootStore = new RootStore()
 
 ReactDOM.render(
   <>
     <GlobalFontStyle />
-    <Provider {...store}>
+    <Provider {...rootStore}>
       <App />
     </Provider>
   </>,

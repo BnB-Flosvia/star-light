@@ -24,8 +24,7 @@ const Container = styled.div`
   border-top: 0.5px solid ${disableColor};
   border-bottom: 0.5px solid ${disableColor};
   top: 0;
-  z-index: 2;
-  position: ${(props) => (props.isFixed ? "fixed" : "static")};
+  position: ${(props) => (props.isFixed ? "fixed" : "relative")};
 `
 
 const MenuWrapper = styled.div`

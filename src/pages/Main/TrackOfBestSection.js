@@ -65,7 +65,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 `
 
-export default function TrackOfBestSection() {
+function TrackOfBestSection() {
   const { trackOfBestList } = useTrackOfBestData()
 
   const isSmallMode = useMediaQuery({
@@ -91,9 +91,10 @@ export default function TrackOfBestSection() {
       </HeaderSection>
       <GridContainer isSmall={isSmallMode} isMedium={isMediumMode}>
         {trackOfBestList.map((item) => {
-          const { songName, artist, simplePoint, username, coverImage } = item
+          const { id, songName, artist, simplePoint, username, coverImage } = item
           return (
             <TrackOfBestListItem
+              id={id}
               title={songName}
               artist={artist}
               summaryContent={simplePoint}
@@ -106,3 +107,5 @@ export default function TrackOfBestSection() {
     </Container>
   )
 }
+
+export default TrackOfBestSection

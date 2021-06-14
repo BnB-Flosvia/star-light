@@ -6,6 +6,7 @@ function useAppData() {
   return useObserver(() => ({
     initialized: app.initialized,
     checkLocalToken: app.checkLocalToken,
+    nickname: app.nickname,
   }))
 }
 
