@@ -73,7 +73,13 @@ export default class TrackOfBestStore {
       // fetch tag list
       const { data: tagListData } = await httpClient.get("/post/tag/")
 
-      this.trackOfBestList = [...this.trackOfBestList, ...trackOfBestListData]
+      if (this.offset + 1 === offset) {
+        this.trackOfBestList = [...this.trackOfBestList, ...trackOfBestListData]
+        this.offset = offset
+      } else {
+        this.trackOfBestList = trackOfBestListData
+      }
+
       this.tagList = tagListData
       this.status = "SUCCESS"
     } catch (error) {

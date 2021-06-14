@@ -33,7 +33,7 @@ const SectionContainer = styled.div`
   .subtitle {
     ${body3Normal}
     color: ${secondaryTextColor};
-    padding-bottom: ${(props) => (props.hasSubtitle ? "12px" : "20px")};
+    padding-bottom: 20px;
   }
 `
 

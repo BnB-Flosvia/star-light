@@ -89,7 +89,7 @@ class CreateTrackOfBestStore {
   }
 
   @action
-  onFieldChange = (field, value) => {
+  onFormFieldChange = (field, value) => {
     this.form.fields[field].value = value
   }
 

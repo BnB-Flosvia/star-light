@@ -65,6 +65,7 @@ const LineLargeButtonWrapper = styled.div`
 `
 
 function TrackOfBestPage() {
+  const initialOffset = 0
   const {
     isLoading,
     isError,
@@ -89,7 +90,7 @@ function TrackOfBestPage() {
 
   useEffect(() => {
     if (selectedOrderType != null) {
-      fetchRequest({ offset: 0 })
+      fetchRequest(initialOffset)
     }
   }, [selectedOrderType, fetchRequest])
 
@@ -102,7 +103,7 @@ function TrackOfBestPage() {
           })}
           onTagChange={(newList) => updateSelectedTagList(newList)}
           onSearch={() => {
-            fetchRequest({ offset: 0 })
+            fetchRequest(initialOffset)
           }}
           orderType={selectedOrderType}
           onOrderChange={(id) => {
@@ -132,7 +133,7 @@ function TrackOfBestPage() {
           <button
             type="button"
             onClick={() => {
-              fetchRequest({ offset: offset + 1 })
+              fetchRequest(offset + 1)
             }}
           >
             더보기
