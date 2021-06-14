@@ -51,13 +51,15 @@ function CreateTrackOfBestPage({ history }) {
   const {
     isLoading,
     isError,
-    isSuccess,
+    isFetchSuccess,
+    isCreateSuccess,
     form,
     onFormFieldChange,
     onSubmit,
     initialize,
     fetchRequest,
     tagList,
+    setFormFieldError,
   } = useCreateTrackOfBestPageData()
 
   useEffect(() => {
@@ -66,6 +68,12 @@ function CreateTrackOfBestPage({ history }) {
       initialize()
     }
   }, [initialize, fetchRequest])
+
+  useEffect(() => {
+    if (isCreateSuccess) {
+      history.push("/trackOfBest")
+    }
+  }, [isCreateSuccess, history])
 
   let content
   if (isLoading) {
@@ -77,9 +85,14 @@ function CreateTrackOfBestPage({ history }) {
   } else if (isError) {
     // TODO: Add error page
     content = <div>에러가 발생했습니다!</div>
-  } else if (isSuccess) {
+  } else if (isFetchSuccess) {
     content = (
-      <ContentContainer onChange={onFormFieldChange} form={form} tagOptions={tagList} />
+      <ContentContainer
+        onChange={onFormFieldChange}
+        form={form}
+        tagOptions={tagList}
+        setError={setFormFieldError}
+      />
     )
   }
 

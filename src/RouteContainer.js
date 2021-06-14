@@ -60,11 +60,10 @@ export default function RouteContainer({
 
   const isAllowed = !requiredLogin || checkLocalToken()
 
-  const onScroll = (event) => {
-    const scrollTop = event?.currentTarget?.scrollTop
-
+  const onScroll = (_event) => {
+    // const scrollTop = event?.currentTarget?.scrollTop
     // TODO: set navigation bar position to fix
-    if (scrollTop) console.log(scrollTop)
+    // if (scrollTop) console.log(scrollTop)
   }
 
   if (!isAllowed) {

@@ -5,37 +5,39 @@ import httpClient from "utils/network/httpClient"
 const defaultFormValue = {
   fields: {
     artist: {
-      value: "",
+      value: null,
       error: null,
       rule: "required",
     },
     songName: {
-      value: "",
+      value: null,
       error: null,
       rule: "required",
     },
     simplePoint: {
-      value: "",
+      value: null,
       error: null,
       rule: "required",
     },
     choseReason: {
-      value: "",
+      value: null,
       error: null,
       rule: "required",
     },
     youtubeUrl: {
-      value: "",
+      value: null,
       error: null,
       rule: "required",
     },
     tag: {
-      value: "",
+      value: null,
       error: null,
+      rule: "",
     },
     coverImageData: {
-      value: "",
+      value: null,
       error: null,
+      rule: "",
     },
   },
   meta: {
@@ -70,8 +72,13 @@ class CreateTrackOfBestStore {
   }
 
   @computed
-  get isSuccess() {
-    return this.status === "SUCCESS"
+  get isFetchSuccess() {
+    return this.status === "FETCH_SUCCESS"
+  }
+
+  @computed
+  get isCreateSuccess() {
+    return this.status === "CREATE_SUCCESS"
   }
 
   @action initialize = () => {
@@ -82,6 +89,8 @@ class CreateTrackOfBestStore {
   getFlattenedValues = (valueKey = "value") => {
     const data = {}
     const form = toJS(this.form).fields
+
+    console.log(form)
     Object.keys(form).forEach((key) => {
       data[key] = form[key][valueKey]
     })
@@ -90,7 +99,16 @@ class CreateTrackOfBestStore {
 
   @action
   onFormFieldChange = (field, value) => {
-    this.form.fields[field].value = value
+    const newForm = { ...this.form }
+    newForm.fields[field].value = value
+    this.form = newForm
+  }
+
+  @action
+  setFormFieldError = (field, error) => {
+    const newForm = { ...this.form }
+    newForm.fields[field].error = error
+    this.form = newForm
   }
 
   @action
@@ -100,7 +118,7 @@ class CreateTrackOfBestStore {
       // fetch tag list
       const { data } = await httpClient.get("/post/tag/")
       this.tagList = data
-      this.status = "SUCCESS"
+      this.status = "FETCH_SUCCESS"
     } catch (error) {
       this.status = "ERROR"
     }
@@ -108,22 +126,26 @@ class CreateTrackOfBestStore {
 
   @action
   onSubmit = async () => {
-    const fields = Object.keys(toJS(this.form).fields)
-    const validation = new Validator(
-      this.getFlattenedValues("value"),
-      this.getFlattenedValues("rule")
-    )
-    this.form.meta.isValid = validation.passes()
-    fields.forEach((field) => {
-      this.form.fields[field].error = validation.errors.first(field)
-    })
-
-    // Check all form fields validation result
-    if (!this.form.meta.isValid) {
-      this.form.meta.error = "모든 내용을 올바르게 입력했는지 확인해주세요."
-    }
-
     try {
+      const fields = Object.keys(toJS(this.form).fields)
+      const validation = new Validator(
+        this.getFlattenedValues("value"),
+        this.getFlattenedValues("rule")
+      )
+
+      this.form.meta.isValid = validation.passes()
+      fields.forEach((field) => {
+        this.form.fields[field].error = validation.errors.first(field)
+      })
+
+      // Check all form fields validation result
+      if (!this.form.meta.isValid) {
+        const newForm = { ...this.form }
+        newForm.meta.error = "모든 내용을 올바르게 입력했는지 확인해주세요."
+        this.form = newForm
+        return
+      }
+
       this.status = "LOADING"
       const {
         artist,
@@ -134,7 +156,7 @@ class CreateTrackOfBestStore {
         choseReason,
         simplePoint,
       } = this.form.fields
-      await httpClient.postWithToken("/post/", {
+      await httpClient.post("/post/", {
         artist,
         songName,
         youtubeUrl,
@@ -143,9 +165,10 @@ class CreateTrackOfBestStore {
         coverImageData,
         simplePoint,
       })
-      this.status = "SUCCESS"
+      this.status = "CREATE_SUCCESS"
     } catch (error) {
       this.status = "ERROR"
+      console.log(error)
       // TODO: check duplication?
     }
   }
@@ -155,5 +178,6 @@ export default CreateTrackOfBestStore
 
 const store = new CreateTrackOfBestStore()
 autorun(() => store.isError)
-autorun(() => store.isSuccess)
+autorun(() => store.isFetchSuccess)
+autorun(() => store.isCreateSuccess)
 autorun(() => store.isLoading)

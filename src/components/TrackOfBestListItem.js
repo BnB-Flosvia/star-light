@@ -1,7 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import {
-  interactionColor,
   secondaryTextColor,
   backgroundColor1,
   highlightTextColor,
@@ -34,7 +33,7 @@ const ImageContainer = styled.div`
     display: block;
     padding-bottom: 100%;
     ${(props) => (props.imgUrl ? backgroundImage : null)};
-    background-color: ${interactionColor};
+    background-color: #ddd;
   }
 `
 

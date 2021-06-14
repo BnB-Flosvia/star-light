@@ -5,6 +5,8 @@ import React from "react"
 import styled from "styled-components"
 import { borderColor, secondaryTextColor } from "styles/colors"
 import { title1Normal, title2Normal, body3Normal } from "styles/textTheme"
+import CoverImageContainer from "./CoverImageContainer"
+import YoutubeVideoContent from "./YoutubeVideoContainer"
 
 const Container = styled.div`
   display: flex;
@@ -50,15 +52,7 @@ const RowContainer = styled.div`
   }
 `
 
-const YoutubeLinkContent = () => {
-  return <div />
-}
-
-const CoverImageContent = () => {
-  return <div />
-}
-
-export default function ContentContainer({ onChange, form, tagOptions = [] }) {
+export default function ContentContainer({ onChange, form, tagOptions = [], setError }) {
   const contentList = [
     {
       title: "가수명 / 곡제목",
@@ -111,13 +105,26 @@ export default function ContentContainer({ onChange, form, tagOptions = [] }) {
     {
       title: "유튜브 링크 첨부",
       contentBuilder: () => {
-        return <YoutubeLinkContent />
+        return (
+          <YoutubeVideoContent
+            onChange={(value) => onChange("youtubeUrl", value)}
+            value={form.fields.youtubeUrl.value}
+            error={form.fields.youtubeUrl.error}
+            setError={(value) => setError("youtubeUrl", value)}
+          />
+        )
       },
     },
     {
       title: "커버 이미지 첨부",
       contentBuilder: () => {
-        return <CoverImageContent />
+        return (
+          <CoverImageContainer
+            onChange={(value) => onChange("coverImageData", value)}
+            value={form.fields.coverImageData.value}
+            youtubeUrl={form.fields.youtubeUrl.value}
+          />
+        )
       },
     },
     {

@@ -6,9 +6,11 @@ function useCreateTrackOfBestPageData() {
   return useObserver(() => ({
     isLoading: createTrackOfBest.isLoading,
     isError: createTrackOfBest.isError,
-    isSuccess: createTrackOfBest.isSuccess,
+    isFetchSuccess: createTrackOfBest.isFetchSuccess,
+    isCreateSuccess: createTrackOfBest.isCreateSuccess,
     form: createTrackOfBest.form,
     onFormFieldChange: createTrackOfBest.onFormFieldChange,
+    setFormFieldError: createTrackOfBest.setFormFieldError,
     onSubmit: createTrackOfBest.onSubmit,
     initialize: createTrackOfBest.initialize,
     fetchRequest: createTrackOfBest.fetchRequest,

@@ -75,7 +75,7 @@ const ErrorText = styled.div`
 export const InputTemplete = ({ labelText, errorText, inputFn, size, className }) => {
   const isError = errorText != null
   return (
-    <div className={className}>
+    <div className={className} style={{ width: "100%" }}>
       {labelText && <LabelText size={size}>{labelText}</LabelText>}
       {inputFn(isError)}
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>
@@ -224,17 +224,22 @@ export const SearchInput = ({
   placeholderText,
   onSearch,
   size,
+  className,
 }) => {
   const [isFocus, setIsFocus] = useState(false)
+  const [searchData, setSearchData] = useState(null)
+
   const handleInputFocus = () => {
     setIsFocus(() => true)
   }
-  const handleInputBlur = () => {
+  const handleInputBlur = (value) => {
     setIsFocus(() => false)
+    setSearchData(() => value)
   }
 
   return (
     <InputTemplete
+      className={className}
       size={size}
       labelText={labelText}
       errorText={errorText}
@@ -246,9 +251,9 @@ export const SearchInput = ({
               isError={isError}
               placeholder={placeholderText}
               onFocus={() => handleInputFocus()}
-              onBlur={() => handleInputBlur()}
+              onBlur={(event) => handleInputBlur(event.target.value)}
             />
-            <SearchIconButton onClick={() => onSearch()} />
+            <SearchIconButton onClick={() => onSearch(searchData)} />
           </SuffixIconInputContainer>
         )
       }}
