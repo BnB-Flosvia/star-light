@@ -13,6 +13,7 @@ import youtubeUrlParser from "utils/youtubeUrlParser"
 import getCroppedImg from "utils/imageCropper"
 import Cropper from "react-easy-crop"
 import { Switch } from "antd"
+import { DarkSmallButton } from "components/Buttons"
 
 const Container = styled.div`
   display: flex;
@@ -80,6 +81,9 @@ const ButtonGroupWrapper = styled.div`
     display: flex;
     flex: 1;
     align-items: flex-end;
+    & > button {
+      margin-right: 12px;
+    }
   }
 `
 
@@ -123,6 +127,7 @@ const CropperContainer = styled.div`
 
 const SwitchSection = styled.div`
   display: flex;
+  align-items: center;
   & > span {
     ${body2Normal}
     padding-right: 10px;
@@ -136,30 +141,25 @@ export default function CoverImageContainer({
   onChange,
   youtubeUrl,
 }) {
-  const modeOptions = [
-    { id: "default", name: "기본" },
-    { id: "custom", name: "커스텀" },
-  ]
   const sizeOptions = [
     { id: "240px", name: "240px" },
     { id: "180px", name: "180px" },
     { id: "120px", name: "120px" },
   ]
-  const [mode, setMode] = useState(modeOptions[0]?.id)
   const [isCropMode, setIsCropMode] = useState(true)
   const [imageSize, setImageSize] = useState(sizeOptions[0]?.id)
   const [image, setImage] = useState(null)
-  const [defaultUrl, setDefaultUrl] = useState(null)
   const [url, setUrl] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
 
   const showCroppedImage = useCallback(
     async (newCroppedAreaPixels) => {
       try {
+        const isYoutubeUrl = url.includes("img.youtube.com")
         let imageUrl
-        if (mode === "default") {
+        if (isYoutubeUrl) {
           // using "CORS Anywhere" proxy server for adding "Access-Control-Allow-Origin" header
-          imageUrl = `http://cors-anywhere.herokuapp.com/${defaultUrl}`
+          imageUrl = `http://cors-anywhere.herokuapp.com/${url}`
         } else {
           imageUrl = url
         }
@@ -169,7 +169,7 @@ export default function CoverImageContainer({
         onChange(null)
       }
     },
-    [onChange, defaultUrl, url, mode]
+    [onChange, url]
   )
 
   const onCropComplete = useCallback(
@@ -195,18 +195,11 @@ export default function CoverImageContainer({
 
   const onIsCropModeChanged = (checked) => {
     if (checked === false) {
-      const imageUrl = mode === "default" ? defaultUrl : url
-      onChange(imageUrl)
+      onChange(url)
     } else {
       onChange(null)
     }
     setIsCropMode(() => checked)
-  }
-
-  const onModeChanged = (id) => {
-    setMode(id)
-    const imageUrl = id === "default" ? defaultUrl : url
-    onChange(imageUrl)
   }
 
   useEffect(() => {
@@ -216,18 +209,16 @@ export default function CoverImageContainer({
   }, [defaultImage])
 
   useEffect(() => {
-    if (mode === "default") {
-      // Get default image (youtube thumbnail)
-      if (youtubeUrl != null) {
-        const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
-        if (id != null) {
-          setDefaultUrl(thumbnailUrl)
-        }
-      } else {
-        setDefaultUrl(null)
+    if (youtubeUrl != null) {
+      const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
+      if (id != null) {
+        setUrl(thumbnailUrl)
+        setIsCropMode(true)
       }
+    } else {
+      setUrl(null)
     }
-  }, [mode, youtubeUrl, onChange])
+  }, [youtubeUrl])
 
   useEffect(() => {
     if (image instanceof File) {
@@ -247,21 +238,24 @@ export default function CoverImageContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [image])
 
-  const imageUrl = mode === "default" ? defaultUrl : url
   return (
     <Container>
       {/* TODO: Add zoom feature */}
-      {imageUrl != null && (
+      {url != null && (
         <SwitchSection>
           <span>이미지 자르기</span>
-          <Switch defaultChecked={isCropMode} onChange={onIsCropModeChanged} />
+          {isCropMode ? (
+            <Switch defaultChecked onChange={onIsCropModeChanged} />
+          ) : (
+            <Switch defaultChecked={false} onChange={onIsCropModeChanged} />
+          )}
         </SwitchSection>
       )}
       {isCropMode && (
         <CropperContainer>
-          {imageUrl != null ? (
+          {url != null ? (
             <Cropper
-              image={imageUrl}
+              image={url}
               crop={crop}
               zoom={1}
               rotation={0}
@@ -276,7 +270,7 @@ export default function CoverImageContainer({
       )}
       <CroppedImageContainer>
         <ImageWrapper className="imageContainer">
-          {imageUrl != null ? (
+          {url != null ? (
             <ImageContainer imgUrl={imageData} size={imageSize} />
           ) : (
             <div className="placeholder">
@@ -286,7 +280,6 @@ export default function CoverImageContainer({
           )}
         </ImageWrapper>
         <ButtonGroupWrapper>
-          <RadioButton items={modeOptions} selectedId={mode} onChange={onModeChanged} />
           <RadioButton
             items={sizeOptions}
             selectedId={imageSize}
@@ -295,20 +288,30 @@ export default function CoverImageContainer({
             }}
           />
           <div className="fileButtonWrapper">
-            {mode === "default" ? (
-              <div />
-            ) : (
-              <>
-                <UploadLabel htmlFor="upload-cover">이미지 가져오기</UploadLabel>
-                <FileInput
-                  accept=".jpg, .jpeg, .png"
-                  type="file"
-                  id="upload-cover"
-                  name="upload-cover"
-                  onChange={setCoverImage}
-                />
-              </>
-            )}
+            <DarkSmallButton
+              onClick={() => {
+                if (youtubeUrl != null) {
+                  const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
+                  if (id != null) {
+                    setUrl(thumbnailUrl)
+                    onChange(thumbnailUrl)
+                  }
+                } else {
+                  setUrl(null)
+                  onChange(null)
+                }
+              }}
+            >
+              기본 이미지로 설정
+            </DarkSmallButton>
+            <UploadLabel htmlFor="upload-cover">이미지 가져오기</UploadLabel>
+            <FileInput
+              accept=".jpg, .jpeg, .png"
+              type="file"
+              id="upload-cover"
+              name="upload-cover"
+              onChange={setCoverImage}
+            />
           </div>
         </ButtonGroupWrapper>
       </CroppedImageContainer>

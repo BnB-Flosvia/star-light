@@ -159,7 +159,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
       title: "태그 선택",
       contentBuilder: () => {
         return (
-          <div style={{ display: "flex", width: "100%", height: "300px" }}>
+          <div style={{ display: "flex", width: "100%" }}>
             <TagSelectInput
               options={tagOptions.map((item) => {
                 return { value: item }

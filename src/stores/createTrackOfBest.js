@@ -155,14 +155,15 @@ class CreateTrackOfBestStore {
         choseReason,
         simplePoint,
       } = this.form.fields
+      const isBase64Image = coverImageData.value.includes("data:image/jpeg;base64")
       await httpClient.post("/post/", {
-        artist: toJS(artist),
-        songName: toJS(songName),
-        youtubeUrl: toJS(youtubeUrl),
-        tag: toJS(tag),
-        choseReason: toJS(choseReason),
-        coverImageData: toJS(coverImageData),
-        simplePoint: toJS(simplePoint),
+        artist: artist.value,
+        songName: songName.value,
+        youtubeUrl: youtubeUrl.value,
+        tag: tag.value,
+        choseReason: choseReason.value,
+        coverImageData: isBase64Image ? coverImageData.value : null,
+        simplePoint: simplePoint.value,
       })
       this.status = "CREATE_SUCCESS"
     } catch (error) {
