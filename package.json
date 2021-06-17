@@ -44,7 +44,6 @@
     "start:mock": "cross-env REACT_APP_ENVIRONMENT=mock react-app-rewired start",
     "build": "cross-env REACT_APP_ENVIRONMENT=production react-app-rewired build",
     "build:mock": "cross-env REACT_APP_ENVIRONMENT=mock react-app-rewired build",
-    "build:stage": "cross-env REACT_APP_ENVIRONMENT=staging react-app-rewired build",
     "build:dev": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
