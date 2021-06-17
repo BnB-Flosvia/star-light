@@ -1,9 +1,10 @@
 import ContentEditor from "components/ContentEditor"
+import InfoTooltip from "components/InfoTooltip"
 import { OutlineInput } from "components/Inputs"
 import TagSelectInput from "components/TagSelectInput"
 import React from "react"
 import styled from "styled-components"
-import { borderColor, secondaryTextColor } from "styles/colors"
+import { borderColor, secondaryTextColor, warningColor } from "styles/colors"
 import { title1Normal, title2Normal, body3Normal } from "styles/textTheme"
 import CoverImageContainer from "./CoverImageContainer"
 import YoutubeVideoContent from "./YoutubeVideoContainer"
@@ -29,8 +30,16 @@ const SectionContainer = styled.div`
   border-top: 1px solid ${borderColor};
   padding: 30px 40px;
   .title {
+    display: flex;
+    align-items: center;
     ${title1Normal}
     padding-bottom: ${(props) => (props.hasSubtitle ? "12px" : "20px")};
+    .required {
+      color: ${warningColor};
+    }
+    svg {
+      margin-left: 10px;
+    }
   }
   .subtitle {
     ${body3Normal}
@@ -76,6 +85,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
           </RowContainer>
         )
       },
+      required: true,
     },
     {
       title: "이 곡의 특징 간단 설명",
@@ -87,9 +97,11 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
             placeholderText="내용 입력"
             errorText={form.fields.simplePoint.error}
             onChange={(value) => onChange("simplePoint", value)}
+            maxLength={20}
           />
         )
       },
+      required: true,
     },
     {
       title: "이 곡이 띵곡인 이유",
@@ -101,6 +113,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
           />
         )
       },
+      required: true,
     },
     {
       title: "유튜브 링크 첨부",
@@ -114,9 +127,17 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
           />
         )
       },
+      required: true,
+      infoText: (
+        <span>
+          내가 선택한 띵곡을 들을 수 있는 유튜브
+          <br /> 동영상의 url을 입력해주세요!
+        </span>
+      ),
     },
     {
       title: "커버 이미지 첨부",
+      subtitle: "기본 이미지는 유튜브 영상 썸네일로 설정됩니다.",
       contentBuilder: () => {
         return (
           <CoverImageContainer
@@ -126,22 +147,39 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
           />
         )
       },
+      infoText: (
+        <span>
+          목록에서 표시될 커버 이미지를 선택해주세요!
+          <br /> 커버 이미지를 선택하지 않을 경우, 유튜브 영상
+          <br /> 썸네일로 자동설정됩니다.
+        </span>
+      ),
     },
     {
       title: "태그 선택",
       contentBuilder: () => {
         return (
-          <TagSelectInput
-            options={tagOptions.map((item) => {
-              return { value: item }
-            })}
-            placeholder="태그를 선택해주세요"
-            notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
-            width={400}
-            onChange={(value) => onChange("tag", value)}
-          />
+          <div style={{ display: "flex", width: "100%", height: "300px" }}>
+            <TagSelectInput
+              options={tagOptions.map((item) => {
+                return { value: item }
+              })}
+              placeholder="태그를 선택해주세요"
+              notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
+              width={400}
+              onChange={(value) => onChange("tag", value)}
+            />
+          </div>
         )
       },
+      infoText: (
+        <span>
+          이 곡에 어울리는 태그를 선택해주세요!
+          <br />
+          태그를 등록하시면 검색 기능, 투표 기능 등을 <br />
+          이용하실 수 있습니다!
+        </span>
+      ),
     },
   ]
 
@@ -151,10 +189,14 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
         <span>나만 아는 갓띵곡 생성</span>
       </HeaderSection>
       {contentList.map((item) => {
-        const { title, subtitle, contentBuilder } = item
+        const { title, subtitle, required, contentBuilder, infoText } = item
         return (
-          <SectionContainer hasSubtitle={subtitle != null}>
-            <span className="title">{title}</span>
+          <SectionContainer hasSubtitle={subtitle != null} isRequired={required || false}>
+            <div className="title">
+              {title}
+              {required && <span className="required">*</span>}
+              {infoText && <InfoTooltip tooltipText={infoText} />}
+            </div>
             {subtitle && <span className="subtitle">{subtitle}</span>}
             {contentBuilder()}
           </SectionContainer>

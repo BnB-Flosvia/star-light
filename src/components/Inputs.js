@@ -72,12 +72,30 @@ const ErrorText = styled.div`
   color: ${errorColor};
 `
 
-export const InputTemplete = ({ labelText, errorText, inputFn, size, className }) => {
+export const InputTemplete = ({
+  labelText,
+  errorText,
+  inputFn,
+  size,
+  className,
+  currentLength = 0,
+  maxLength,
+}) => {
   const isError = errorText != null
   return (
     <div className={className} style={{ width: "100%" }}>
       {labelText && <LabelText size={size}>{labelText}</LabelText>}
-      {inputFn(isError)}
+      <div style={{ display: "flex", width: "100%", alignItems: "flex-end" }}>
+        {inputFn(isError)}
+        {maxLength && (
+          <div
+            className="lengthText"
+            style={{ paddingLeft: "12px", whiteSpace: "nowrap" }}
+          >
+            {currentLength} / {maxLength}
+          </div>
+        )}
+      </div>
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>
     </div>
   )
@@ -93,22 +111,31 @@ export const OutlineInput = ({
   onChange,
   readOnly,
   className,
+  maxLength,
 }) => {
+  const [length, setLength] = useState(0)
   return (
     <InputTemplete
       className={className}
       size={size}
       labelText={labelText}
       errorText={errorText}
+      currentLength={length}
+      maxLength={maxLength}
       inputFn={(isError) => {
         return (
           <Input
             isError={isError}
             placeholder={placeholderText}
             size={size}
+            onChange={(e) => {
+              const data = e.target.value
+              setLength(data.length)
+            }}
             onBlur={(e) => onChange(e.target.value)}
             readOnly={readOnly}
             {...(value != null ? { value } : { defaultValue })}
+            maxLength={maxLength}
           />
         )
       }}

@@ -32,12 +32,12 @@ const defaultFormValue = {
     tag: {
       value: null,
       error: null,
-      rule: "",
+      rule: "array",
     },
     coverImageData: {
       value: null,
       error: null,
-      rule: "",
+      rule: "string",
     },
   },
   meta: {
@@ -90,7 +90,6 @@ class CreateTrackOfBestStore {
     const data = {}
     const form = toJS(this.form).fields
 
-    console.log(form)
     Object.keys(form).forEach((key) => {
       data[key] = form[key][valueKey]
     })
@@ -157,13 +156,13 @@ class CreateTrackOfBestStore {
         simplePoint,
       } = this.form.fields
       await httpClient.post("/post/", {
-        artist,
-        songName,
-        youtubeUrl,
-        tag,
-        choseReason,
-        coverImageData,
-        simplePoint,
+        artist: toJS(artist),
+        songName: toJS(songName),
+        youtubeUrl: toJS(youtubeUrl),
+        tag: toJS(tag),
+        choseReason: toJS(choseReason),
+        coverImageData: toJS(coverImageData),
+        simplePoint: toJS(simplePoint),
       })
       this.status = "CREATE_SUCCESS"
     } catch (error) {

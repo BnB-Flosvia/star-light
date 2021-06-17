@@ -40,34 +40,19 @@ export default function YoutubeVideoContent({ onChange, value: url, error, setEr
   if (url != null) {
     const { id } = youtubeUrlParser(url)
 
-    if (id != null) {
-      youtubePlayer = (
-        <YouTube
-          videoId={id}
-          opts={{
-            height: "300",
-            width: "500",
-            playerVars: {
-              autoplay: 1,
-            },
-          }}
-          onReady={onReady}
-          /*
-          onError={() => {
-            onChange(null)
-            setPlayerError("유튜브 플레이어가 동작하지 않습니다.")
-          }}
-          */
-        />
-      )
-    } else {
-      setError("유효하지 않은 url 입니다.")
-      youtubePlayer = (
-        <SampleContainer>
-          <div>유튜브 url을 입력하면 유튜브 플레이어가 표시됩니다.</div>
-        </SampleContainer>
-      )
-    }
+    youtubePlayer = (
+      <YouTube
+        videoId={id}
+        opts={{
+          height: "300",
+          width: "500",
+          playerVars: {
+            autoplay: 1,
+          },
+        }}
+        onReady={onReady}
+      />
+    )
   } else {
     youtubePlayer = (
       <SampleContainer>
@@ -81,7 +66,13 @@ export default function YoutubeVideoContent({ onChange, value: url, error, setEr
       <SearchInput
         placeholderText="유튜브 url 입력"
         onSearch={(value) => {
-          onChange(value)
+          const { isValidUrl } = youtubeUrlParser(value)
+          if (isValidUrl) {
+            onChange(value)
+            setError(null)
+          } else {
+            setError("올바르지 않은 url 형식입니다.")
+          }
         }}
         className="urlInput"
         errorText={error}

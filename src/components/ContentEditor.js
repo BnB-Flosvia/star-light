@@ -5,6 +5,7 @@ import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
 import { Editor } from "@toast-ui/react-editor"
 import { body2Normal } from "styles/textTheme"
+import { secondaryTextColor } from "styles/colors"
 
 const Container = styled.div`
   .tui-editor-defaultUI {
@@ -22,6 +23,7 @@ const Container = styled.div`
     pre.CodeMirror-placeholder {
       padding-left: 20px;
       ${body2Normal}
+      color: ${secondaryTextColor};
     }
 
     .CodeMirror-line {

@@ -1,11 +1,26 @@
 import RadioButton from "components/RadioButton"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import styled, { css } from "styled-components"
-import { darkPrimaryColor, darkPrimaryColor2 } from "styles/colors"
-import { body3Normal } from "styles/textTheme"
+import {
+  darkPrimaryColor,
+  darkPrimaryColor2,
+  interactionColor,
+  primaryTextColor,
+  secondaryTextColor,
+} from "styles/colors"
+import { body3Normal, body2Normal } from "styles/textTheme"
 import youtubeUrlParser from "utils/youtubeUrlParser"
+import getCroppedImg from "utils/imageCropper"
+import Cropper from "react-easy-crop"
+import { Switch } from "antd"
 
 const Container = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+`
+
+const CroppedImageContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   .imageContainer {
@@ -20,11 +35,31 @@ const backgroundImage = (props) =>
     background-size: cover;
   `
 
+const ImageWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 240px;
+  height: 240px;
+  background: #ddd;
+  .placeholder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    ${body3Normal}
+    color: ${secondaryTextColor};
+    line-height: 16px;
+    padding: 20px;
+  }
+`
+
 const ImageContainer = styled.div`
   width: ${(props) => (props.size ? props.size : "240px")};
   height: ${(props) => (props.size ? props.size : "240px")};
   ${(props) => (props.imgUrl ? backgroundImage : null)};
-  background-color: #ddd;
+  background-color: #ededed;
 `
 
 const ButtonGroupWrapper = styled.div`
@@ -41,6 +76,11 @@ const ButtonGroupWrapper = styled.div`
     padding-bottom: 8px;
   }
   min-height: 240px;
+  .fileButtonWrapper {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+  }
 `
 
 const UploadLabel = styled.label`
@@ -50,14 +90,52 @@ const UploadLabel = styled.label`
   width: 120px;
   height: 40px;
   border-radius: 4px;
-  border: 1px solid ${darkPrimaryColor};
+  ${body3Normal}
+  color: #fff;
+  background: ${darkPrimaryColor};
+  &:hover {
+    background: ${interactionColor};
+    color: ${primaryTextColor};
+    font-weight: 700;
+  }
 `
 
 const FileInput = styled.input`
   display: none;
 `
 
-export default function CoverImageContainer({ value: image, onChange, youtubeUrl }) {
+const CropperContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: #ddd;
+  margin-bottom: 30px;
+  .placeholder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    ${body2Normal}
+    color: ${secondaryTextColor};
+  }
+`
+
+const SwitchSection = styled.div`
+  display: flex;
+  & > span {
+    ${body2Normal}
+    padding-right: 10px;
+  }
+  padding-bottom: 14px;
+`
+
+export default function CoverImageContainer({
+  defaultImage,
+  value: imageData,
+  onChange,
+  youtubeUrl,
+}) {
   const modeOptions = [
     { id: "default", name: "기본" },
     { id: "custom", name: "커스텀" },
@@ -68,16 +146,74 @@ export default function CoverImageContainer({ value: image, onChange, youtubeUrl
     { id: "120px", name: "120px" },
   ]
   const [mode, setMode] = useState(modeOptions[0]?.id)
+  const [isCropMode, setIsCropMode] = useState(true)
   const [imageSize, setImageSize] = useState(sizeOptions[0]?.id)
+  const [image, setImage] = useState(null)
+  const [defaultUrl, setDefaultUrl] = useState(null)
   const [url, setUrl] = useState(null)
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+
+  const showCroppedImage = useCallback(
+    async (newCroppedAreaPixels) => {
+      try {
+        let imageUrl
+        if (mode === "default") {
+          // using "CORS Anywhere" proxy server for adding "Access-Control-Allow-Origin" header
+          imageUrl = `http://cors-anywhere.herokuapp.com/${defaultUrl}`
+        } else {
+          imageUrl = url
+        }
+        const newCroppedImage = await getCroppedImg(imageUrl, newCroppedAreaPixels)
+        onChange(newCroppedImage)
+      } catch (error) {
+        onChange(null)
+      }
+    },
+    [onChange, defaultUrl, url, mode]
+  )
+
+  const onCropComplete = useCallback(
+    (_croppedArea, newCroppedAreaPixels) => {
+      showCroppedImage(newCroppedAreaPixels)
+    },
+    [showCroppedImage]
+  )
 
   const setCoverImage = (event) => {
     const newImage = (event?.target?.files || [])[0]
 
-    if (newImage != null && onChange != null) {
-      onChange(newImage)
+    if (newImage != null && setImage != null) {
+      setImage(newImage)
+
+      const reader = new FileReader()
+      reader.onload = () => {
+        onChange(reader.result)
+      }
+      reader.readAsDataURL(newImage)
     }
   }
+
+  const onIsCropModeChanged = (checked) => {
+    if (checked === false) {
+      const imageUrl = mode === "default" ? defaultUrl : url
+      onChange(imageUrl)
+    } else {
+      onChange(null)
+    }
+    setIsCropMode(() => checked)
+  }
+
+  const onModeChanged = (id) => {
+    setMode(id)
+    const imageUrl = id === "default" ? defaultUrl : url
+    onChange(imageUrl)
+  }
+
+  useEffect(() => {
+    if (defaultImage != null) {
+      setImage(defaultImage)
+    }
+  }, [defaultImage])
 
   useEffect(() => {
     if (mode === "default") {
@@ -85,10 +221,16 @@ export default function CoverImageContainer({ value: image, onChange, youtubeUrl
       if (youtubeUrl != null) {
         const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
         if (id != null) {
-          setUrl(thumbnailUrl)
+          setDefaultUrl(thumbnailUrl)
         }
+      } else {
+        setDefaultUrl(null)
       }
-    } else if (image instanceof File) {
+    }
+  }, [mode, youtubeUrl, onChange])
+
+  useEffect(() => {
+    if (image instanceof File) {
       const reader = new FileReader()
 
       reader.onload = () => {
@@ -98,47 +240,78 @@ export default function CoverImageContainer({ value: image, onChange, youtubeUrl
       reader.readAsDataURL(image)
     } else if (image != null) {
       // Get image from s3
-      setUrl(`${image?.path}/${image?.name}`)
+      setUrl(image)
     } else {
       setUrl(null)
     }
-  }, [image, mode, youtubeUrl, setUrl])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image])
 
+  const imageUrl = mode === "default" ? defaultUrl : url
   return (
     <Container>
-      <ImageContainer className="imageContainer" imgUrl={url} size={imageSize} />
-      <ButtonGroupWrapper>
-        <RadioButton
-          items={modeOptions}
-          selectedId={mode}
-          onChange={(id) => {
-            setMode(id)
-          }}
-        />
-        <RadioButton
-          items={sizeOptions}
-          selectedId={imageSize}
-          onChange={(id) => {
-            setImageSize(id)
-          }}
-        />
-        <div style={{ display: "flex", flex: 1, alignItems: "flex-end" }}>
-          {mode === "default" ? (
-            <div className="infoText">기본 이미지는 유튜브 영상 썸네일로 설정됩니다.</div>
+      {/* TODO: Add zoom feature */}
+      {imageUrl != null && (
+        <SwitchSection>
+          <span>이미지 자르기</span>
+          <Switch defaultChecked={isCropMode} onChange={onIsCropModeChanged} />
+        </SwitchSection>
+      )}
+      {isCropMode && (
+        <CropperContainer>
+          {imageUrl != null ? (
+            <Cropper
+              image={imageUrl}
+              crop={crop}
+              zoom={1}
+              rotation={0}
+              aspect={1}
+              onCropChange={setCrop}
+              onCropComplete={onCropComplete}
+            />
           ) : (
-            <>
-              <UploadLabel htmlFor="upload-cover">이미지 가져오기</UploadLabel>
-              <FileInput
-                accept=".jpg, .jpeg, .png"
-                type="file"
-                id="upload-cover"
-                name="upload-cover"
-                onChange={setCoverImage}
-              />
-            </>
+            <div className="placeholder">이미지 자르기가 ON 상태일 경우 표시됩니다.</div>
           )}
-        </div>
-      </ButtonGroupWrapper>
+        </CropperContainer>
+      )}
+      <CroppedImageContainer>
+        <ImageWrapper className="imageContainer">
+          {imageUrl != null ? (
+            <ImageContainer imgUrl={imageData} size={imageSize} />
+          ) : (
+            <div className="placeholder">
+              커버 이미지로 사용될 이미지가 표시됩니다. 우측에 위치한 사이즈 버튼을
+              사용하면 다양한 사이즈의 이미지를 확인할 수 있습니다.
+            </div>
+          )}
+        </ImageWrapper>
+        <ButtonGroupWrapper>
+          <RadioButton items={modeOptions} selectedId={mode} onChange={onModeChanged} />
+          <RadioButton
+            items={sizeOptions}
+            selectedId={imageSize}
+            onChange={(id) => {
+              setImageSize(id)
+            }}
+          />
+          <div className="fileButtonWrapper">
+            {mode === "default" ? (
+              <div />
+            ) : (
+              <>
+                <UploadLabel htmlFor="upload-cover">이미지 가져오기</UploadLabel>
+                <FileInput
+                  accept=".jpg, .jpeg, .png"
+                  type="file"
+                  id="upload-cover"
+                  name="upload-cover"
+                  onChange={setCoverImage}
+                />
+              </>
+            )}
+          </div>
+        </ButtonGroupWrapper>
+      </CroppedImageContainer>
     </Container>
   )
 }

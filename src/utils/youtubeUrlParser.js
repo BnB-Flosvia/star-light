@@ -13,6 +13,17 @@ export default function youtubeUrlParser(url) {
     return sec
   }
 
+  const matchYoutubeUrl = () => {
+    const p =
+      /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
+    if (url.match(p)) {
+      return url.match(p)[1]
+    }
+    return false
+  }
+
+  const isValidUrl = matchYoutubeUrl()
+
   const videoId = /^https?:\/\/(www\.)?youtu\.be/.test(url)
     ? url.replace(/^https?:\/\/(www\.)?youtu\.be\/([\w-]{11}).*/, "$2")
     : url.replace(/.*\?v=([\w-]{11}).*/, "$1")
@@ -25,6 +36,7 @@ export default function youtubeUrlParser(url) {
 
   return {
     id: videoId,
+    isValidUrl,
     startString: videoStartTime,
     startSeconds: videoStartSeconds,
     thumbnailUrl: videoThumbnailUrl,

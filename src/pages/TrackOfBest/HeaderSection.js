@@ -1,12 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import { primaryTextColor, primaryColor, lightInteractionColor } from "styles/colors"
+import { primaryTextColor, lightInteractionColor } from "styles/colors"
 import TagSelectInput from "src/components/TagSelectInput"
 import { title1Normal } from "styles/textTheme"
-import { Info } from "@material-ui/icons"
 import { SearchIconButton } from "components/IconButtons"
 import RadioButton from "components/RadioButton"
 import { RoundedLinkButton } from "components/Buttons"
+import InfoTooltip from "components/InfoTooltip"
 
 const TagSection = styled.div`
   display: flex;
@@ -77,7 +77,14 @@ export default function HeaderSection({
           <span className="title">
             <span className="boldText">#</span>태그 검색
           </span>
-          <Info style={{ color: `${primaryColor}`, fontSize: 16 }} />
+          <InfoTooltip
+            tooltipText={
+              <span>
+                원하는 키워드를 입력하여 검색하거나 <br />
+                태그 리스트에서 선택할 수 있습니다.
+              </span>
+            }
+          />
         </div>
         <div className="tagInputSection">
           <TagSelectInput
