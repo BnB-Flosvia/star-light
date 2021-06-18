@@ -4,6 +4,7 @@ import token from "./data/token.json"
 import getPosts from "./data/getPosts.json"
 import getTags from "./data/getTags.json"
 import getUserData from "./data/getUserData.json"
+import getPostDetail from "./data/getPostDetail.json"
 
 let mock = {
   restore: () => {},
@@ -21,10 +22,20 @@ const fetchMock = {
     mock.onPost("/user/refresh/").reply(200)
     mock.onPost("/user/register/").reply(200)
 
-    // trackOfBest
+    // trackOfBest detail
+    mock.onGet("/post/1/").reply(200, getPostDetail)
+    mock.onGet("/post/2/").reply(200, getPostDetail)
+    mock.onGet("/post/3/").reply(200, getPostDetail)
+    mock.onGet("/post/4/").reply(200, getPostDetail)
+
+    // tag list
     mock.onGet("/post/tag/").reply(200, getTags)
-    mock.onGet(getTrackOfBestUrl).reply(200, getPosts)
+
+    // user own data
     mock.onGet("/user/me/").reply(200, getUserData)
+
+    // trackOfBest list
+    mock.onGet(getTrackOfBestUrl).reply(200, getPosts)
 
     // createTrackOfBest
     mock.onPost("/post/").reply(200)

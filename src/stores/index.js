@@ -4,6 +4,7 @@ import MainStore from "./main"
 import SignInStore from "./signIn"
 import SignUpStore from "./signup"
 import TrackOfBestStore from "./trackOfBest"
+import TrackOfBestDetailStore from "./trackOfBestDetail"
 
 class RootStore {
   constructor() {
@@ -13,6 +14,7 @@ class RootStore {
     this.signUp = new SignUpStore(this)
     this.trackOfBest = new TrackOfBestStore(this)
     this.createTrackOfBest = new CreateTrackOfBestStore(this)
+    this.trackOfBestDetail = new TrackOfBestDetailStore(this)
   }
 }
 

@@ -9,6 +9,7 @@ import TrackOfBestListItem from "components/TrackOfBestListItem"
 import { body1Normal } from "styles/textTheme"
 import range from "utils/range"
 import { isEmpty } from "lodash-es"
+import queryString from "query-string"
 import HeaderSection from "./HeaderSection"
 
 const RowContainer = styled.div`
@@ -64,7 +65,7 @@ const LineLargeButtonWrapper = styled.div`
   }
 `
 
-function TrackOfBestPage() {
+function TrackOfBestPage({ location }) {
   const initialOffset = 0
   const {
     isLoading,
@@ -79,13 +80,21 @@ function TrackOfBestPage() {
     updateSelectedTagList,
     setOrderType,
     offset,
+    isLast,
   } = useTrackOfBestPageData()
 
+  const query = queryString.parse(location.search)
+
   useEffect(() => {
-    fetchRequest()
+    if (query?.tag != null) {
+      fetchRequest(null, [query.tag])
+    } else {
+      fetchRequest()
+    }
     return () => {
       initialize()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchRequest, initialize])
 
   useEffect(() => {
@@ -129,16 +138,18 @@ function TrackOfBestPage() {
                 )
               })}
         </GridContainer>
-        <LineLargeButtonWrapper>
-          <button
-            type="button"
-            onClick={() => {
-              fetchRequest(offset + 1)
-            }}
-          >
-            더보기
-          </button>
-        </LineLargeButtonWrapper>
+        {!isLast && (
+          <LineLargeButtonWrapper>
+            <button
+              type="button"
+              onClick={() => {
+                fetchRequest(offset + 1)
+              }}
+            >
+              더보기
+            </button>
+          </LineLargeButtonWrapper>
+        )}
       </div>
     )
   }

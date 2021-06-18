@@ -17,6 +17,7 @@ function useTrackOfBestPageData() {
     setOrderType: trackOfBest.setOrderType,
     setOffset: trackOfBest.setOffset,
     offset: trackOfBest.offset,
+    isLast: trackOfBest.isLast,
   }))
 }
 
