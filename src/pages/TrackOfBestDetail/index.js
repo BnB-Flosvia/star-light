@@ -9,10 +9,20 @@ import {
 } from "styles/colors"
 import useTrackOfBestDetailPageData from "utils/hooks/trackOfBestDetail/useTrackOfBestDetailPageData"
 import { PageLoading } from "components/Spin"
-import { body1Normal, title2Normal, body2Normal, title1Normal } from "styles/textTheme"
+import {
+  body1Normal,
+  title2Normal,
+  body2Normal,
+  title1Normal,
+  body3Normal,
+  label2Normal,
+} from "styles/textTheme"
 import YouTube from "react-youtube"
 import youtubeUrlParser from "utils/youtubeUrlParser"
 import MarkdownPreview from "@uiw/react-markdown-preview"
+import { MoreVertIconButton } from "components/IconButtons"
+import Dropdown from "components/Dropdown"
+import { useMediaQuery } from "react-responsive"
 
 const RowContainer = styled.div`
   flex: 1;
@@ -27,8 +37,11 @@ const RowContainer = styled.div`
 
 const ContentContainer = styled.div`
   display: flex;
+  height: 100%;
   flex-flow: column;
-  width: 720px;
+  width: ${(props) => (props.isSmallMode || props.isMediumMode ? "100%" : "720px")};
+  padding: ${(props) =>
+    props.isSmallMode ? "0 24px" : props.isMediumMode ? "0 40px" : null};
   align-items: center;
   padding-bottom: 40px;
 `
@@ -37,31 +50,41 @@ const HeaderSection = styled.div`
   display: flex;
   flex-flow: column;
   width: 100%;
-  padding: 36px 24px 0;
   margin-bottom: 40px;
   border-bottom: 1px solid ${borderColor};
   .title {
     display: flex;
     width: 100%;
     justify-content: center;
-    ${title2Normal}
+    padding-top: 1.5em;
+    ${(props) =>
+      props.isSmallMode ? body1Normal : props.isMediumMode ? title1Normal : title2Normal}
   }
   .subtitle {
     display: flex;
     width: 100%;
     justify-content: center;
-    ${body1Normal}
+    ${(props) =>
+      props.isSmallMode ? body3Normal : props.isMediumMode ? body2Normal : body1Normal};
     color: ${secondaryTextColor};
-    margin-top: 12px;
+    padding-top: 0.75em;
   }
-  .nickname {
+  .nicknameAndMore {
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    ${body2Normal}
-    padding: 10px 0 12px;
-    .boldText {
-      font-weight: bold;
+    align-items: center;
+    ${(props) =>
+      props.isSmallMode ? label2Normal : props.isMediumMode ? body3Normal : body2Normal}
+    padding: 0.5em 1.5em 0.75em;
+    margin: ${(props) => (!props.isMine ? "2px 0" : null)};
+    .nickname {
+      .boldText {
+        font-weight: bold;
+      }
+    }
+    .moreButtonDropdown {
+      margin-left: 10px;
     }
   }
 `
@@ -70,29 +93,32 @@ const SimplePointText = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  padding: 44px 0px 46px;
-  ${title1Normal}
+  padding: 2.25em 0;
+  ${(props) =>
+    props.isSmallMode ? body2Normal : props.isMediumMode ? body1Normal : title1Normal}
 `
 
 const ChoseReasonContainer = styled.div`
+  flex: 1;
   display: flex;
   justify-content: center;
-  width: 100%;
-  padding: 0 100px 60px;
+  padding: 0 2.5em 3.75em;
   .wmde-markdown {
-    ${body1Normal}
-    line-height: 24px;
+    ${(props) =>
+      props.isSmallMode ? body3Normal : props.isMediumMode ? body2Normal : body1Normal};
+    line-height: 1.5em;
     text-align: center;
   }
 `
 
 const TagSectionContainer = styled.div`
   display: flex;
-  width: 500px;
+  padding: 0 2.5em;
   justify-content: flex-start;
   & > div {
-    margin-right: 16px;
-    ${body2Normal}
+    margin-right: 1.25em;
+    ${(props) =>
+      props.isSmallMode ? body3Normal : props.isMediumMode ? body3Normal : body2Normal};
     &:hover {
       color: ${primaryColor};
     }
@@ -116,8 +142,45 @@ function TrackOfBestDetailPage({ match, history }) {
     }
   }, [initialize, fetchRequest, id])
 
+  const isSmallMode = useMediaQuery({
+    query: "(max-width: 420px)",
+  })
+  const isMediumMode = useMediaQuery({
+    query: "(min-width: 420px) and (max-width: 768px)",
+  })
+
   const goTagFilterPage = (tag) => {
     history.push(`/trackOfBest?tag=${tag}`)
+  }
+
+  const moreButtonMenu = [
+    {
+      name: "수정하기",
+      onClick: () => {
+        history.push("/trackOfBest/edit")
+      },
+    },
+    {
+      name: "삭제하기",
+      onClick: () => {},
+    },
+  ]
+
+  const onMoreButtonClick = ({ onClick }) => {
+    return <MoreVertIconButton className="moreIcon" onClick={onClick} />
+  }
+
+  let youtubeVideoWidth
+  let youtubeVideoHeight
+  if (isSmallMode) {
+    youtubeVideoWidth = 280
+    youtubeVideoHeight = 200
+  } else if (isMediumMode) {
+    youtubeVideoWidth = 300
+    youtubeVideoHeight = 200
+  } else {
+    youtubeVideoWidth = 500
+    youtubeVideoHeight = 300
   }
 
   const {
@@ -129,35 +192,54 @@ function TrackOfBestDetailPage({ match, history }) {
     // hitCount,
     simplePoint = "",
     choseReason = "",
+    isMine = false,
   } = trackOfBestDetail || {}
   const { id: videoId } = youtubeUrlParser(youtubeUrl)
   const defaultContent = (
-    <ContentContainer>
-      <HeaderSection>
+    <ContentContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
+      <HeaderSection
+        isSmallMode={isSmallMode}
+        isMediumMode={isMediumMode}
+        isMine={isMine}
+      >
         <div className="title">{songName}</div>
         <div className="subtitle">{artist}</div>
         {username && (
-          <div className="nickname">
-            <span className="boldText">{username}</span>님 추천곡
+          <div className="nicknameAndMore">
+            <span className="nickname">
+              <span className="boldText">{username}</span>님 추천곡
+            </span>
+            {!isSmallMode && !isMediumMode && isMine && (
+              <Dropdown
+                className="moreButtonDropdown"
+                buildCustomButton={onMoreButtonClick}
+                menus={moreButtonMenu}
+                placement="bottom-start"
+                offset={[0, 10]}
+              />
+            )}
           </div>
         )}
       </HeaderSection>
       <YouTube
         videoId={videoId}
         opts={{
-          height: "300",
-          width: "500",
+          height: youtubeVideoHeight,
+          width: youtubeVideoWidth,
           playerVars: {
             autoplay: 1,
           },
         }}
         onReady={onReady}
       />
-      <SimplePointText>{`"${simplePoint}"`}</SimplePointText>
-      <ChoseReasonContainer>
+      <SimplePointText
+        isSmallMode={isSmallMode}
+        isMediumMode={isMediumMode}
+      >{`"${simplePoint}"`}</SimplePointText>
+      <ChoseReasonContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
         <MarkdownPreview source={choseReason.replaceAll("\n", "<br>")} />
       </ChoseReasonContainer>
-      <TagSectionContainer>
+      <TagSectionContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
         {tagList.map((tag) => {
           return (
             <div

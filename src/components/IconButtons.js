@@ -8,7 +8,9 @@ import {
   VisibilityOff,
   GitHub,
   Search,
+  MoreVert,
 } from "@material-ui/icons"
+import { interactionColor, secondaryTextColor } from "styles/colors"
 
 const SmallButtonContainer = styled.button`
   display: flex;
@@ -31,6 +33,24 @@ const MediumButtonContainer = styled(SmallButtonContainer)`
     svg {
       fill: ${secondaryColor};
     }
+  }
+`
+
+const MediumCircularButtonContainer = styled.div`
+  display: flex;
+  width: 25px;
+  height: 25px;
+  box-sizing: border-box;
+  background: none;
+  border: 1.5px solid ${secondaryTextColor};
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  svg {
+    fill: ${(props) => (props.color ? props.color : `${primaryTextColor}`)};
+  }
+  &:hover {
+    background: ${interactionColor};
   }
 `
 
@@ -90,5 +110,21 @@ export const VisibilityIconButton = ({ isVisible = false, onClick }) => {
     >
       {isVisible ? <VisibilityOff /> : <Visibility />}
     </MediumButtonContainer>
+  )
+}
+
+export const MoreVertIconButton = ({ onClick, className }) => {
+  return (
+    <MediumCircularButtonContainer
+      onClick={() => {
+        if (typeof onClick === "function") {
+          onClick()
+        }
+      }}
+      color={secondaryTextColor}
+      className={className}
+    >
+      <MoreVert fontSize="small" />
+    </MediumCircularButtonContainer>
   )
 }

@@ -11,7 +11,7 @@
   },
   {
     "id": 2,
-    "username": "백수나부랭",
+    "username": "아뵤",
     "artist": "백현 (BAEKHYUN)",
     "songName": "너에게 가는 이 길 위에서",
     "coverImage": "https://i1.sndcdn.com/avatars-zEdpVq2f7k6eILLR-zzNFQQ-t240x240.jpg",
@@ -21,11 +21,11 @@
   },
   {
     "id": 3,
-    "username": "백수나부랭",
+    "username": "얍",
     "artist": "백현 (BAEKHYUN)",
     "songName": "놀이공원",
     "coverImage": null,
-    "simplePoint": "이건 정말 갓띵곡입니다 여러분 들어",
+    "simplePoint": "이건 정말 갓띵곡",
     "choseReason": "이유이유",
     "tag": ["tag1", "tag2"]
   },
