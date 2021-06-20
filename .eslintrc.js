@@ -42,7 +42,7 @@ module.exports = {
       },
     ],
     camelcase: "warn",
-    "linebreak-style": [2, "windows"],
+    "linebreak-style": (process.platform === "win32" ? [2, "windows"] : 0),
 
     // Organize
     "jsx-a11y/anchor-is-valid": "off",
