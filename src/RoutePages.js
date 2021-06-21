@@ -5,6 +5,7 @@ import SignInPage from "pages/SignIn"
 import SignUpPage from "pages/SignUp"
 import TrackOfBestPage from "pages/TrackOfBest"
 import TrackOfBestDetailPage from "pages/TrackOfBestDetail"
+import CreateTrackOfBestPage from "pages/CreateTrackOfBest"
 import RouteContainer from "./RouteContainer"
 
 export default function RoutePages() {
@@ -24,6 +25,12 @@ export default function RoutePages() {
       </RouteContainer>
       <RouteContainer path="/trackOfBest" exact>
         <TrackOfBestPage />
+      </RouteContainer>
+      <RouteContainer path="/trackOfBest/register" exact hiddenFooter>
+        <CreateTrackOfBestPage />
+      </RouteContainer>
+      <RouteContainer path="/trackOfBest/edit" exact>
+        <div />
       </RouteContainer>
       <RouteContainer path="/trackOfBest/:id" exact>
         <TrackOfBestDetailPage />

@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import styled from "styled-components"
 import TrackOfBestSection from "pages/Main/TrackOfBestSection"
 import useMainPageData from "utils/hooks/main/useMainPageData"
-import { Spin } from "antd"
+import { PageLoading } from "components/Spin"
 import { lightBackgroundColor } from "styles/colors"
 
 const RowContainer = styled.div`
@@ -14,14 +14,21 @@ const RowContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   background: ${lightBackgroundColor};
-`
-
-const SpinWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
+  .ant-spin-blur {
+    width: 100%;
+    height: 100%;
+  }
+  .ant-spin-nested-loading {
+    width: 100%;
+    height: 100%;
+  }
+  .ant-spin-spinning {
+    width: 100%;
+    height: 100%;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+  }
 `
 
 export default function MainPage() {
@@ -37,11 +44,7 @@ export default function MainPage() {
 
   let content
   if (isLoading) {
-    content = (
-      <SpinWrapper>
-        <Spin tip="로딩중..." />
-      </SpinWrapper>
-    )
+    content = <PageLoading content={<TrackOfBestSection />} />
   } else if (isFetchError) {
     // TODO: Add error page
     content = <div>에러가 발생했습니다!</div>
