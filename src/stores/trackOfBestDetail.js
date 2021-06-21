@@ -17,13 +17,23 @@ export default class TrackOfBestDetailStore {
   }
 
   @computed
-  get isError() {
-    return this.status === "ERROR"
+  get isFetchError() {
+    return this.status === "FETCH_ERROR"
   }
 
   @computed
-  get isSuccess() {
-    return this.status === "SUCCESS"
+  get isFetchSuccess() {
+    return this.status === "FETCH_SUCCESS"
+  }
+
+  @computed
+  get isDeleteError() {
+    return this.status === "DELETE_ERROR"
+  }
+
+  @computed
+  get isDeleteSuccess() {
+    return this.status === "DELETE_SUCCESS"
   }
 
   @action initialize = () => {
@@ -39,14 +49,29 @@ export default class TrackOfBestDetailStore {
       const { data } = await httpClient.get(`/post/${id}/`)
 
       this.trackOfBestDetail = data
-      this.status = "SUCCESS"
+      this.status = "FETCH_SUCCESS"
     } catch (error) {
-      this.status = "ERROR"
+      this.status = "FETCH_ERROR"
+    }
+  }
+
+  @action deleteRequest = async (id) => {
+    try {
+      this.status = "LOADING"
+
+      // fetch trackOfBest detail data
+      await httpClient.deleteWithToken(`/post/${id}/`)
+
+      this.status = "DELETE_SUCCESS"
+    } catch (error) {
+      this.status = "DELETE_ERROR"
     }
   }
 }
 
 const store = new TrackOfBestDetailStore()
-autorun(() => store.isError)
-autorun(() => store.isSuccess)
+autorun(() => store.isFetchError)
+autorun(() => store.isFetchSuccess)
+autorun(() => store.isDeleteError)
+autorun(() => store.isDeleteSuccess)
 autorun(() => store.isLoading)

@@ -5,11 +5,14 @@ function useTrackOfBestDetailPageData() {
   const { trackOfBestDetail } = useStores()
   return useObserver(() => ({
     isLoading: trackOfBestDetail.isLoading,
-    isError: trackOfBestDetail.isError,
-    isSuccess: trackOfBestDetail.isSuccess,
+    isFetchError: trackOfBestDetail.isFetchError,
+    isFetchSuccess: trackOfBestDetail.isFetchSuccess,
+    isDeleteError: trackOfBestDetail.isDeleteError,
+    isDeleteSuccess: trackOfBestDetail.isDeleteSuccess,
     initialize: trackOfBestDetail.initialize,
     trackOfBestDetail: trackOfBestDetail.trackOfBestDetail,
     fetchRequest: trackOfBestDetail.fetchRequest,
+    deleteRequest: trackOfBestDetail.deleteRequest,
   }))
 }
 

@@ -10,6 +10,7 @@ import { body1Normal } from "styles/textTheme"
 import range from "utils/range"
 import { isEmpty } from "lodash-es"
 import queryString from "query-string"
+import { useMediaQuery } from "react-responsive"
 import HeaderSection from "./HeaderSection"
 
 const RowContainer = styled.div`
@@ -36,6 +37,13 @@ const RowContainer = styled.div`
     left: 50% !important;
     transform: translate(-50%, -50%);
   }
+  .contentContainer {
+    padding: ${(props) =>
+      props.isSmall ? "24px 10px" : props.isMedium ? "40px" : "52px 72px"};
+    width: 100%;
+    height: 100%;
+    flex: 1;
+  }
 `
 
 const GridContainer = styled.div`
@@ -45,11 +53,11 @@ const GridContainer = styled.div`
 `
 
 const LineLargeButtonWrapper = styled.div`
-  padding-top: 40px;
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
+  padding-top: 40px;
   & > button {
     display: flex;
     align-items: center;
@@ -74,7 +82,7 @@ function TrackOfBestPage({ location }) {
     initialize,
     trackOfBestList,
     tagList,
-    // selectedTagList,
+    searchedTagList,
     selectedOrderType,
     fetchRequest,
     updateSelectedTagList,
@@ -82,6 +90,13 @@ function TrackOfBestPage({ location }) {
     offset,
     isLast,
   } = useTrackOfBestPageData()
+
+  const isSmallMode = useMediaQuery({
+    query: "(max-width: 420px)",
+  })
+  const isMediumMode = useMediaQuery({
+    query: "(min-width: 420px) and (max-width: 768px)",
+  })
 
   const query = queryString.parse(location.search)
 
@@ -105,7 +120,7 @@ function TrackOfBestPage({ location }) {
 
   function defaultContent() {
     return (
-      <div style={{ padding: "40px 72px", width: "100%", height: "100%", flex: 1 }}>
+      <div className="contentContainer">
         <HeaderSection
           tagOptions={toJS(tagList).map((item) => {
             return { value: item }
@@ -118,6 +133,7 @@ function TrackOfBestPage({ location }) {
           onOrderChange={(id) => {
             setOrderType(id)
           }}
+          searchedTagList={searchedTagList}
         />
         <GridContainer>
           {isLoading && isEmpty(trackOfBestList)
@@ -164,7 +180,11 @@ function TrackOfBestPage({ location }) {
     content = defaultContent()
   }
 
-  return <RowContainer>{content}</RowContainer>
+  return (
+    <RowContainer isSmall={isSmallMode} isMedium={isMediumMode}>
+      {content}
+    </RowContainer>
+  )
 }
 
 export default withRouter(TrackOfBestPage)

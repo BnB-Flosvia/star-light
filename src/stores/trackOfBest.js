@@ -13,6 +13,8 @@ export default class TrackOfBestStore {
 
   @observable selectedTagList = []
 
+  @observable searchedTagList = []
+
   @observable selectedOrderType = null
 
   @observable offset = 0
@@ -73,8 +75,6 @@ export default class TrackOfBestStore {
 
       // fetch trackOfBest list
       const { data: trackOfBestListData } = await httpClient.get("/post/", filter)
-      // fetch tag list
-      const { data: tagListData } = await httpClient.get("/post/tag/")
 
       if (trackOfBestListData.length < defaultLimit) {
         this.isLast = true
@@ -87,7 +87,14 @@ export default class TrackOfBestStore {
         this.trackOfBestList = trackOfBestListData
       }
 
-      this.tagList = tagListData
+      this.searchedTagList = [...this.selectedTagList]
+
+      // fetch tag list
+      if (isEmpty(this.tagList)) {
+        const { data: tagListData } = await httpClient.get("/post/tag/")
+        this.tagList = tagListData
+      }
+
       this.status = "SUCCESS"
     } catch (error) {
       this.status = "ERROR"

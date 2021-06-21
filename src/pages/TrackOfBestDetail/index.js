@@ -1,28 +1,16 @@
 import React, { useEffect } from "react"
 import { withRouter } from "react-router-dom"
 import styled from "styled-components"
-import {
-  lightBackgroundColor,
-  secondaryTextColor,
-  borderColor,
-  primaryColor,
-} from "styles/colors"
+import { lightBackgroundColor, primaryColor } from "styles/colors"
 import useTrackOfBestDetailPageData from "utils/hooks/trackOfBestDetail/useTrackOfBestDetailPageData"
 import { PageLoading } from "components/Spin"
-import {
-  body1Normal,
-  title2Normal,
-  body2Normal,
-  title1Normal,
-  body3Normal,
-  label2Normal,
-} from "styles/textTheme"
+import { body1Normal, body2Normal, title1Normal, body3Normal } from "styles/textTheme"
 import YouTube from "react-youtube"
 import youtubeUrlParser from "utils/youtubeUrlParser"
 import MarkdownPreview from "@uiw/react-markdown-preview"
-import { MoreVertIconButton } from "components/IconButtons"
-import Dropdown from "components/Dropdown"
 import { useMediaQuery } from "react-responsive"
+import { message } from "antd"
+import HeaderSection from "pages/TrackOfBestDetail/HeaderSection"
 
 const RowContainer = styled.div`
   flex: 1;
@@ -44,49 +32,6 @@ const ContentContainer = styled.div`
     props.isSmallMode ? "0 24px" : props.isMediumMode ? "0 40px" : null};
   align-items: center;
   padding-bottom: 40px;
-`
-
-const HeaderSection = styled.div`
-  display: flex;
-  flex-flow: column;
-  width: 100%;
-  margin-bottom: 40px;
-  border-bottom: 1px solid ${borderColor};
-  .title {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding-top: 1.5em;
-    ${(props) =>
-      props.isSmallMode ? body1Normal : props.isMediumMode ? title1Normal : title2Normal}
-  }
-  .subtitle {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    ${(props) =>
-      props.isSmallMode ? body3Normal : props.isMediumMode ? body2Normal : body1Normal};
-    color: ${secondaryTextColor};
-    padding-top: 0.75em;
-  }
-  .nicknameAndMore {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-    align-items: center;
-    ${(props) =>
-      props.isSmallMode ? label2Normal : props.isMediumMode ? body3Normal : body2Normal}
-    padding: 0.5em 1.5em 0.75em;
-    margin: ${(props) => (!props.isMine ? "2px 0" : null)};
-    .nickname {
-      .boldText {
-        font-weight: bold;
-      }
-    }
-    .moreButtonDropdown {
-      margin-left: 10px;
-    }
-  }
 `
 
 const SimplePointText = styled.div`
@@ -132,8 +77,17 @@ function onReady(event) {
 
 function TrackOfBestDetailPage({ match, history }) {
   const { id } = match.params
-  const { isLoading, isError, isSuccess, initialize, trackOfBestDetail, fetchRequest } =
-    useTrackOfBestDetailPageData()
+  const {
+    isLoading,
+    isFetchError,
+    // isFetchSuccess,
+    isDeleteError,
+    isDeleteSuccess,
+    initialize,
+    trackOfBestDetail,
+    fetchRequest,
+    deleteRequest,
+  } = useTrackOfBestDetailPageData()
 
   useEffect(() => {
     fetchRequest(id)
@@ -141,6 +95,19 @@ function TrackOfBestDetailPage({ match, history }) {
       initialize()
     }
   }, [initialize, fetchRequest, id])
+
+  useEffect(() => {
+    if (isDeleteSuccess) {
+      history.pop()
+      message.success("성공적으로 삭제되었습니다.")
+    }
+  }, [isDeleteSuccess, history])
+
+  useEffect(() => {
+    if (isDeleteError) {
+      message.error("요청이 실패하였습니다.")
+    }
+  }, [isDeleteError])
 
   const isSmallMode = useMediaQuery({
     query: "(max-width: 420px)",
@@ -152,22 +119,8 @@ function TrackOfBestDetailPage({ match, history }) {
   const goTagFilterPage = (tag) => {
     history.push(`/trackOfBest?tag=${tag}`)
   }
-
-  const moreButtonMenu = [
-    {
-      name: "수정하기",
-      onClick: () => {
-        history.push("/trackOfBest/edit")
-      },
-    },
-    {
-      name: "삭제하기",
-      onClick: () => {},
-    },
-  ]
-
-  const onMoreButtonClick = ({ onClick }) => {
-    return <MoreVertIconButton className="moreIcon" onClick={onClick} />
+  const goEditPage = () => {
+    history.push(`/trackOfBest/edit?id=${id}`)
   }
 
   let youtubeVideoWidth
@@ -195,32 +148,19 @@ function TrackOfBestDetailPage({ match, history }) {
     isMine = false,
   } = trackOfBestDetail || {}
   const { id: videoId } = youtubeUrlParser(youtubeUrl)
+
   const defaultContent = (
     <ContentContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
       <HeaderSection
+        songName={songName}
+        artist={artist}
+        username={username}
+        isMine={isMine}
+        goEditPage={goEditPage}
+        deleteRequest={() => deleteRequest(id)}
         isSmallMode={isSmallMode}
         isMediumMode={isMediumMode}
-        isMine={isMine}
-      >
-        <div className="title">{songName}</div>
-        <div className="subtitle">{artist}</div>
-        {username && (
-          <div className="nicknameAndMore">
-            <span className="nickname">
-              <span className="boldText">{username}</span>님 추천곡
-            </span>
-            {!isSmallMode && !isMediumMode && isMine && (
-              <Dropdown
-                className="moreButtonDropdown"
-                buildCustomButton={onMoreButtonClick}
-                menus={moreButtonMenu}
-                placement="bottom-start"
-                offset={[0, 10]}
-              />
-            )}
-          </div>
-        )}
-      </HeaderSection>
+      />
       <YouTube
         videoId={videoId}
         opts={{
@@ -259,10 +199,10 @@ function TrackOfBestDetailPage({ match, history }) {
   let content
   if (isLoading) {
     content = <PageLoading content={defaultContent} />
-  } else if (isError) {
+  } else if (isFetchError) {
     // TODO: Add error page
     content = <div>에러가 발생했습니다!</div>
-  } else if (isSuccess) {
+  } else {
     content = defaultContent
   }
   return <RowContainer>{content}</RowContainer>
