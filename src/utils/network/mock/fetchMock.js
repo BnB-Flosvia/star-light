@@ -10,7 +10,7 @@ let mock = {
   restore: () => {},
 }
 
-const getTrackOfBestUrl = new RegExp(`/post/*`)
+const trackOfBestUrl = new RegExp(`/post/*`)
 
 const fetchMock = {
   enable() {
@@ -35,10 +35,16 @@ const fetchMock = {
     mock.onGet("/user/me/").reply(200, getUserData)
 
     // trackOfBest list
-    mock.onGet(getTrackOfBestUrl).reply(200, getPosts)
+    mock.onGet(trackOfBestUrl).reply(200, getPosts)
 
     // createTrackOfBest
     mock.onPost("/post/").reply(200)
+
+    // updateTrackOfBest
+    mock.onPut(trackOfBestUrl).reply(200)
+
+    // deleteTrackOfBest
+    mock.onDelete(trackOfBestUrl).reply(200)
 
     mock.onPost().reply(500)
   },

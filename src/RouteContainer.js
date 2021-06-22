@@ -8,6 +8,7 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import Header from "components/Header"
 import Footer from "components/Footer"
 import { checkLocalToken } from "authProvider"
+import { message } from "antd"
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -67,6 +68,8 @@ export default function RouteContainer({
   }
 
   if (!isAllowed) {
+    message.error("해당 기능은 로그인 후 이용하실 수 있습니다.")
+
     return (
       <Route path={path} {...props}>
         <Redirect to="/signin" />

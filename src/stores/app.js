@@ -29,8 +29,8 @@ export default class AppStore {
     try {
       await this.checkLocalToken()
       const { data } = await httpClient.getWithToken("/user/me/")
-      const { nickname } = data || {}
-      this.nickname = nickname
+      const { username } = data || {}
+      this.nickname = username
       this.initialized = true
     } catch (error) {
       this.initialized = false

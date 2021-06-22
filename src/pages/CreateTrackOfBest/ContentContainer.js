@@ -5,7 +5,7 @@ import TagSelectInput from "components/TagSelectInput"
 import React from "react"
 import styled from "styled-components"
 import { borderColor, secondaryTextColor, warningColor } from "styles/colors"
-import { title1Normal, title2Normal, body3Normal } from "styles/textTheme"
+import { title1Normal, body3Normal } from "styles/textTheme"
 import CoverImageContainer from "./CoverImageContainer"
 import YoutubeVideoContent from "./YoutubeVideoContainer"
 
@@ -13,15 +13,6 @@ const Container = styled.div`
   display: flex;
   flex-flow: column;
   max-width: 720px;
-`
-
-const HeaderSection = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  padding: 32px 0;
-  ${title2Normal}
 `
 
 const SectionContainer = styled.div`
@@ -61,7 +52,14 @@ const RowContainer = styled.div`
   }
 `
 
-export default function ContentContainer({ onChange, form, tagOptions = [], setError }) {
+export default function ContentContainer({
+  headerSection,
+  onChange,
+  form,
+  tagOptions = [],
+  setError,
+  defaultValue,
+}) {
   const contentList = [
     {
       title: "가수명 / 곡제목",
@@ -74,6 +72,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
               placeholderText="가수명 입력"
               errorText={form.fields.artist.error}
               onChange={(value) => onChange("artist", value)}
+              defaultValue={defaultValue?.artist}
             />
             <OutlineInput
               className="input"
@@ -81,6 +80,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
               placeholderText="곡제목 입력"
               errorText={form.fields.songName.error}
               onChange={(value) => onChange("songName", value)}
+              defaultValue={defaultValue?.songName}
             />
           </RowContainer>
         )
@@ -98,6 +98,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
             errorText={form.fields.simplePoint.error}
             onChange={(value) => onChange("simplePoint", value)}
             maxLength={20}
+            defaultValue={defaultValue?.simplePoint}
           />
         )
       },
@@ -110,6 +111,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
           <ContentEditor
             onChange={(value) => onChange("choseReason", value)}
             errorText={form.fields.choseReason.error}
+            value={defaultValue?.choseReason}
           />
         )
       },
@@ -121,7 +123,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
         return (
           <YoutubeVideoContent
             onChange={(value) => onChange("youtubeUrl", value)}
-            value={form.fields.youtubeUrl.value}
+            value={form.fields.youtubeUrl.value || defaultValue?.youtubeUrl}
             error={form.fields.youtubeUrl.error}
             setError={(value) => setError("youtubeUrl", value)}
           />
@@ -141,9 +143,10 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
       contentBuilder: () => {
         return (
           <CoverImageContainer
+            defaultImage={defaultValue?.coverImage}
             onChange={(value) => onChange("coverImageData", value)}
             value={form.fields.coverImageData.value}
-            youtubeUrl={form.fields.youtubeUrl.value}
+            youtubeUrl={form.fields.youtubeUrl.value || defaultValue?.youtubeUrl}
           />
         )
       },
@@ -168,6 +171,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
               notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
               width={400}
               onChange={(value) => onChange("tag", value)}
+              value={defaultValue?.tag}
             />
           </div>
         )
@@ -185,9 +189,7 @@ export default function ContentContainer({ onChange, form, tagOptions = [], setE
 
   return (
     <Container>
-      <HeaderSection>
-        <span>나만 아는 갓띵곡 생성</span>
-      </HeaderSection>
+      {headerSection}
       {contentList.map((item) => {
         const { title, subtitle, required, contentBuilder, infoText } = item
         return (

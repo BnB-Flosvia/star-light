@@ -1,6 +1,9 @@
 import { makeObservable, observable, action, computed, autorun } from "mobx"
 import httpClient from "utils/network/httpClient"
 
+const defaultOffset = 0
+const defaultLimit = 4
+
 export default class MainStore {
   @observable status = ""
 
@@ -34,8 +37,12 @@ export default class MainStore {
   @action fetchRequest = async () => {
     try {
       this.status = "LOADING"
-      const response = await httpClient.get("/post/")
-      this.trackOfBestList = response.data
+      const filter = {
+        limit: defaultLimit,
+        offset: defaultOffset,
+      }
+      const { data = {} } = await httpClient.get("/post/", filter)
+      this.trackOfBestList = data?.results
       this.status = "FETCH_SUCCESS"
     } catch (error) {
       this.status = "FETCH_ERROR"

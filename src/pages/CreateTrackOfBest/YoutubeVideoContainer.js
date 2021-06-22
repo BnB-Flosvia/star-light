@@ -64,6 +64,7 @@ export default function YoutubeVideoContent({ onChange, value: url, error, setEr
   return (
     <YoutubeContentContainer>
       <SearchInput
+        defaultValue={url}
         placeholderText="유튜브 url 입력"
         onSearch={(value) => {
           const { isValidUrl } = youtubeUrlParser(value)

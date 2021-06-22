@@ -246,6 +246,8 @@ export const CustomPasswordInput = ({
 }
 
 export const SearchInput = ({
+  value,
+  defaultValue,
   labelText,
   errorText,
   placeholderText,
@@ -259,9 +261,9 @@ export const SearchInput = ({
   const handleInputFocus = () => {
     setIsFocus(() => true)
   }
-  const handleInputBlur = (value) => {
+  const handleInputBlur = (data) => {
     setIsFocus(() => false)
-    setSearchData(() => value)
+    setSearchData(() => data)
   }
 
   return (
@@ -279,6 +281,7 @@ export const SearchInput = ({
               placeholder={placeholderText}
               onFocus={() => handleInputFocus()}
               onBlur={(event) => handleInputBlur(event.target.value)}
+              {...(value != null ? { value } : { defaultValue })}
             />
             <SearchIconButton onClick={() => onSearch(searchData)} />
           </SuffixIconInputContainer>

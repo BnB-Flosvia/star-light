@@ -5,8 +5,9 @@ function useCreateTrackOfBestPageData() {
   const { createTrackOfBest } = useStores()
   return useObserver(() => ({
     isLoading: createTrackOfBest.isLoading,
-    isError: createTrackOfBest.isError,
+    isFetchError: createTrackOfBest.isFetchError,
     isFetchSuccess: createTrackOfBest.isFetchSuccess,
+    isCreateError: createTrackOfBest.isCreateError,
     isCreateSuccess: createTrackOfBest.isCreateSuccess,
     form: createTrackOfBest.form,
     onFormFieldChange: createTrackOfBest.onFormFieldChange,
