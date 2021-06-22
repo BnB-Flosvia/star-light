@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Select, Tag } from "antd"
-import { body2Normal } from "styles/textTheme"
+import { body2Normal, body3Normal } from "styles/textTheme"
 import {
   borderColor,
   interactionColor,
@@ -20,18 +20,18 @@ const Container = styled.div`
 
   .ant-tag {
     margin-right: 5px;
-    ${body2Normal}
+    ${(props) => (props.isSmall ? body3Normal : body2Normal)};
     color: #fff;
     padding: 6px;
   }
 
   .ant-select-selection-search {
-    ${body2Normal}
+    ${(props) => (props.isSmall ? body3Normal : body2Normal)};
     margin: 0;
   }
 
   .ant-select-selection-placeholder {
-    ${body2Normal}
+    ${(props) => (props.isSmall ? body3Normal : body2Normal)};
     color: ${secondaryTextColor};
   }
 `
@@ -91,13 +91,14 @@ export default function TagSelectInput({
   notFoundContent,
   onChange,
   width,
+  isSmall,
 }) {
   function handleChange(newValue) {
     onChange(newValue)
   }
 
   return (
-    <Container>
+    <Container isSmall={isSmall}>
       <Select
         mode="multiple"
         showArrow
@@ -105,7 +106,7 @@ export default function TagSelectInput({
         defaultValue={value}
         style={{ width }}
         options={options}
-        size="large"
+        size={isSmall ? null : "large"}
         suffixIcon={
           <IconContainer>
             <ArrowDropDown style={{ color: `${primaryTextColor}` }} />
@@ -115,7 +116,7 @@ export default function TagSelectInput({
         onChange={handleChange}
         notFoundContent={notFoundContent || <div>검색 결과가 존재하지 않습니다.</div>}
         dropdownRender={(menu) => (
-          <DropdownContainer className="dropdown" width={width}>
+          <DropdownContainer className="dropdown" width={width} isSmall={isSmall}>
             {menu}
           </DropdownContainer>
         )}

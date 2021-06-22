@@ -13,9 +13,13 @@ export default class TrackOfBestStore {
 
   @observable selectedTagList = []
 
+  @observable searchedTagList = []
+
   @observable selectedOrderType = null
 
   @observable offset = 0
+
+  @observable isLast = false
 
   // MobX version is after 6, need makeObservalbe call
   constructor() {
@@ -58,9 +62,10 @@ export default class TrackOfBestStore {
     this.offset = newOffset
   }
 
-  @action fetchRequest = async (offset) => {
+  @action fetchRequest = async (offset, tag = []) => {
     try {
       this.status = "LOADING"
+      this.selectedTagList = [...this.selectedTagList, ...tag]
       const filter = {
         tags: !isEmpty(this.selectedTagList) ? this.selectedTagList.join(",") : undefined,
         sort: this.selectedOrderType,
@@ -70,8 +75,10 @@ export default class TrackOfBestStore {
 
       // fetch trackOfBest list
       const { data: trackOfBestListData } = await httpClient.get("/post/", filter)
-      // fetch tag list
-      const { data: tagListData } = await httpClient.get("/post/tag/")
+
+      if (trackOfBestListData.length < defaultLimit) {
+        this.isLast = true
+      }
 
       if (this.offset + 1 === offset) {
         this.trackOfBestList = [...this.trackOfBestList, ...trackOfBestListData]
@@ -80,7 +87,14 @@ export default class TrackOfBestStore {
         this.trackOfBestList = trackOfBestListData
       }
 
-      this.tagList = tagListData
+      this.searchedTagList = [...this.selectedTagList]
+
+      // fetch tag list
+      if (isEmpty(this.tagList)) {
+        const { data: tagListData } = await httpClient.get("/post/tag/")
+        this.tagList = tagListData
+      }
+
       this.status = "SUCCESS"
     } catch (error) {
       this.status = "ERROR"

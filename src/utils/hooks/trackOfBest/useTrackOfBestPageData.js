@@ -11,12 +11,14 @@ function useTrackOfBestPageData() {
     trackOfBestList: trackOfBest.trackOfBestList,
     tagList: trackOfBest.tagList,
     selectedTagList: trackOfBest.selectedTagList,
+    searchedTagList: trackOfBest.searchedTagList,
     selectedOrderType: trackOfBest.selectedOrderType,
     fetchRequest: trackOfBest.fetchRequest,
     updateSelectedTagList: trackOfBest.updateSelectedTagList,
     setOrderType: trackOfBest.setOrderType,
     setOffset: trackOfBest.setOffset,
     offset: trackOfBest.offset,
+    isLast: trackOfBest.isLast,
   }))
 }
 
