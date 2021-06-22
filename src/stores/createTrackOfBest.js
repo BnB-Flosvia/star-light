@@ -156,7 +156,7 @@ class CreateTrackOfBestStore {
         simplePoint,
       } = this.form.fields
       const isBase64Image = coverImageData.value.includes("data:image/jpeg;base64")
-      await httpClient.post("/post/", {
+      await httpClient.postWithToken("/post/", {
         artist: artist.value,
         songName: songName.value,
         youtubeUrl: youtubeUrl.value,
