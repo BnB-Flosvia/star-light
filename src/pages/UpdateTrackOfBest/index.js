@@ -1,13 +1,14 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { lightBackgroundColor } from "styles/colors"
-import useCreateTrackOfBestPageData from "utils/hooks/createTrackOfBest/useCreateTrackOfBestPageData"
+import { lightBackgroundColor, primaryColor, secondaryTextColor } from "styles/colors"
 import { PageLoading } from "components/Spin"
 import { withRouter } from "react-router-dom"
 import { message } from "antd"
+import useUpdateTrackOfBestPageData from "utils/hooks/updateTrackOfBest/useUpdateTrackOfBestPageData"
+import queryString from "query-string"
+import ContentContainer from "pages/CreateTrackOfBest/ContentContainer"
+import { body1Normal, body3Normal, title2Normal } from "styles/textTheme"
 import PageBottomBar from "components/PageBottomBar"
-import { title2Normal } from "styles/textTheme"
-import ContentContainer from "./ContentContainer"
 
 const RowContainer = styled.div`
   flex: 1;
@@ -23,20 +24,36 @@ const RowContainer = styled.div`
 
 const HeaderSection = styled.div`
   display: flex;
+  flex-flow: column;
   width: 100%;
   justify-content: center;
   align-items: center;
-  padding: 32px 0;
-  ${title2Normal}
+  padding: 30px 16px 16px;
+  .title {
+    ${title2Normal}
+    padding-bottom: 10px;
+  }
+  .subtitle {
+    ${body1Normal}
+    color: ${secondaryTextColor};
+  }
+  .modeText {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding-top: 2px;
+    ${body3Normal}
+    color: ${primaryColor};
+  }
 `
 
-function CreateTrackOfBestPage({ history }) {
+function UpdateTrackOfBestPage({ location, history }) {
   const {
     isLoading,
     isFetchError,
     // isFetchSuccess,
-    isCreateError,
-    isCreateSuccess,
+    isUpdateError,
+    isUpdateSuccess,
     form,
     onFormFieldChange,
     onSubmit,
@@ -44,31 +61,37 @@ function CreateTrackOfBestPage({ history }) {
     fetchRequest,
     tagList,
     setFormFieldError,
-  } = useCreateTrackOfBestPageData()
+    trackOfBestDetail,
+  } = useUpdateTrackOfBestPageData()
+
+  const query = queryString.parse(location.search)
+  const id = query?.id
 
   useEffect(() => {
-    fetchRequest()
+    fetchRequest(id)
     return () => {
       initialize()
     }
-  }, [initialize, fetchRequest])
+  }, [initialize, fetchRequest, id])
 
   useEffect(() => {
-    if (isCreateError) {
+    if (isUpdateError) {
       message.error("요청이 실패하였습니다.")
     }
-  }, [isCreateError])
+  }, [isUpdateError])
 
   useEffect(() => {
-    if (isCreateSuccess) {
+    if (isUpdateSuccess) {
       history.push("/trackOfBest")
-      message.success("포스트가 성공적으로 등록되었습니다.")
+      message.success("포스트가 성공적으로 수정되었습니다.")
     }
-  }, [isCreateSuccess, history])
+  }, [isUpdateSuccess, history])
 
   const headerSection = (
     <HeaderSection>
-      <span>나만 아는 갓띵곡 생성</span>
+      <span className="title">{trackOfBestDetail?.songName || ""}</span>
+      <span className="subtitle">{trackOfBestDetail?.artist || ""}</span>
+      <span className="modeText">정보 변경 모드</span>
     </HeaderSection>
   )
 
@@ -92,6 +115,7 @@ function CreateTrackOfBestPage({ history }) {
     content = (
       <ContentContainer
         headerSection={headerSection}
+        defaultValue={trackOfBestDetail}
         onChange={onFormFieldChange}
         form={form}
         tagOptions={tagList}
@@ -108,11 +132,11 @@ function CreateTrackOfBestPage({ history }) {
           history.goBack()
         }}
         cancelText="나가기"
-        onSubmitClick={() => onSubmit()}
-        submitText="등록하기"
+        onSubmitClick={() => onSubmit(id)}
+        submitText="수정하기"
       />
     </RowContainer>
   )
 }
 
-export default withRouter(CreateTrackOfBestPage)
+export default withRouter(UpdateTrackOfBestPage)

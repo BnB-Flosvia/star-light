@@ -7,27 +7,27 @@ const defaultFormValue = {
     artist: {
       value: null,
       error: null,
-      rule: "required",
+      rule: "string",
     },
     songName: {
       value: null,
       error: null,
-      rule: "required",
+      rule: "string",
     },
     simplePoint: {
       value: null,
       error: null,
-      rule: "required",
+      rule: "string",
     },
     choseReason: {
       value: null,
       error: null,
-      rule: "required",
+      rule: "string",
     },
     youtubeUrl: {
       value: null,
       error: null,
-      rule: "required",
+      rule: "string",
     },
     tag: {
       value: null,
@@ -46,7 +46,7 @@ const defaultFormValue = {
   },
 }
 
-class CreateTrackOfBestStore {
+class UpdateTrackOfBestStore {
   @observable
   status = ""
 
@@ -55,6 +55,9 @@ class CreateTrackOfBestStore {
 
   @observable
   tagList = []
+
+  @observable
+  trackOfBestDetail = null
 
   // MobX version is after 6, need makeObservalbe call
   constructor() {
@@ -77,18 +80,19 @@ class CreateTrackOfBestStore {
   }
 
   @computed
-  get isCreateError() {
-    return this.status === "CREATE_ERROR"
+  get isUpdateError() {
+    return this.status === "UPDATE_ERROR"
   }
 
   @computed
-  get isCreateSuccess() {
-    return this.status === "CREATE_SUCCESS"
+  get isUpdateSuccess() {
+    return this.status === "UPDATE_SUCCESS"
   }
 
   @action initialize = () => {
     this.status = ""
     this.form = defaultFormValue
+    this.trackOfBestDetail = null
   }
 
   getFlattenedValues = (valueKey = "value") => {
@@ -116,12 +120,18 @@ class CreateTrackOfBestStore {
   }
 
   @action
-  fetchRequest = async () => {
+  fetchRequest = async (id) => {
     try {
       this.status = "LOADING"
+
+      // fetch trackOfBest detail data
+      const { data } = await httpClient.get(`/post/${id}/`)
+      this.trackOfBestDetail = data
+
       // fetch tag list
-      const { data } = await httpClient.get("/post/tag/")
-      this.tagList = data
+      const { data: tagListData } = await httpClient.get("/post/tag/")
+      this.tagList = tagListData
+
       this.status = "FETCH_SUCCESS"
     } catch (error) {
       this.status = "FETCH_ERROR"
@@ -129,7 +139,7 @@ class CreateTrackOfBestStore {
   }
 
   @action
-  onSubmit = async () => {
+  onSubmit = async (id) => {
     try {
       const fields = Object.keys(toJS(this.form).fields)
       const validation = new Validator(
@@ -139,11 +149,8 @@ class CreateTrackOfBestStore {
 
       this.form.meta.isValid = validation.passes()
       fields.forEach((field) => {
-        const errorText = validation.errors.first(field)
-        if (typeof errorText === "string") {
-          if (validation.errors.first(field).includes("required")) {
-            this.form.fields[field].error = "필수로 입력해야하는 필드입니다."
-          }
+        if (validation.errors.first(field).includes("required")) {
+          this.form.fields[field].error = "필수로 입력해야하는 필드입니다."
         } else {
           this.form.fields[field].error = ""
         }
@@ -168,29 +175,29 @@ class CreateTrackOfBestStore {
         simplePoint,
       } = this.form.fields
       const isBase64Image = coverImageData.value.includes("data:image/jpeg;base64")
-      await httpClient.postWithToken("/post/", {
+      await httpClient.putWithToken(`/post/${id}`, {
         artist: artist.value,
         songName: songName.value,
         youtubeUrl: youtubeUrl.value,
         tag: tag?.value ?? [],
         choseReason: choseReason.value,
-        coverImageData: isBase64Image ? coverImageData.value : null,
+        coverImageData: isBase64Image ? coverImageData.value : undefined,
         simplePoint: simplePoint.value,
       })
-      this.status = "CREATE_SUCCESS"
+      this.status = "UPDATE_SUCCESS"
     } catch (error) {
-      this.status = "CREATE_ERROR"
+      this.status = "UPDATE_ERROR"
       console.log(error)
       // TODO: check duplication?
     }
   }
 }
 
-export default CreateTrackOfBestStore
+export default UpdateTrackOfBestStore
 
-const store = new CreateTrackOfBestStore()
+const store = new UpdateTrackOfBestStore()
 autorun(() => store.isFetchError)
 autorun(() => store.isFetchSuccess)
-autorun(() => store.isCreateError)
-autorun(() => store.isCreateSuccess)
+autorun(() => store.isUpdateError)
+autorun(() => store.isUpdateSuccess)
 autorun(() => store.isLoading)
