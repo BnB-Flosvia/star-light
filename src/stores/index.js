@@ -5,6 +5,7 @@ import SignInStore from "./signIn"
 import SignUpStore from "./signup"
 import TrackOfBestStore from "./trackOfBest"
 import TrackOfBestDetailStore from "./trackOfBestDetail"
+import UpdateTrackOfBestStore from "./updateTrackOfBest"
 
 class RootStore {
   constructor() {
@@ -15,6 +16,7 @@ class RootStore {
     this.trackOfBest = new TrackOfBestStore(this)
     this.createTrackOfBest = new CreateTrackOfBestStore(this)
     this.trackOfBestDetail = new TrackOfBestDetailStore(this)
+    this.updateTrackOfBest = new UpdateTrackOfBestStore(this)
   }
 }
 

@@ -67,7 +67,7 @@ export default class TrackOfBestStore {
       this.status = "LOADING"
       this.selectedTagList = [...this.selectedTagList, ...tag]
       const filter = {
-        tags: !isEmpty(this.selectedTagList) ? this.selectedTagList.join(",") : undefined,
+        tag: !isEmpty(this.selectedTagList) ? this.selectedTagList.join(",") : undefined,
         sort: this.selectedOrderType,
         limit: defaultLimit,
         offset: offset != null ? offset : this.offset,
@@ -75,16 +75,17 @@ export default class TrackOfBestStore {
 
       // fetch trackOfBest list
       const { data: trackOfBestListData } = await httpClient.get("/post/", filter)
+      const trackOfBestListResult = trackOfBestListData?.results
 
-      if (trackOfBestListData.length < defaultLimit) {
+      if (trackOfBestListResult.length < defaultLimit) {
         this.isLast = true
       }
 
       if (this.offset + 1 === offset) {
-        this.trackOfBestList = [...this.trackOfBestList, ...trackOfBestListData]
+        this.trackOfBestList = [...this.trackOfBestList, ...trackOfBestListResult]
         this.offset = offset
       } else {
-        this.trackOfBestList = trackOfBestListData
+        this.trackOfBestList = trackOfBestListResult
       }
 
       this.searchedTagList = [...this.selectedTagList]

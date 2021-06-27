@@ -98,7 +98,7 @@ function TrackOfBestDetailPage({ match, history }) {
 
   useEffect(() => {
     if (isDeleteSuccess) {
-      history.pop()
+      history.goBack()
       message.success("성공적으로 삭제되었습니다.")
     }
   }, [isDeleteSuccess, history])

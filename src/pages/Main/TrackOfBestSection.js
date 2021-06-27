@@ -67,7 +67,7 @@ const GridContainer = styled.div`
 `
 
 function TrackOfBestSection() {
-  const { isLoading, trackOfBestList } = useTrackOfBestData()
+  const { isLoading, trackOfBestList, totalCount = 0 } = useTrackOfBestData()
 
   const isSmallMode = useMediaQuery({
     query: "(max-width: 420px)",
@@ -84,7 +84,7 @@ function TrackOfBestSection() {
           혼자 듣기 아까운 숨겨진 명곡을 사람들과 공유해보세요!
         </div>
         <div className="subtitle">
-          <span>✨현재 20개의 띵곡이 등록되었어요!</span>
+          <span>✨현재 {totalCount}개의 띵곡이 등록되었어요!</span>
           <LinkText isSmall={isSmallMode} isMedium={isMediumMode} to="/trackOfBest">
             전체 보러가기
           </LinkText>
