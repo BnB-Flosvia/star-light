@@ -105,7 +105,7 @@ function CreateTrackOfBestPage({ history }) {
       {content}
       <PageBottomBar
         onCancelClick={() => {
-          history.pop()
+          history.goBack()
         }}
         cancelText="나가기"
         onSubmitClick={() => onSubmit()}

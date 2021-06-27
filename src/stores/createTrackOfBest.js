@@ -172,7 +172,7 @@ class CreateTrackOfBestStore {
         artist: artist.value,
         songName: songName.value,
         youtubeUrl: youtubeUrl.value,
-        tag: tag.value,
+        tag: tag?.value ?? [],
         choseReason: choseReason.value,
         coverImageData: isBase64Image ? coverImageData.value : null,
         simplePoint: simplePoint.value,
