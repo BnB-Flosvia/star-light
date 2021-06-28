@@ -4,8 +4,8 @@ import "@toast-ui/editor/dist/toastui-editor.css"
 import React, { useRef, useEffect } from "react"
 import styled from "styled-components"
 import { Editor } from "@toast-ui/react-editor"
-import { body2Normal } from "styles/textTheme"
-import { secondaryTextColor } from "styles/colors"
+import { body2Normal, label2Normal } from "styles/textTheme"
+import { errorColor, secondaryTextColor } from "styles/colors"
 
 const Container = styled.div`
   .tui-editor-defaultUI {
@@ -30,9 +30,15 @@ const Container = styled.div`
       padding: 0 20px;
     }
   }
+
+  .errorText {
+    padding-top: 10px;
+    ${label2Normal}
+    color: ${errorColor};
+  }
 `
 
-export default function ContentEditor({ onChange, value }) {
+export default function ContentEditor({ onChange, value, errorText }) {
   const editorRef = useRef()
   const handleContentClick = () => {
     if (onChange != null) {
@@ -56,6 +62,7 @@ export default function ContentEditor({ onChange, value }) {
         ref={editorRef}
         hideModeSwitch
       />
+      <div className="errorText">{errorText}</div>
     </Container>
   )
 }

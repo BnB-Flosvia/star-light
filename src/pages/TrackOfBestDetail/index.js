@@ -61,12 +61,15 @@ const TagSectionContainer = styled.div`
   padding: 0 2.5em;
   justify-content: flex-start;
   & > div {
-    margin-right: 1.25em;
     ${(props) =>
       props.isSmallMode ? body3Normal : props.isMediumMode ? body3Normal : body2Normal};
     &:hover {
       color: ${primaryColor};
     }
+  }
+
+  & > :not(:last-child) {
+    margin-right: 1.25em;
   }
 `
 
@@ -177,7 +180,7 @@ function TrackOfBestDetailPage({ match, history }) {
         isMediumMode={isMediumMode}
       >{`"${simplePoint}"`}</SimplePointText>
       <ChoseReasonContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
-        <MarkdownPreview source={choseReason.replaceAll("\n", "<br>")} />
+        <MarkdownPreview source={(choseReason || "").replaceAll("\n", "<br>")} />
       </ChoseReasonContainer>
       <TagSectionContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
         {tagList.map((tag) => {

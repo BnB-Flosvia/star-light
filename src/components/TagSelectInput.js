@@ -92,6 +92,7 @@ export default function TagSelectInput({
   onChange,
   width,
   isSmall,
+  mode = "multiple",
 }) {
   function handleChange(newValue) {
     onChange(newValue)
@@ -100,7 +101,7 @@ export default function TagSelectInput({
   return (
     <Container isSmall={isSmall}>
       <Select
-        mode="multiple"
+        mode={mode}
         showArrow
         tagRender={tagRender}
         defaultValue={value}

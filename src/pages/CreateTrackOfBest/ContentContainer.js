@@ -2,10 +2,17 @@ import ContentEditor from "components/ContentEditor"
 import InfoTooltip from "components/InfoTooltip"
 import { OutlineInput } from "components/Inputs"
 import TagSelectInput from "components/TagSelectInput"
+import { isEmpty } from "lodash-es"
 import React from "react"
 import styled from "styled-components"
-import { borderColor, secondaryTextColor, warningColor } from "styles/colors"
-import { title1Normal, body3Normal } from "styles/textTheme"
+import {
+  borderColor,
+  secondaryTextColor,
+  warningColor,
+  backgroundColor1,
+  interactionColor,
+} from "styles/colors"
+import { title1Normal, body3Normal, body2Bold, body3Bold } from "styles/textTheme"
 import CoverImageContainer from "./CoverImageContainer"
 import YoutubeVideoContent from "./YoutubeVideoContainer"
 
@@ -52,11 +59,53 @@ const RowContainer = styled.div`
   }
 `
 
+const PopularTagContainer = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: 200px;
+  min-height: 200px;
+  border: 1px dashed ${secondaryTextColor};
+  background: ${backgroundColor1};
+  padding: 18px 16px 8px 0px;
+  margin-left: 40px;
+  .title {
+    padding: 0px 16px 16px;
+    ${body2Bold}
+  }
+  .tagContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    & > div {
+      margin-left: 16px;
+      margin-bottom: 10px;
+    }
+    flex-wrap: wrap;
+  }
+  .emptyView {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    ${body3Normal}
+    color: ${secondaryTextColor};
+  }
+`
+
+const TagItem = styled.div`
+  display: flex;
+  padding: 6px 12px;
+  ${body3Bold}
+  background: ${interactionColor};
+`
+
 export default function ContentContainer({
   headerSection,
   onChange,
   form,
   tagOptions = [],
+  popularTagOptions = [],
   setError,
   defaultValue,
 }) {
@@ -72,7 +121,7 @@ export default function ContentContainer({
               placeholderText="가수명 입력"
               errorText={form.fields.artist.error}
               onChange={(value) => onChange("artist", value)}
-              defaultValue={defaultValue?.artist}
+              defaultValue={defaultValue?.artist || form.fields.artist.value}
             />
             <OutlineInput
               className="input"
@@ -80,7 +129,7 @@ export default function ContentContainer({
               placeholderText="곡제목 입력"
               errorText={form.fields.songName.error}
               onChange={(value) => onChange("songName", value)}
-              defaultValue={defaultValue?.songName}
+              defaultValue={defaultValue?.songName || form.fields.songName.value}
             />
           </RowContainer>
         )
@@ -98,7 +147,7 @@ export default function ContentContainer({
             errorText={form.fields.simplePoint.error}
             onChange={(value) => onChange("simplePoint", value)}
             maxLength={20}
-            defaultValue={defaultValue?.simplePoint}
+            defaultValue={defaultValue?.simplePoint || form.fields.simplePoint.value}
           />
         )
       },
@@ -111,7 +160,7 @@ export default function ContentContainer({
           <ContentEditor
             onChange={(value) => onChange("choseReason", value)}
             errorText={form.fields.choseReason.error}
-            value={defaultValue?.choseReason}
+            value={defaultValue?.choseReason || form?.fields.choseReason.value}
           />
         )
       },
@@ -169,10 +218,23 @@ export default function ContentContainer({
               })}
               placeholder="태그를 선택해주세요"
               notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
-              width={400}
+              width={300}
               onChange={(value) => onChange("tag", value)}
               value={defaultValue?.tag}
+              mode="tags"
             />
+            <PopularTagContainer>
+              <div className="title">🔥 인기태그 🔥</div>
+              <div className="tagContainer">
+                {isEmpty(popularTagOptions) ? (
+                  <div className="emptyView">인기 태그가 없습니다.</div>
+                ) : (
+                  popularTagOptions.map((item) => {
+                    return <TagItem>{item}</TagItem>
+                  })
+                )}
+              </div>
+            </PopularTagContainer>
           </div>
         )
       },

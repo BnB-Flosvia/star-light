@@ -145,7 +145,9 @@ class CreateTrackOfBestStore {
             this.form.fields[field].error = "필수로 입력해야하는 필드입니다."
           }
         } else {
-          this.form.fields[field].error = ""
+          this.form.fields[field].error = validation.errors.first(field)
+            ? "올바르지 않은 값 입니다."
+            : null
         }
       })
 
