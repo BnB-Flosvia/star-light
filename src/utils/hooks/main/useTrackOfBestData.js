@@ -6,6 +6,7 @@ function useTrackOfBestData() {
   return useObserver(() => ({
     isLoading: main.isLoading,
     trackOfBestList: main.trackOfBestList,
+    totalCount: main.trackOfBestTotalCount,
   }))
 }
 
