@@ -47,6 +47,7 @@
     "build": "cross-env REACT_APP_ENVIRONMENT=production react-app-rewired build",
     "build:mock": "cross-env REACT_APP_ENVIRONMENT=mock react-app-rewired build",
     "build:dev": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired build",
+    "deploy": "serve -s build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "storybook": "start-storybook -p 6006 -s public",
@@ -64,6 +65,11 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
@@ -85,9 +91,10 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      "last 2 versions",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not ie <= 10"
     ],
     "development": [
       "last 1 chrome version",

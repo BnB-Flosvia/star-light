@@ -9,6 +9,8 @@ export default class MainStore {
 
   @observable trackOfBestList = []
 
+  @observable trackOfBestTotalCount = 0
+
   // MobX version is after 6, need makeObservalbe call
   constructor() {
     makeObservable(this)
@@ -43,6 +45,7 @@ export default class MainStore {
       }
       const { data = {} } = await httpClient.get("/post/", filter)
       this.trackOfBestList = data?.results
+      this.trackOfBestTotalCount = data?.count
       this.status = "FETCH_SUCCESS"
     } catch (error) {
       this.status = "FETCH_ERROR"

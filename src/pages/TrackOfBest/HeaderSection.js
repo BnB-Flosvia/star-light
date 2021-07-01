@@ -113,6 +113,7 @@ export default function HeaderSection({
         </div>
         <div className="tagInputSection">
           <TagSelectInput
+            value={searchedTagList}
             options={tagOptions}
             placeholder="검색할 태그명 입력"
             notFoundContent={<div>존재하지 않는 태그명입니다.</div>}

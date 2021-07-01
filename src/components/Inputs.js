@@ -256,7 +256,7 @@ export const SearchInput = ({
   className,
 }) => {
   const [isFocus, setIsFocus] = useState(false)
-  const [searchData, setSearchData] = useState(null)
+  const [searchData, setSearchData] = useState(defaultValue || value)
 
   const handleInputFocus = () => {
     setIsFocus(() => true)

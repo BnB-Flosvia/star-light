@@ -2,7 +2,7 @@ import { makeObservable, observable, action, computed, autorun } from "mobx"
 import httpClient from "utils/network/httpClient"
 import { isEmpty } from "lodash-es"
 
-const defaultLimit = 10
+const defaultLimit = 12
 
 export default class TrackOfBestStore {
   @observable status = ""
