@@ -16,6 +16,8 @@ function useCreateTrackOfBestPageData() {
     initialize: createTrackOfBest.initialize,
     fetchRequest: createTrackOfBest.fetchRequest,
     tagList: createTrackOfBest.tagList,
+    imageFile: createTrackOfBest.imageFile,
+    setImageFile: createTrackOfBest.setImageFile,
   }))
 }
 

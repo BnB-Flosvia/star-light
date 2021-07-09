@@ -17,6 +17,8 @@ function useUpdateTrackOfBestPageData() {
     fetchRequest: updateTrackOfBest.fetchRequest,
     tagList: updateTrackOfBest.tagList,
     trackOfBestDetail: updateTrackOfBest.trackOfBestDetail,
+    imageFile: updateTrackOfBest.imageFile,
+    setImageFile: updateTrackOfBest.setImageFile,
   }))
 }
 

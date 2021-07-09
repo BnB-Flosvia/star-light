@@ -30,7 +30,7 @@ const defaultFormValue = {
       rule: "required",
     },
     tag: {
-      value: null,
+      value: [],
       error: null,
       rule: "array",
     },
@@ -52,6 +52,9 @@ class CreateTrackOfBestStore {
 
   @observable
   form = defaultFormValue
+
+  @observable
+  imageFile = null
 
   @observable
   tagList = []
@@ -113,6 +116,11 @@ class CreateTrackOfBestStore {
     const newForm = { ...this.form }
     newForm.fields[field].error = error
     this.form = newForm
+  }
+
+  @action
+  setImageFile = (newFile) => {
+    this.imageFile = newFile
   }
 
   @action
@@ -179,6 +187,7 @@ class CreateTrackOfBestStore {
         coverImageData: isBase64Image ? coverImageData.value : null,
         simplePoint: simplePoint.value,
       })
+
       this.status = "CREATE_SUCCESS"
     } catch (error) {
       this.status = "CREATE_ERROR"

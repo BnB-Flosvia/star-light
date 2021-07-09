@@ -8,6 +8,7 @@ import {
 } from "styles/colors"
 import { body1Bold, body3Normal, label3Normal } from "styles/textTheme"
 import { withRouter } from "react-router-dom"
+import youtubeUrlParser from "utils/youtubeUrlParser"
 
 const ItemContainer = styled.div`
   display: flex;
@@ -97,8 +98,9 @@ function TrackOfBestListItem({
   artist,
   summaryContent,
   nickname,
-  imageUrl,
+  coverImage,
   history,
+  youtubeUrl,
   // tags = [],
 }) {
   // TODO: check user type => set correct icon
@@ -112,6 +114,16 @@ function TrackOfBestListItem({
         <div className="container" />
       </LoadingItem>
     )
+  }
+
+  let imageUrl = null
+  if (coverImage != null) {
+    imageUrl = coverImage
+  } else if (youtubeUrl != null) {
+    const { thumbnailUrl, id: videoId } = youtubeUrlParser(youtubeUrl)
+    if (videoId != null) {
+      imageUrl = thumbnailUrl
+    }
   }
 
   return (

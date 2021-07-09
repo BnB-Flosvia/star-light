@@ -95,6 +95,7 @@ export const LineSmallButton = styled.button`
   ${body2Normal}
   color: ${(props) => (props.color ? props.color : primaryTextColor)};
   border-radius: 24px;
+  cursor: pointer;
 `
 
 export const DarkSmallButton = styled.button`
