@@ -39,7 +39,8 @@
     "react-youtube": "^7.13.1",
     "react-easy-crop": "^3.5.1",
     "@uiw/react-markdown-preview": "^1.0.9",
-    "query-string": "^7.0.0"
+    "query-string": "^7.0.0",
+    "http-proxy-middleware": "^2.0.1"
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",

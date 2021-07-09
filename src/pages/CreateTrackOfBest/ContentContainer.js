@@ -104,6 +104,8 @@ export default function ContentContainer({
   headerSection,
   onChange,
   form,
+  setImageFile,
+  imageFile,
   tagOptions = [],
   popularTagOptions = [],
   setError,
@@ -196,6 +198,8 @@ export default function ContentContainer({
             onChange={(value) => onChange("coverImageData", value)}
             value={form.fields.coverImageData.value}
             youtubeUrl={form.fields.youtubeUrl.value || defaultValue?.youtubeUrl}
+            imageFile={imageFile}
+            setImageFile={setImageFile}
           />
         )
       },
@@ -220,7 +224,7 @@ export default function ContentContainer({
               notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
               width={300}
               onChange={(value) => onChange("tag", value)}
-              value={defaultValue?.tag}
+              value={defaultValue?.tag || form.fields.tag.value}
               mode="tags"
             />
             <PopularTagContainer>

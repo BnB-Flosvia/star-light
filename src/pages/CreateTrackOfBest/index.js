@@ -34,7 +34,6 @@ function CreateTrackOfBestPage({ history }) {
   const {
     isLoading,
     isFetchError,
-    // isFetchSuccess,
     isCreateError,
     isCreateSuccess,
     form,
@@ -44,6 +43,8 @@ function CreateTrackOfBestPage({ history }) {
     fetchRequest,
     tagList,
     setFormFieldError,
+    imageFile,
+    setImageFile,
   } = useCreateTrackOfBestPageData()
 
   useEffect(() => {
@@ -96,6 +97,8 @@ function CreateTrackOfBestPage({ history }) {
         form={form}
         tagOptions={tagList}
         setError={setFormFieldError}
+        imageFile={imageFile}
+        setImageFile={setImageFile}
       />
     )
   }

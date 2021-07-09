@@ -141,7 +141,15 @@ function TrackOfBestPage({ location }) {
                 return <TrackOfBestListItem isLoading />
               })
             : toJS(trackOfBestList).map((item) => {
-                const { id, songName, artist, simplePoint, username, coverImage } = item
+                const {
+                  id,
+                  songName,
+                  artist,
+                  simplePoint,
+                  username,
+                  coverImage,
+                  youtubeUrl,
+                } = item
                 return (
                   <TrackOfBestListItem
                     id={id}
@@ -149,7 +157,8 @@ function TrackOfBestPage({ location }) {
                     artist={artist}
                     summaryContent={simplePoint}
                     nickname={username}
-                    imageUrl={coverImage}
+                    coverImage={coverImage}
+                    youtubeUrl={youtubeUrl}
                   />
                 )
               })}

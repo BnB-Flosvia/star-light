@@ -62,6 +62,8 @@ function UpdateTrackOfBestPage({ location, history }) {
     tagList,
     setFormFieldError,
     trackOfBestDetail,
+    imageFile,
+    setImageFile,
   } = useUpdateTrackOfBestPageData()
 
   const query = queryString.parse(location.search)
@@ -120,6 +122,8 @@ function UpdateTrackOfBestPage({ location, history }) {
         form={form}
         tagOptions={tagList}
         setError={setFormFieldError}
+        imageFile={imageFile}
+        setImageFile={setImageFile}
       />
     )
   }

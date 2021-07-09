@@ -32,7 +32,7 @@ export default function youtubeUrlParser(url) {
     : 0
   const videoStartSeconds = videoStartTime ? timeToSec(videoStartTime) : 0
 
-  const videoThumbnailUrl = `https://img.youtube.com/vi/${videoId}/0.jpg`
+  const videoThumbnailUrl = `/vi/${videoId}/0.jpg`
 
   return {
     id: videoId,

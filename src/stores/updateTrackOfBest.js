@@ -30,7 +30,7 @@ const defaultFormValue = {
       rule: "string",
     },
     tag: {
-      value: null,
+      value: [],
       error: null,
       rule: "array",
     },
@@ -55,6 +55,9 @@ class UpdateTrackOfBestStore {
 
   @observable
   tagList = []
+
+  @observable
+  imageFile = null
 
   @observable
   trackOfBestDetail = null
@@ -117,6 +120,11 @@ class UpdateTrackOfBestStore {
     const newForm = { ...this.form }
     newForm.fields[field].error = error
     this.form = newForm
+  }
+
+  @action
+  setImageFile = (newFile) => {
+    this.imageFile = newFile
   }
 
   @action

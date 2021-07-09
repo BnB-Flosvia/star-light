@@ -137,9 +137,11 @@ const SwitchSection = styled.div`
 
 export default function CoverImageContainer({
   defaultImage,
-  value: imageData,
+  value: imageBlob,
   onChange,
   youtubeUrl,
+  imageFile,
+  setImageFile,
 }) {
   const sizeOptions = [
     { id: "240px", name: "240px" },
@@ -148,22 +150,13 @@ export default function CoverImageContainer({
   ]
   const [isCropMode, setIsCropMode] = useState(true)
   const [imageSize, setImageSize] = useState(sizeOptions[0]?.id)
-  const [image, setImage] = useState(null)
   const [url, setUrl] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
 
   const showCroppedImage = useCallback(
     async (newCroppedAreaPixels) => {
       try {
-        const isYoutubeUrl = url.includes("img.youtube.com")
-        let imageUrl
-        if (isYoutubeUrl) {
-          // using "CORS Anywhere" proxy server for adding "Access-Control-Allow-Origin" header
-          imageUrl = `http://cors-anywhere.herokuapp.com/${url}`
-        } else {
-          imageUrl = url
-        }
-        const newCroppedImage = await getCroppedImg(imageUrl, newCroppedAreaPixels)
+        const newCroppedImage = await getCroppedImg(url, newCroppedAreaPixels)
         onChange(newCroppedImage)
       } catch (error) {
         onChange(null)
@@ -182,12 +175,13 @@ export default function CoverImageContainer({
   const setCoverImage = (event) => {
     const newImage = (event?.target?.files || [])[0]
 
-    if (newImage != null && setImage != null) {
-      setImage(newImage)
+    if (newImage != null && setImageFile != null) {
+      setImageFile(newImage)
 
       const reader = new FileReader()
       reader.onload = () => {
         onChange(reader.result)
+        setUrl(reader.result)
       }
       reader.readAsDataURL(newImage)
     }
@@ -204,12 +198,19 @@ export default function CoverImageContainer({
 
   useEffect(() => {
     if (defaultImage != null) {
-      setImage(defaultImage)
-    }
-  }, [defaultImage])
+      // set default image url (s3)
+      setUrl(defaultImage)
+    } else if (imageFile instanceof File) {
+      const reader = new FileReader()
 
-  useEffect(() => {
-    if (youtubeUrl != null) {
+      reader.onload = () => {
+        setUrl(reader.result)
+      }
+
+      reader.readAsDataURL(imageFile)
+    } else if (youtubeUrl != null) {
+      // if this mode is not update or don't have default image url,
+      // check youtube url and set youtube thumbnail as default image
       const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
       if (id != null) {
         setUrl(thumbnailUrl)
@@ -218,25 +219,8 @@ export default function CoverImageContainer({
     } else {
       setUrl(null)
     }
-  }, [youtubeUrl])
-
-  useEffect(() => {
-    if (image instanceof File) {
-      const reader = new FileReader()
-
-      reader.onload = () => {
-        setUrl(reader.result)
-      }
-
-      reader.readAsDataURL(image)
-    } else if (image != null) {
-      // Get image from s3
-      setUrl(image)
-    } else {
-      setUrl(null)
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [image])
+  }, [defaultImage, youtubeUrl])
 
   return (
     <Container>
@@ -271,7 +255,7 @@ export default function CoverImageContainer({
       <CroppedImageContainer>
         <ImageWrapper className="imageContainer">
           {url != null ? (
-            <ImageContainer imgUrl={imageData} size={imageSize} />
+            <ImageContainer imgUrl={imageBlob} size={imageSize} />
           ) : (
             <div className="placeholder">
               커버 이미지로 사용될 이미지가 표시됩니다. 우측에 위치한 사이즈 버튼을
@@ -300,6 +284,7 @@ export default function CoverImageContainer({
                   setUrl(null)
                   onChange(null)
                 }
+                setImageFile(null)
               }}
             >
               기본 이미지로 설정
