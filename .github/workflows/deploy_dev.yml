@@ -39,13 +39,13 @@ jobs:
       - name: Build
         run: npm run build:dev
       
-      - name: Copy build to app
-        run: |
-          mkdir app
-          cp -r build/* app/
+      # - name: Copy build to app
+      #   run: |
+      #     mkdir app
+      #     cp -r build/* app/
 
       - name: Generate deployment package
-        run: zip -r deploy-web.zip . -x *.git* node_modules/\* build/\*
+        run: zip -r deploy-web.zip . -x *.git* node_modules/\*
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v14
