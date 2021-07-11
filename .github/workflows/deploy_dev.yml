@@ -53,7 +53,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: star-light-web-dev
-          environment_name: star-light-web-dev
+          environment_name: star-light-web-dev-node-12
           version_label: ${{ github.sha }}
           region: ap-northeast-2
           deployment_package: deploy-web.zip
