@@ -121,9 +121,10 @@ export default class SignInStore {
       localStorage.setItem("refreshToken", refresh)
 
       const { data: nicknameData } = await httpClient.getWithToken("/user/me/")
-      const { nickname } = nicknameData || {}
+
+      const { username } = nicknameData || {}
       const { setNickname } = this.root.app
-      setNickname(nickname)
+      setNickname(username)
 
       this.status = "SUCCESS"
     } catch (error) {

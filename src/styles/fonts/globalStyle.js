@@ -1,3 +1,4 @@
+/*
 import { createGlobalStyle } from "styled-components"
 import NanumGothicRegular from "./NanumGothic.ttf"
 import NanumGothicWoff2 from "./NanumGothic.woff2"
@@ -15,3 +16,4 @@ export default createGlobalStyle`
       url(${NanumGothicWoff}) format("woff")
   }
 `
+*/

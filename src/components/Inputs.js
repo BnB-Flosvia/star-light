@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useCallback, useMemo, useState } from "react"
 import styled from "styled-components"
 import {
@@ -71,36 +72,70 @@ const ErrorText = styled.div`
   color: ${errorColor};
 `
 
-export const InputTemplete = ({ labelText, errorText, inputFn, size }) => {
+export const InputTemplete = ({
+  labelText,
+  errorText,
+  inputFn,
+  size,
+  className,
+  currentLength = 0,
+  maxLength,
+}) => {
   const isError = errorText != null
   return (
-    <>
+    <div className={className} style={{ width: "100%" }}>
       {labelText && <LabelText size={size}>{labelText}</LabelText>}
-      {inputFn(isError)}
+      <div style={{ display: "flex", width: "100%", alignItems: "flex-end" }}>
+        {inputFn(isError)}
+        {maxLength && (
+          <div
+            className="lengthText"
+            style={{ paddingLeft: "12px", whiteSpace: "nowrap" }}
+          >
+            {currentLength} / {maxLength}
+          </div>
+        )}
+      </div>
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>
-    </>
+    </div>
   )
 }
 
 export const OutlineInput = ({
+  value,
+  defaultValue,
   labelText,
   errorText,
   placeholderText,
   size,
   onChange,
+  readOnly,
+  className,
+  maxLength,
 }) => {
+  const [length, setLength] = useState(0)
   return (
     <InputTemplete
+      className={className}
       size={size}
       labelText={labelText}
       errorText={errorText}
+      currentLength={length}
+      maxLength={maxLength}
       inputFn={(isError) => {
         return (
           <Input
             isError={isError}
             placeholder={placeholderText}
             size={size}
+            onChange={(e) => {
+              const data = e.target.value
+              setLength(data.length)
+            }}
             onBlur={(e) => onChange(e.target.value)}
+            readOnly={readOnly}
+            {...(value != null ? { value } : { defaultValue })}
+            maxLength={maxLength}
           />
         )
       }}
@@ -211,22 +246,29 @@ export const CustomPasswordInput = ({
 }
 
 export const SearchInput = ({
+  value,
+  defaultValue,
   labelText,
   errorText,
   placeholderText,
   onSearch,
   size,
+  className,
 }) => {
   const [isFocus, setIsFocus] = useState(false)
+  const [searchData, setSearchData] = useState(defaultValue || value)
+
   const handleInputFocus = () => {
     setIsFocus(() => true)
   }
-  const handleInputBlur = () => {
+  const handleInputBlur = (data) => {
     setIsFocus(() => false)
+    setSearchData(() => data)
   }
 
   return (
     <InputTemplete
+      className={className}
       size={size}
       labelText={labelText}
       errorText={errorText}
@@ -238,9 +280,10 @@ export const SearchInput = ({
               isError={isError}
               placeholder={placeholderText}
               onFocus={() => handleInputFocus()}
-              onBlur={() => handleInputBlur()}
+              onBlur={(event) => handleInputBlur(event.target.value)}
+              {...(value != null ? { value } : { defaultValue })}
             />
-            <SearchIconButton onClick={() => onSearch()} />
+            <SearchIconButton onClick={() => onSearch(searchData)} />
           </SuffixIconInputContainer>
         )
       }}

@@ -1,7 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import {
-  interactionColor,
   secondaryTextColor,
   backgroundColor1,
   highlightTextColor,
@@ -9,6 +8,7 @@ import {
 } from "styles/colors"
 import { body1Bold, body3Normal, label3Normal } from "styles/textTheme"
 import { withRouter } from "react-router-dom"
+import youtubeUrlParser from "utils/youtubeUrlParser"
 
 const ItemContainer = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const ImageContainer = styled.div`
     display: block;
     padding-bottom: 100%;
     ${(props) => (props.imgUrl ? backgroundImage : null)};
-    background-color: ${interactionColor};
+    background-color: #ddd;
   }
 `
 
@@ -75,19 +75,56 @@ const ContentWrapper = styled.div`
   }
 `
 
+const LoadingItem = styled.div`
+  display: flex;
+  padding: 20px;
+  border: 1px solid ${secondaryTextColor};
+  background-color: ${lightBackgroundColor};
+  .container {
+    width: 100%;
+    &:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+      background-color: #ddd;
+    }
+  }
+`
+
 function TrackOfBestListItem({
+  isLoading,
   id,
   title,
   artist,
   summaryContent,
   nickname,
-  imageUrl,
+  coverImage,
   history,
+  youtubeUrl,
   // tags = [],
 }) {
   // TODO: check user type => set correct icon
   // This is default user icon
   const icon = "🦄"
+
+  if (isLoading) {
+    return (
+      <LoadingItem>
+        <div className="container" />
+        <div className="container" />
+      </LoadingItem>
+    )
+  }
+
+  let imageUrl = null
+  if (coverImage != null) {
+    imageUrl = coverImage
+  } else if (youtubeUrl != null) {
+    const { thumbnailUrl, id: videoId } = youtubeUrlParser(youtubeUrl)
+    if (videoId != null) {
+      imageUrl = thumbnailUrl
+    }
+  }
 
   return (
     <ItemContainer

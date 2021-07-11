@@ -126,6 +126,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="닉네임 입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onNicknameChange}
+        maxLength={6}
       />
       <FullWidthButton onClick={() => signUp()} size={isSmallMode ? "small" : "medium"}>
         {isLoading ? (

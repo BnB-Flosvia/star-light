@@ -43,9 +43,9 @@ const fetchRequest = async ({
         throw Error("Not Exist Session")
       }
 
-      options.header = {
-        ...options.header,
-        token: accessToken,
+      options.headers = {
+        ...options.headers,
+        Authorization: `Bearer ${accessToken}`,
       }
     }
 

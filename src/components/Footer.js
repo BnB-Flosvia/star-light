@@ -39,7 +39,7 @@ export default function Footer() {
       {isSmallMode ? <SmallLogo /> : <MediumLogo />}
       <InfoSection>
         <span>BnB-Flosvia ⓒ 2021</span>
-        <a href="https://twitter.com/home" target="_blank" rel="noreferrer">
+        <a href="https://github.com/BnB-Flosvia" target="_blank" rel="noreferrer">
           <GitHub style={{ color: "#fff" }} />
         </a>
       </InfoSection>

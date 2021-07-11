@@ -21,10 +21,10 @@ export function CircleLineSpin({ size }) {
   return <Spin indicator={antIcon} spinning />
 }
 
-export function PageLoading() {
+export function PageLoading({ content }) {
   return (
     <SpinWrapper>
-      <Spin tip="로딩중..." />
+      <Spin tip="로딩중...">{content}</Spin>
     </SpinWrapper>
   )
 }

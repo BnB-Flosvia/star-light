@@ -14,6 +14,7 @@ import { borderColor } from "styles/colors"
 import useTrackOfBestData from "utils/hooks/main/useTrackOfBestData"
 import { useMediaQuery } from "react-responsive"
 import { Link } from "react-router-dom"
+import range from "utils/range"
 
 const Container = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ const GridContainer = styled.div`
 `
 
 function TrackOfBestSection() {
-  const { trackOfBestList } = useTrackOfBestData()
+  const { isLoading, trackOfBestList, totalCount = 0 } = useTrackOfBestData()
 
   const isSmallMode = useMediaQuery({
     query: "(max-width: 420px)",
@@ -83,26 +84,39 @@ function TrackOfBestSection() {
           혼자 듣기 아까운 숨겨진 명곡을 사람들과 공유해보세요!
         </div>
         <div className="subtitle">
-          <span>✨현재 20개의 띵곡이 등록되었어요!</span>
+          <span>✨현재 {totalCount}개의 띵곡이 등록되었어요!</span>
           <LinkText isSmall={isSmallMode} isMedium={isMediumMode} to="/trackOfBest">
             전체 보러가기
           </LinkText>
         </div>
       </HeaderSection>
       <GridContainer isSmall={isSmallMode} isMedium={isMediumMode}>
-        {trackOfBestList.map((item) => {
-          const { id, songName, artist, simplePoint, username, coverImage } = item
-          return (
-            <TrackOfBestListItem
-              id={id}
-              title={songName}
-              artist={artist}
-              summaryContent={simplePoint}
-              nickname={username}
-              imageUrl={coverImage}
-            />
-          )
-        })}
+        {isLoading
+          ? range(1, 5).map((_) => {
+              return <TrackOfBestListItem isLoading />
+            })
+          : trackOfBestList.map((item) => {
+              const {
+                id,
+                songName,
+                artist,
+                simplePoint,
+                username,
+                coverImage,
+                youtubeUrl,
+              } = item
+              return (
+                <TrackOfBestListItem
+                  id={id}
+                  title={songName}
+                  artist={artist}
+                  summaryContent={simplePoint}
+                  nickname={username}
+                  coverImage={coverImage}
+                  youtubeUrl={youtubeUrl}
+                />
+              )
+            })}
       </GridContainer>
     </Container>
   )

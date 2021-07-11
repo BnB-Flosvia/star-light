@@ -8,6 +8,7 @@ import PerfectScrollbar from "react-perfect-scrollbar"
 import Header from "components/Header"
 import Footer from "components/Footer"
 import { checkLocalToken } from "authProvider"
+import { message } from "antd"
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -53,20 +54,22 @@ export default function RouteContainer({
   children,
   component,
   requiredLogin,
+  hiddenFooter,
   ...props
 }) {
   const childComponent = children || component || <div />
 
   const isAllowed = !requiredLogin || checkLocalToken()
 
-  const onScroll = (event) => {
-    const scrollTop = event?.currentTarget?.scrollTop
-
+  const onScroll = (_event) => {
+    // const scrollTop = event?.currentTarget?.scrollTop
     // TODO: set navigation bar position to fix
-    if (scrollTop) console.log(scrollTop)
+    // if (scrollTop) console.log(scrollTop)
   }
 
   if (!isAllowed) {
+    message.error("해당 기능은 로그인 후 이용하실 수 있습니다.")
+
     return (
       <Route path={path} {...props}>
         <Redirect to="/signin" />
@@ -87,7 +90,7 @@ export default function RouteContainer({
               <Header />
               <NavigationBar isFixed={false} />
               <ContentContainer>{childComponent}</ContentContainer>
-              <Footer />
+              {!hiddenFooter && <Footer />}
             </>
           )}
         </ScrollContainer>

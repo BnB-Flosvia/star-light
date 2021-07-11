@@ -48,7 +48,6 @@ function Header({ history }) {
   // TODO: check user type => set correct icon
   // This is default user icon
   const icon = "🦄"
-  // TODO: get user nickname
   const { nickname } = useAppData()
   const isSmallMode = useMediaQuery({
     query: "(max-width: 768px)",

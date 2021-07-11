@@ -61,6 +61,8 @@ function DropdownButton({ buttonType, ...props }) {
 }
 
 export default function Dropdown({
+  className,
+  buildCustomButton,
   buttonType,
   menus,
   placement = "bottom-end",
@@ -96,13 +98,17 @@ export default function Dropdown({
   }, [])
 
   return (
-    <Container ref={clickOutsideRef}>
+    <Container ref={clickOutsideRef} className={className}>
       <div ref={setReferenceRef}>
-        <DropdownButton
-          buttonType={buttonType}
-          isOpen={isOpen}
-          onClick={() => onButtonClick()}
-        />
+        {buildCustomButton != null ? (
+          buildCustomButton({ isOpen, onClick: () => onButtonClick() })
+        ) : (
+          <DropdownButton
+            buttonType={buttonType}
+            isOpen={isOpen}
+            onClick={() => onButtonClick()}
+          />
+        )}
       </div>
       {isOpen && (
         <div ref={setPopperRef} style={styles.popper} {...attributes.popper}>
