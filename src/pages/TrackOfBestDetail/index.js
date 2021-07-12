@@ -180,7 +180,7 @@ function TrackOfBestDetailPage({ match, history }) {
         isMediumMode={isMediumMode}
       >{`"${simplePoint}"`}</SimplePointText>
       <ChoseReasonContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
-        <MarkdownPreview source={(choseReason || "").replaceAll("\n", "<br>")} />
+        <MarkdownPreview source={choseReason || ""} />
       </ChoseReasonContainer>
       <TagSectionContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
         {tagList.map((tag) => {

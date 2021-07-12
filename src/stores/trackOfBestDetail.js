@@ -1,5 +1,6 @@
 import { makeObservable, observable, action, computed, autorun } from "mobx"
 import httpClient from "utils/network/httpClient"
+import { isEmpty } from "lodash-es"
 
 export default class TrackOfBestDetailStore {
   @observable status = ""
@@ -46,9 +47,15 @@ export default class TrackOfBestDetailStore {
       this.status = "LOADING"
 
       // fetch trackOfBest detail data
-      const { data } = await httpClient.get(`/post/${id}/`)
+      const accessToken = localStorage.getItem("accessToken")
+      if (accessToken == null || isEmpty(accessToken)) {
+        const { data } = await httpClient.get(`/post/${id}/`)
+        this.trackOfBestDetail = data
+      } else {
+        const { data } = await httpClient.getWithToken(`/post/${id}/`)
+        this.trackOfBestDetail = data
+      }
 
-      this.trackOfBestDetail = data
       this.status = "FETCH_SUCCESS"
     } catch (error) {
       this.status = "FETCH_ERROR"

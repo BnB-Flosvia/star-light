@@ -1,6 +1,5 @@
 import queryStringify from "utils/queryString"
 import axios from "axios"
-import { StatusCodes } from "http-status-codes"
 import { isEmpty } from "lodash-es"
 import { refreshAccessToken } from "authProvider"
 
@@ -55,10 +54,14 @@ const fetchRequest = async ({
     }
     return {}
   } catch (error) {
-    if (error?.response?.status === StatusCodes.UNAUTHORIZED) {
+    if (error?.response?.status === 444) {
       const newAccessToken = await refreshAccessToken()
 
-      options.headers.token = newAccessToken
+      options.headers = {
+        ...options.headers,
+        Authorization: `Bearer ${newAccessToken}`,
+      }
+
       const response = await axios(options)
       if (response?.data != null) {
         return { data: response.data }

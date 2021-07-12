@@ -30,7 +30,7 @@ const defaultFormValue = {
       rule: "string",
     },
     tag: {
-      value: [],
+      value: null,
       error: null,
       rule: "array",
     },
@@ -61,6 +61,9 @@ class UpdateTrackOfBestStore {
 
   @observable
   trackOfBestDetail = null
+
+  @observable
+  enableSubmitButton = false
 
   // MobX version is after 6, need makeObservalbe call
   constructor() {
@@ -113,6 +116,8 @@ class UpdateTrackOfBestStore {
     const newForm = { ...this.form }
     newForm.fields[field].value = value
     this.form = newForm
+
+    this.enableSubmitButton = true
   }
 
   @action
@@ -134,7 +139,13 @@ class UpdateTrackOfBestStore {
 
       // fetch trackOfBest detail data
       const { data } = await httpClient.get(`/post/${id}/`)
-      this.trackOfBestDetail = data
+
+      let coverImageProxyUrl = null
+      if (data?.coverImage != null) {
+        coverImageProxyUrl = data?.coverImage.split(".com")[1]
+      }
+
+      this.trackOfBestDetail = { ...data, coverImage: coverImageProxyUrl }
 
       // fetch tag list
       const { data: tagListData } = await httpClient.get("/post/tag/")
@@ -157,10 +168,9 @@ class UpdateTrackOfBestStore {
 
       this.form.meta.isValid = validation.passes()
       fields.forEach((field) => {
-        if (validation.errors.first(field).includes("required")) {
-          this.form.fields[field].error = "필수로 입력해야하는 필드입니다."
-        } else {
-          this.form.fields[field].error = ""
+        // if error is not exist, value to be "false", so we shoule handle this problem
+        if (validation.errors.first(field)) {
+          this.form.fields[field].error = validation.errors.first(field)
         }
       })
 
@@ -182,15 +192,18 @@ class UpdateTrackOfBestStore {
         choseReason,
         simplePoint,
       } = this.form.fields
-      const isBase64Image = coverImageData.value.includes("data:image/jpeg;base64")
-      await httpClient.putWithToken(`/post/${id}`, {
-        artist: artist.value,
-        songName: songName.value,
-        youtubeUrl: youtubeUrl.value,
-        tag: tag?.value ?? [],
-        choseReason: choseReason.value,
+      const isBase64Image = (coverImageData.value || "").includes(
+        "data:image/jpeg;base64"
+      )
+
+      await httpClient.putWithToken(`/post/${id}/`, {
+        artist: artist?.value != null ? artist.value : undefined,
+        songName: songName?.value != null ? songName.value : undefined,
+        youtubeUrl: youtubeUrl?.value != null ? youtubeUrl.value : undefined,
+        tag: tag?.value != null ? tag.value : undefined,
+        choseReason: choseReason?.value != null ? choseReason?.value : undefined,
         coverImageData: isBase64Image ? coverImageData.value : undefined,
-        simplePoint: simplePoint.value,
+        simplePoint: simplePoint?.value != null ? simplePoint?.value : undefined,
       })
       this.status = "UPDATE_SUCCESS"
     } catch (error) {
