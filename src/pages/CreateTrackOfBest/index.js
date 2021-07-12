@@ -82,6 +82,7 @@ function CreateTrackOfBestPage({ history }) {
             headerSection={headerSection}
             onChange={onFormFieldChange}
             form={form}
+            mode="create"
           />
         }
       />
@@ -99,6 +100,7 @@ function CreateTrackOfBestPage({ history }) {
         setError={setFormFieldError}
         imageFile={imageFile}
         setImageFile={setImageFile}
+        mode="create"
       />
     )
   }
@@ -113,6 +115,7 @@ function CreateTrackOfBestPage({ history }) {
         cancelText="나가기"
         onSubmitClick={() => onSubmit()}
         submitText="등록하기"
+        enableSubmitButton
       />
     </RowContainer>
   )
