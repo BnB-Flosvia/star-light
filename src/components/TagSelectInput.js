@@ -113,6 +113,7 @@ export default function TagSelectInput({
             <ArrowDropDown style={{ color: `${primaryTextColor}` }} />
           </IconContainer>
         }
+        dropdownMatchSelectWidth={false}
         placeholder={placeholder}
         onChange={handleChange}
         notFoundContent={notFoundContent || <div>검색 결과가 존재하지 않습니다.</div>}

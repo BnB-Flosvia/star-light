@@ -1,5 +1,5 @@
 import RadioButton from "components/RadioButton"
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import styled, { css } from "styled-components"
 import {
   darkPrimaryColor,
@@ -142,13 +142,19 @@ export default function CoverImageContainer({
   youtubeUrl,
   imageFile,
   setImageFile,
+  mode,
 }) {
   const sizeOptions = [
     { id: "240px", name: "240px" },
     { id: "180px", name: "180px" },
     { id: "120px", name: "120px" },
   ]
-  const [isCropMode, setIsCropMode] = useState(true)
+  const [isCropMode, setIsCropMode] = useState(() => {
+    if (mode === "update") {
+      return false
+    }
+    return true
+  })
   const [imageSize, setImageSize] = useState(sizeOptions[0]?.id)
   const [url, setUrl] = useState(null)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -187,6 +193,20 @@ export default function CoverImageContainer({
     }
   }
 
+  const setDefaultImage = () => {
+    if (youtubeUrl != null) {
+      const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
+      if (id != null) {
+        setUrl(thumbnailUrl)
+        onChange(thumbnailUrl)
+      }
+    } else {
+      setUrl(null)
+      onChange(null)
+    }
+    setImageFile(null)
+  }
+
   const onIsCropModeChanged = (checked) => {
     if (checked === false) {
       onChange(url)
@@ -195,6 +215,13 @@ export default function CoverImageContainer({
     }
     setIsCropMode(() => checked)
   }
+
+  const imageBoxUrl = useMemo(() => {
+    if (!isCropMode && imageBlob == null) {
+      return url
+    }
+    return imageBlob
+  }, [imageBlob, isCropMode, url])
 
   useEffect(() => {
     if (defaultImage != null) {
@@ -214,7 +241,6 @@ export default function CoverImageContainer({
       const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
       if (id != null) {
         setUrl(thumbnailUrl)
-        setIsCropMode(true)
       }
     } else {
       setUrl(null)
@@ -255,7 +281,7 @@ export default function CoverImageContainer({
       <CroppedImageContainer>
         <ImageWrapper className="imageContainer">
           {url != null ? (
-            <ImageContainer imgUrl={imageBlob} size={imageSize} />
+            <ImageContainer imgUrl={imageBoxUrl} size={imageSize} />
           ) : (
             <div className="placeholder">
               커버 이미지로 사용될 이미지가 표시됩니다. 우측에 위치한 사이즈 버튼을
@@ -272,21 +298,7 @@ export default function CoverImageContainer({
             }}
           />
           <div className="fileButtonWrapper">
-            <DarkSmallButton
-              onClick={() => {
-                if (youtubeUrl != null) {
-                  const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
-                  if (id != null) {
-                    setUrl(thumbnailUrl)
-                    onChange(thumbnailUrl)
-                  }
-                } else {
-                  setUrl(null)
-                  onChange(null)
-                }
-                setImageFile(null)
-              }}
-            >
+            <DarkSmallButton onClick={setDefaultImage}>
               기본 이미지로 설정
             </DarkSmallButton>
             <UploadLabel htmlFor="upload-cover">이미지 가져오기</UploadLabel>

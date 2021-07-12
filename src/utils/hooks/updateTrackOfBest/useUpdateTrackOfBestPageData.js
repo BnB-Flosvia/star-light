@@ -19,6 +19,7 @@ function useUpdateTrackOfBestPageData() {
     trackOfBestDetail: updateTrackOfBest.trackOfBestDetail,
     imageFile: updateTrackOfBest.imageFile,
     setImageFile: updateTrackOfBest.setImageFile,
+    enableSubmitButton: updateTrackOfBest.enableSubmitButton,
   }))
 }
 

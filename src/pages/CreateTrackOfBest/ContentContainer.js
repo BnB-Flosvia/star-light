@@ -110,6 +110,7 @@ export default function ContentContainer({
   popularTagOptions = [],
   setError,
   defaultValue,
+  mode,
 }) {
   const contentList = [
     {
@@ -200,6 +201,7 @@ export default function ContentContainer({
             youtubeUrl={form.fields.youtubeUrl.value || defaultValue?.youtubeUrl}
             imageFile={imageFile}
             setImageFile={setImageFile}
+            mode={mode}
           />
         )
       },
@@ -224,7 +226,7 @@ export default function ContentContainer({
               notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
               width={300}
               onChange={(value) => onChange("tag", value)}
-              value={defaultValue?.tag || form.fields.tag.value}
+              value={defaultValue?.tag || form.fields.tag.value || []}
               mode="tags"
             />
             <PopularTagContainer>

@@ -64,6 +64,7 @@ function UpdateTrackOfBestPage({ location, history }) {
     trackOfBestDetail,
     imageFile,
     setImageFile,
+    enableSubmitButton,
   } = useUpdateTrackOfBestPageData()
 
   const query = queryString.parse(location.search)
@@ -91,8 +92,12 @@ function UpdateTrackOfBestPage({ location, history }) {
 
   const headerSection = (
     <HeaderSection>
-      <span className="title">{trackOfBestDetail?.songName || ""}</span>
-      <span className="subtitle">{trackOfBestDetail?.artist || ""}</span>
+      <span className="title">
+        {form.fields.songName.value || trackOfBestDetail?.songName || ""}
+      </span>
+      <span className="subtitle">
+        {form.fields.artist.value || trackOfBestDetail?.artist || ""}
+      </span>
       <span className="modeText">정보 변경 모드</span>
     </HeaderSection>
   )
@@ -106,6 +111,7 @@ function UpdateTrackOfBestPage({ location, history }) {
             headerSection={headerSection}
             onChange={onFormFieldChange}
             form={form}
+            mode="update"
           />
         }
       />
@@ -124,6 +130,7 @@ function UpdateTrackOfBestPage({ location, history }) {
         setError={setFormFieldError}
         imageFile={imageFile}
         setImageFile={setImageFile}
+        mode="update"
       />
     )
   }
@@ -138,6 +145,7 @@ function UpdateTrackOfBestPage({ location, history }) {
         cancelText="나가기"
         onSubmitClick={() => onSubmit(id)}
         submitText="수정하기"
+        enableSubmitButton={enableSubmitButton}
       />
     </RowContainer>
   )

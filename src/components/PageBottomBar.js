@@ -7,6 +7,7 @@ const BottomBar = styled.div`
   display: flex;
   width: 100%;
   position: fixed;
+  z-index: 1000;
   bottom: 0;
   flex: 0 0 80px;
   height: 80px;
@@ -31,6 +32,7 @@ export default function PageBottomBar({
   cancelText = "나가기",
   onSubmitClick,
   submitText = "확인",
+  enableSubmitButton,
 }) {
   return (
     <BottomBar>
@@ -38,7 +40,11 @@ export default function PageBottomBar({
         <LineSmallButton onClick={onCancelClick} color={errorColor}>
           {cancelText}
         </LineSmallButton>
-        <LineSmallButton onClick={onSubmitClick} color={primaryColor}>
+        <LineSmallButton
+          onClick={onSubmitClick}
+          color={primaryColor}
+          disabled={!enableSubmitButton}
+        >
           {submitText}
         </LineSmallButton>
       </ButtonGroupWrapper>
