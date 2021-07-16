@@ -1,4 +1,4 @@
-import { getLocalToken } from "authProvider"
+import { getLocalToken } from "utils/authProvider"
 import { makeObservable, observable, action } from "mobx"
 import httpClient from "utils/network/httpClient"
 
@@ -13,7 +13,7 @@ export default class AppStore {
     this.fetchRequest()
   }
 
-  @action checkLocalToken = async () => {
+  @action checkLocalTokenIsValid = async () => {
     try {
       await getLocalToken()
     } catch (error) {
@@ -27,7 +27,7 @@ export default class AppStore {
 
   @action fetchRequest = async () => {
     try {
-      await this.checkLocalToken()
+      await this.checkLocalTokenIsValid()
       const { data } = await httpClient.getWithToken("/user/me/")
       const { username } = data || {}
       this.nickname = username

@@ -1,7 +1,7 @@
 import queryStringify from "utils/queryString"
 import axios from "axios"
 import { isEmpty } from "lodash-es"
-import { refreshAccessToken } from "authProvider"
+import { refreshAccessToken } from "utils/authProvider"
 
 axios.defaults.baseURL = `http://${process.env.REACT_APP_HOST}/api/v1`
 
