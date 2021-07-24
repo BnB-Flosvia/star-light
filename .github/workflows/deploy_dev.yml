@@ -1,0 +1,59 @@
+# This is a basic workflow to help you get started with Actions
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ dev ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env: 
+      CI: false
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v1
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.18.3'
+
+      - name: Install packages
+        run: npm install
+
+      - name: Build
+        run: npm run build:dev
+      
+      # - name: Copy build to app
+      #   run: |
+      #     mkdir app
+      #     cp -r build/* app/
+
+      - name: Generate deployment package
+        run: zip -r deploy-web.zip . -x *.git* node_modules/\*
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v14
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: star-light-web-dev
+          environment_name: star-light-web-dev-node-12
+          version_label: ${{ github.sha }}
+          region: ap-northeast-2
+          deployment_package: deploy-web.zip
