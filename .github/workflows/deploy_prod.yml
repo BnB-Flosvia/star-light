@@ -33,6 +33,9 @@ jobs:
         with:
           node-version: '12.18.3'
 
+      - name: Set Api server url
+        run: echo REACT_APP_HOST=${{ secrets.REACT_APP_HOST_MASTER }} | tee .env
+
       - name: Install packages
         run: npm install
 
