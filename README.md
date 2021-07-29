@@ -1,12 +1,10 @@
 # Star Light
-
 - This is a web service for share your favorite songs with people
+- [Star Light Web](http://star-light-web.ap-northeast-2.elasticbeanstalk.com)
+
+## Tech stack
 - React + MobX + Styled-component + Axios
 - Using Storybook for testing
-
-## Service Url
-
-> [star light page:development web](http://star-light-web-dev.eba-mz52msmv.ap-northeast-2.elasticbeanstalk.com)
 
 ## Usage
 
