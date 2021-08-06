@@ -3,6 +3,9 @@
 
 - [Star Light](#star-light)
   * [서비스 기능 소개](#service-features)
+    + [나만 아는 갓띵곡](#track-of-best)
+    + [이달의 명곡](#music-of-month)
+    + [명예의 전당](#hall-of-frame)
   * [Tech Stack](#tech-stack)
   * [Usage](#usage)
     + [Clone repository](#clone-repository)
@@ -18,13 +21,16 @@
 
 ## Service Features
 > 서비스 기능 소개
-### 나만 아는 갓띵곡
+### Track of best
+> 나만 아는 갓띵곡
 - 다른 사용자들이 등록한 숨겨진 **띵곡**들을 찾아볼 수 있습니다!
 - 태그를 사용하여 원하는 장르, 가수, 분위기 등 다양한 토픽으로 음악을 검색할 수 있습니다.
 - 나만 알고 있는 띵곡이 있다면! 내가 직접 음악 정보를 등록해서 다른 사용자와 공유할 수도 있습니다!
-### 이달의 명곡
+### Music of month
+> 이달의 명곡
 - 기능 오픈 예정
-### 명예의 전당
+### Hall of frame
+> 명예의 전당
 - 기능 오픈 예정
 
 ## Tech Stack
