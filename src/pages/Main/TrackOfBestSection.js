@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import TrackOfBestListItem from "components/TrackOfBestListItem"
 import {
   label2Normal,
@@ -61,9 +61,16 @@ const LinkText = styled(Link)`
 const GridContainer = styled.div`
   display: grid;
   padding: ${(props) =>
-    props.isSmall ? "0 10px 24px" : props.isMedium ? "0 48px 30px" : "0 54px 36px"};
+    props.isSmall ? "0 20px 24px" : props.isMedium ? "0 36px 30px" : "0 54px 36px"};
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  ${(props) =>
+    props.isSmall
+      ? css`
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        `
+      : css`
+          grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        `};
 `
 
 function TrackOfBestSection() {
