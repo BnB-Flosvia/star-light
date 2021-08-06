@@ -1,10 +1,9 @@
 # Star Light
-- 띵곡 공유를 위한 웹 서비스
-- [Star Light 웹 사이트](http://star-light-web.ap-northeast-2.elasticbeanstalk.com)
+띵곡 공유를 위한 웹 서비스 / [Star Light 웹 사이트](http://star-light-web.ap-northeast-2.elasticbeanstalk.com)
 
 - [Star Light](#star-light)
-  * [서비스 기능 소개](#------)
-  * [Tech stack](#tech-stack)
+  * [서비스 기능 소개](#service-features)
+  * [Tech Stack](#tech-stack)
   * [Usage](#usage)
     + [Clone repository](#clone-repository)
     + [Install dependencies](#install-dependencies)
@@ -17,7 +16,8 @@
   * [Todo](#todo)
   * [Reference](#reference)
 
-## 서비스 기능 소개
+## Service Features
+> 서비스 기능 소개
 ### 나만 아는 갓띵곡
 - 다른 사용자들이 등록한 숨겨진 **띵곡**들을 찾아볼 수 있습니다!
 - 태그를 사용하여 원하는 장르, 가수, 분위기 등 다양한 토픽으로 음악을 검색할 수 있습니다.
@@ -27,7 +27,7 @@
 ### 명예의 전당
 - 기능 오픈 예정
 
-## Tech stack
+## Tech Stack
 
 - React + MobX + Styled-component + Axios
 - Using Storybook for testing
