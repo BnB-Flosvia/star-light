@@ -96,4 +96,5 @@
 - [Star Light Design in Figma](https://www.figma.com/file/NyRHXYp1ydVb9l4yoHmDtH/Star-Light-Web?node-id=0%3A1)
   - If you need authorization for figma design, notify this email => "dkdudkc22@gmail.com"
 - [Star Light Storyboard v1.0](https://docs.google.com/presentation/d/1Sp_AaRGX0Djxg1bEWvEA5sCDMwHlt4ju8T6O6NrWqA0/edit?usp=sharing)
-- [Star Light Requirements Specification](https://hackmd.io/HwCwBPuvQR-Teo6EjRtAIg?view)
+- [Star Light Requirements Specification](https://hackmd.io/@starmango/service-specification)
+- [Star Light 웹 개발 로그](https://hackmd.io/@starmango/development-log)
