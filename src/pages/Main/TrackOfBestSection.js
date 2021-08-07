@@ -1,8 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import TrackOfBestListItem from "components/TrackOfBestListItem"
 import {
-  label2Normal,
   title1Normal,
   title2Normal,
   title3Normal,
@@ -14,25 +12,25 @@ import { borderColor } from "styles/colors"
 import useTrackOfBestData from "utils/hooks/main/useTrackOfBestData"
 import { useMediaQuery } from "react-responsive"
 import { Link } from "react-router-dom"
-import range from "utils/range"
+import TrackOfBestGridList from "components/TrackOfBestGridList"
 
 const Container = styled.div`
   display: flex;
   flex-flow: column;
   height: fit-content;
   width: 100%;
+  padding: ${(props) =>
+    props.isSmall ? "24px 20px" : props.isMedium ? "36px 30px" : "54px 36px"};
 `
 
 const HeaderSection = styled.div`
-  ${(props) =>
-    props.isSmall ? title1Normal : props.isMedium ? title2Normal : title3Normal}
-  margin: 1em;
+  ${(props) => (props.isSmall ? title2Normal : title3Normal)}
+  margin-bottom: 1em;
   .sectionTitle {
     padding: 0 16px;
   }
   .sectionSubtitle {
-    ${(props) =>
-      props.isSmall ? label2Normal : props.isMedium ? body3Normal : body1Normal}
+    ${(props) => (props.isSmall ? body3Normal : body1Normal)}
     padding: 1em 16px 2em;
   }
   .subtitle {
@@ -40,8 +38,7 @@ const HeaderSection = styled.div`
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    ${(props) =>
-      props.isSmall ? body3Normal : props.isMedium ? body2Normal : title1Normal}
+    ${(props) => (props.isSmall ? body2Normal : title1Normal)}
     padding: 1em 16px;
     border-bottom: 1px solid ${borderColor};
     border-top: 1px solid ${borderColor};
@@ -54,16 +51,7 @@ const LinkText = styled(Link)`
   align-items: center;
   padding-left: 2em;
   text-decoration: underline;
-  ${(props) =>
-    props.isSmall ? label2Normal : props.isMedium ? body3Normal : body2Normal}
-`
-
-const GridContainer = styled.div`
-  display: grid;
-  padding: ${(props) =>
-    props.isSmall ? "0 10px 24px" : props.isMedium ? "0 48px 30px" : "0 54px 36px"};
-  width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)}
 `
 
 function TrackOfBestSection() {
@@ -77,47 +65,24 @@ function TrackOfBestSection() {
   })
 
   return (
-    <Container>
-      <HeaderSection isSmall={isSmallMode} isMedium={isMediumMode}>
+    <Container isSmall={isSmallMode} isMedium={isMediumMode}>
+      <HeaderSection isSmall={isMediumMode || isSmallMode}>
         <div className="sectionTitle">나만 아는 갓띵곡🎵</div>
         <div className="sectionSubtitle">
-          혼자 듣기 아까운 숨겨진 명곡을 사람들과 공유해보세요!
+          나만 알고있는 숨겨진 명곡을 사람들과 공유해보세요!
         </div>
         <div className="subtitle">
           <span>✨현재 {totalCount}개의 띵곡이 등록되었어요!</span>
-          <LinkText isSmall={isSmallMode} isMedium={isMediumMode} to="/trackOfBest">
-            전체 보러가기
+          <LinkText isSmall={isMediumMode || isSmallMode} to="/trackOfBest">
+            {isSmallMode ? "➡️" : "전체 보러가기"}
           </LinkText>
         </div>
       </HeaderSection>
-      <GridContainer isSmall={isSmallMode} isMedium={isMediumMode}>
-        {isLoading
-          ? range(1, 5).map((_) => {
-              return <TrackOfBestListItem isLoading />
-            })
-          : trackOfBestList.map((item) => {
-              const {
-                id,
-                songName,
-                artist,
-                simplePoint,
-                username,
-                coverImage,
-                youtubeUrl,
-              } = item
-              return (
-                <TrackOfBestListItem
-                  id={id}
-                  title={songName}
-                  artist={artist}
-                  summaryContent={simplePoint}
-                  nickname={username}
-                  coverImage={coverImage}
-                  youtubeUrl={youtubeUrl}
-                />
-              )
-            })}
-      </GridContainer>
+      <TrackOfBestGridList
+        isSmall={isSmallMode}
+        isIntialLoading={isLoading}
+        list={trackOfBestList}
+      />
     </Container>
   )
 }
