@@ -5,6 +5,8 @@ import { isEmpty } from "lodash-es"
 const defaultLimit = 12
 
 export default class TrackOfBestStore {
+  @observable isInitialized = false
+
   @observable status = ""
 
   @observable trackOfBestList = []
@@ -42,10 +44,12 @@ export default class TrackOfBestStore {
   }
 
   @action initialize = () => {
+    this.isInitialized = false
     this.status = ""
     this.trackOfBestList = []
     this.tagList = []
     this.selectedTagList = []
+    this.searchedTagList = []
     this.selectedOrderType = null
     this.offset = 0
   }
@@ -94,6 +98,10 @@ export default class TrackOfBestStore {
       if (isEmpty(this.tagList)) {
         const { data: tagListData } = await httpClient.get("/post/tag/")
         this.tagList = tagListData
+      }
+
+      if (!this.isInitialized) {
+        this.isInitialized = true
       }
 
       this.status = "SUCCESS"

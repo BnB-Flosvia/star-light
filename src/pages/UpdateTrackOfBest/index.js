@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom"
 import { message } from "antd"
 import useUpdateTrackOfBestPageData from "utils/hooks/updateTrackOfBest/useUpdateTrackOfBestPageData"
 import queryString from "query-string"
-import ContentContainer from "pages/CreateTrackOfBest/ContentContainer"
+import ContentContainer from "pages/CreateTrackOfBest/ContentTemplete"
 import { body1Normal, body3Normal, title2Normal } from "styles/textTheme"
 import PageBottomBar from "components/PageBottomBar"
 

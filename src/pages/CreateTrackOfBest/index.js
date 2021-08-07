@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom"
 import { message } from "antd"
 import PageBottomBar from "components/PageBottomBar"
 import { title2Normal } from "styles/textTheme"
-import ContentContainer from "./ContentContainer"
+import ContentContainer from "./ContentTemplete"
 
 const RowContainer = styled.div`
   flex: 1;

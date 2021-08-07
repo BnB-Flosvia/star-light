@@ -1,16 +1,13 @@
 import React, { useEffect } from "react"
-import { toJS } from "mobx"
 import { withRouter } from "react-router-dom"
 import styled from "styled-components"
 import useTrackOfBestPageData from "utils/hooks/trackOfBest/useTrackOfBestPageData"
 import { backgroundColor1, lightBackgroundColor, primaryTextColor } from "styles/colors"
 import { PageLoading } from "components/Spin"
-import TrackOfBestListItem from "components/TrackOfBestListItem"
 import { body1Normal } from "styles/textTheme"
-import range from "utils/range"
-import { isEmpty } from "lodash-es"
 import queryString from "query-string"
 import { useMediaQuery } from "react-responsive"
+import TrackOfBestGridList from "components/TrackOfBestGridList"
 import HeaderSection from "./HeaderSection"
 
 const RowContainer = styled.div`
@@ -21,6 +18,8 @@ const RowContainer = styled.div`
   height: 100%;
   justify-content: flex-start;
   align-items: flex-start;
+  padding: ${(props) =>
+    props.isSmall ? "24px 20px" : props.isMedium ? "40px 36px" : "52px 72px"};
   background: ${lightBackgroundColor};
   .ant-spin-blur {
     width: 100%;
@@ -37,19 +36,6 @@ const RowContainer = styled.div`
     left: 50% !important;
     transform: translate(-50%, -50%);
   }
-  .contentContainer {
-    padding: ${(props) =>
-      props.isSmall ? "24px 10px" : props.isMedium ? "40px" : "52px 72px"};
-    width: 100%;
-    height: 100%;
-    flex: 1;
-  }
-`
-
-const GridContainer = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 `
 
 const LineLargeButtonWrapper = styled.div`
@@ -76,9 +62,9 @@ const LineLargeButtonWrapper = styled.div`
 function TrackOfBestPage({ location }) {
   const initialOffset = 0
   const {
+    isInitialized,
     isLoading,
     isError,
-    isSuccess,
     initialize,
     trackOfBestList,
     tagList,
@@ -120,9 +106,10 @@ function TrackOfBestPage({ location }) {
 
   function defaultContent() {
     return (
-      <div className="contentContainer">
+      <>
         <HeaderSection
-          tagOptions={toJS(tagList).map((item) => {
+          isLoading={isLoading && isInitialized}
+          tagOptions={tagList.map((item) => {
             return { value: item }
           })}
           onTagChange={(newList) => updateSelectedTagList(newList)}
@@ -135,34 +122,11 @@ function TrackOfBestPage({ location }) {
           }}
           searchedTagList={searchedTagList}
         />
-        <GridContainer>
-          {isLoading && isEmpty(trackOfBestList)
-            ? range(1, 5).map((_) => {
-                return <TrackOfBestListItem isLoading />
-              })
-            : toJS(trackOfBestList).map((item) => {
-                const {
-                  id,
-                  songName,
-                  artist,
-                  simplePoint,
-                  username,
-                  coverImage,
-                  youtubeUrl,
-                } = item
-                return (
-                  <TrackOfBestListItem
-                    id={id}
-                    title={songName}
-                    artist={artist}
-                    summaryContent={simplePoint}
-                    nickname={username}
-                    coverImage={coverImage}
-                    youtubeUrl={youtubeUrl}
-                  />
-                )
-              })}
-        </GridContainer>
+        <TrackOfBestGridList
+          isSmall={isSmallMode}
+          isIntialLoading={isLoading && !isInitialized}
+          list={trackOfBestList}
+        />
         {!isLast && (
           <LineLargeButtonWrapper>
             <button
@@ -175,17 +139,17 @@ function TrackOfBestPage({ location }) {
             </button>
           </LineLargeButtonWrapper>
         )}
-      </div>
+      </>
     )
   }
 
   let content
-  if (isLoading) {
+  if (isLoading && !isInitialized) {
     content = <PageLoading content={defaultContent()} />
   } else if (isError) {
     // TODO: Add error page
     content = <div>에러가 발생했습니다!</div>
-  } else if (isSuccess) {
+  } else {
     content = defaultContent()
   }
 
