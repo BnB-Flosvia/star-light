@@ -62,6 +62,7 @@ const LabelText = styled.div`
   width: 100%;
   padding-bottom: 10px;
   ${(props) => (props.size === "small" ? body3Normal : body2Normal)}
+  color: ${(props) => props.color};
 `
 
 const ErrorText = styled.div`
@@ -80,17 +81,22 @@ export const InputTemplete = ({
   className,
   currentLength = 0,
   maxLength,
+  color = primaryTextColor,
 }) => {
   const isError = errorText != null
   return (
     <div className={className} style={{ width: "100%" }}>
-      {labelText && <LabelText size={size}>{labelText}</LabelText>}
+      {labelText && (
+        <LabelText size={size} color={color}>
+          {labelText}
+        </LabelText>
+      )}
       <div style={{ display: "flex", width: "100%", alignItems: "flex-end" }}>
         {inputFn(isError)}
         {maxLength && (
           <div
             className="lengthText"
-            style={{ paddingLeft: "12px", whiteSpace: "nowrap" }}
+            style={{ paddingLeft: "12px", whiteSpace: "nowrap", color }}
           >
             {currentLength} / {maxLength}
           </div>
@@ -112,6 +118,7 @@ export const OutlineInput = ({
   readOnly,
   className,
   maxLength,
+  color,
 }) => {
   const [length, setLength] = useState(0)
   return (
@@ -122,6 +129,7 @@ export const OutlineInput = ({
       errorText={errorText}
       currentLength={length}
       maxLength={maxLength}
+      color={color}
       inputFn={(isError) => {
         return (
           <Input
@@ -149,12 +157,14 @@ export const PasswordInput = ({
   placeholderText,
   size,
   onChange,
+  color,
 }) => {
   return (
     <InputTemplete
       size={size}
       labelText={labelText}
       errorText={errorText}
+      color={color}
       inputFn={(isError) => {
         return (
           <Input

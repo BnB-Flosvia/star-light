@@ -2,8 +2,7 @@ import React, { useCallback } from "react"
 import styled from "styled-components"
 import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
 import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
-import { body3Normal, label2Normal } from "styles/textTheme"
-import { dividerColor } from "styles/colors"
+import { body3Normal } from "styles/textTheme"
 import { OutlineInput, PasswordInput } from "components/Inputs"
 import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"
@@ -19,14 +18,14 @@ const Container = styled.div`
   max-width: 400px;
   height: fit-content;
   padding: 24px 16px;
-  background: ${dividerColor};
   & > button {
     margin-top: 24px;
   }
 `
 
 const TopLabelText = styled.span`
-  ${(props) => (props.isSmall ? label2Normal : body3Normal)}
+  ${body3Normal}
+  color: #fff;
   text-align: center;
   padding: 16px 0 32px 0;
 `
@@ -43,9 +42,11 @@ export default function SignUpContent() {
   return (
     <Container>
       <Link to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</Link>
-      <TopLabelText isSmall={isSmallMode}>
-        Star Light 서비스를 통해 나만 알고 있는 갓띵곡을 공유해보세요!
-      </TopLabelText>
+      {!isSmallMode && (
+        <TopLabelText>
+          Star Light 서비스를 통해 나만 알고 있는 갓띵곡을 공유해보세요!
+        </TopLabelText>
+      )}
       <InputContentSection isSmallMode={isSmallMode} />
     </Container>
   )
@@ -102,6 +103,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="이메일 입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onEmailChange}
+        color="#fff"
       />
       <InputSpacingBox isSmall={emailFormatErrorText != null} />
       <PasswordInput
@@ -110,6 +112,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="비밀번호 입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onPwdChange}
+        color="#fff"
       />
       <InputSpacingBox isSmall />
       <PasswordInput
@@ -118,6 +121,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="비밀번호 재입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onPwdConfirmChange}
+        color="#fff"
       />
       <InputSpacingBox isSmall={pwdConfirmErrorText != null} />
       <OutlineInput
@@ -127,6 +131,7 @@ const InputContentSection = ({ isSmallMode }) => {
         size={isSmallMode ? "small" : "medium"}
         onChange={onNicknameChange}
         maxLength={6}
+        color="#fff"
       />
       <FullWidthButton onClick={() => signUp()} size={isSmallMode ? "small" : "medium"}>
         {isLoading ? (

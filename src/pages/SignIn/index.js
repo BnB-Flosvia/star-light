@@ -3,7 +3,7 @@ import styled from "styled-components"
 import SignInContent from "pages/SignIn/SignInContent"
 import { withRouter } from "react-router-dom"
 import useSignInPageData from "utils/hooks/signIn/useSignInPageData"
-import { backgroundPrimaryColor1 } from "styles/colors"
+// import { darkPrimaryColor } from "styles/colors"
 
 const PageContainer = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const PageContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: ${backgroundPrimaryColor1};
+  background: radial-gradient(ellipse at bottom, #243a73 0%, #090b21 100%);
 `
 
 function SignInPage({ history }) {
