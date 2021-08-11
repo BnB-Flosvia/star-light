@@ -81,6 +81,13 @@ const LengthText = styled.div`
   color: ${(props) => props.color};
 `
 
+const InputWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: fit-content;
+  justify-content: flex-end;
+`
+
 export const InputTemplete = ({
   labelText,
   errorText,
@@ -99,21 +106,14 @@ export const InputTemplete = ({
           {labelText}
         </LabelText>
       )}
-      <div
-        style={{
-          display: "flex",
-          flexFlow: "column",
-          width: "fit-content",
-          justifyContent: "flex-end",
-        }}
-      >
+      <InputWrapper>
         {inputFn(isError)}
         {maxLength && (
           <LengthText color={color}>
             {currentLength} / {maxLength}
           </LengthText>
         )}
-      </div>
+      </InputWrapper>
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>
     </div>
   )
