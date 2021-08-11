@@ -18,7 +18,8 @@ const Container = styled.div`
   width: 400px;
   max-width: 400px;
   height: fit-content;
-  padding: 24px 16px;
+  padding: 24px 40px;
+  box-sizing: border-box;
   & > button {
     margin-top: 24px;
   }
@@ -73,7 +74,7 @@ export default function SignInContent() {
       <Link to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</Link>
       {!isSmallMode && (
         <TopLabelText>
-          Star Light 서비스를 통해 나만 알고 있는 갓띵곡을 공유해보세요!
+          Star Light 서비스를 통해 나만 아는 띵곡을 공유해보세요!
         </TopLabelText>
       )}
       <InputContentSection isSmallMode={isSmallMode} />

@@ -12,8 +12,7 @@ import { SearchIconButton, VisibilityIconButton } from "components/IconButtons"
 
 const Input = styled.input`
   display: flex;
-  max-width: 400px;
-  width: 100%;
+  width: 320px;
   height: fit-content;
   box-sizing: border-box;
   padding: ${(props) => (props.size === "small" ? "14px" : "16px")};
@@ -58,10 +57,10 @@ const SuffixIconInputContainer = styled.div`
 `
 
 const LabelText = styled.div`
-  display: flex;
-  width: 100%;
+  display: inline-block;
   padding-bottom: 10px;
-  ${(props) => (props.size === "small" ? body3Normal : body2Normal)}
+  padding-left: 1px;
+  ${body3Normal}
   color: ${(props) => props.color};
 `
 
@@ -71,6 +70,15 @@ const ErrorText = styled.div`
   padding-top: 10px;
   ${label2Normal}
   color: ${errorColor};
+`
+
+const LengthText = styled.div`
+  display: inline-block;
+  text-align: right;
+  font-size: 13px;
+  padding-top: 6px;
+  padding-right: 4px;
+  color: ${(props) => props.color};
 `
 
 export const InputTemplete = ({
@@ -85,21 +93,25 @@ export const InputTemplete = ({
 }) => {
   const isError = errorText != null
   return (
-    <div className={className} style={{ width: "100%" }}>
+    <div className={className} style={{ width: "fit-content" }}>
       {labelText && (
         <LabelText size={size} color={color}>
           {labelText}
         </LabelText>
       )}
-      <div style={{ display: "flex", width: "100%", alignItems: "flex-end" }}>
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          width: "fit-content",
+          justifyContent: "flex-end",
+        }}
+      >
         {inputFn(isError)}
         {maxLength && (
-          <div
-            className="lengthText"
-            style={{ paddingLeft: "12px", whiteSpace: "nowrap", color }}
-          >
+          <LengthText color={color}>
             {currentLength} / {maxLength}
-          </div>
+          </LengthText>
         )}
       </div>
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>

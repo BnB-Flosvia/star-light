@@ -7,11 +7,12 @@ import useSignInPageData from "utils/hooks/signIn/useSignInPageData"
 
 const PageContainer = styled.div`
   display: flex;
+  position: relative;
   width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(ellipse at bottom, #243a73 0%, #090b21 100%);
+  background: linear-gradient(#03030b, #151a44, #335f9e);
 `
 
 function SignInPage({ history }) {

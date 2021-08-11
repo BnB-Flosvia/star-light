@@ -2,7 +2,6 @@ import React, { useCallback } from "react"
 import styled from "styled-components"
 import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
 import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
-import { body3Normal } from "styles/textTheme"
 import { OutlineInput, PasswordInput } from "components/Inputs"
 import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"
@@ -17,17 +16,17 @@ const Container = styled.div`
   width: 400px;
   max-width: 400px;
   height: fit-content;
-  padding: 24px 16px;
+  padding: 28px 40px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   & > button {
     margin-top: 24px;
   }
-`
-
-const TopLabelText = styled.span`
-  ${body3Normal}
-  color: #fff;
-  text-align: center;
-  padding: 16px 0 32px 0;
+  a {
+    padding-bottom: 12px;
+  }
 `
 
 const InputSpacingBox = styled.div`
@@ -42,11 +41,6 @@ export default function SignUpContent() {
   return (
     <Container>
       <Link to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</Link>
-      {!isSmallMode && (
-        <TopLabelText>
-          Star Light 서비스를 통해 나만 알고 있는 갓띵곡을 공유해보세요!
-        </TopLabelText>
-      )}
       <InputContentSection isSmallMode={isSmallMode} />
     </Container>
   )
