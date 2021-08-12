@@ -1,11 +1,12 @@
+![header](https://capsule-render.vercel.app/api?type=wave&color=1d254f&height=300&section=header&text=STAR%LIGHT&desc=나만%20아는%20띵곡을%20공유해보세요%21&fontSize=90)
 
 # Star Light
 ## Tech Stack
-<img src="https://img.shields.io/badge/React%20v17.0.1-61DAFB?style=flat-square&logo=React&logoColor=white"/>
-<img src="https://img.shields.io/badge/StyledComponent%20v5.1.1-DB7093?style=flat-square&logo=styled-components&logoColor=white"/>
-<img src="https://img.shields.io/badge/MobX%20v6.2.0-FF9955?style=flat-square&logo=MobX&logoColor=white"/>
-<img src="https://img.shields.io/badge/AntDesign%20v4.15.6-0170FE?style=plastic&logo=Ant%20Design&logoColor=white"/>
-<img src="https://img.shields.io/badge/MaterialUI%20v4.11.4-0081CB?style=plastic&logo=Material-UI&logoColor=white"/>
+<img src="https://img.shields.io/badge/React%20v17.0.1-61DAFB?style=flat-square&logo=React&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/StyledComponent%20v5.1.1-DB7093?style=flat-square&logo=styled-components&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/MobX%20v6.2.0-FF9955?style=flat-square&logo=MobX&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/AntDesign%20v4.15.6-0170FE?style=plastic&logo=Ant%20Design&logoColor=white"/>&nbsp
+<img src="https://img.shields.io/badge/MaterialUI%20v4.11.4-0081CB?style=plastic&logo=Material-UI&logoColor=white"/>&nbsp
 <img src="https://img.shields.io/badge/Storybook%20v5.3.19-FF4785?style=plastic&logo=Storybook&logoColor=white"/>
 
 ## 프로젝트 소개
