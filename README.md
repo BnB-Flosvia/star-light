@@ -1,44 +1,34 @@
+
 # Star Light
-띵곡 공유를 위한 웹 서비스 / [Star Light 웹 사이트](http://star-light-web.ap-northeast-2.elasticbeanstalk.com)
-
-- [Star Light](#star-light)
-  * [서비스 기능 소개](#service-features)
-    + [나만 아는 갓띵곡](#track-of-best)
-    + [이달의 명곡](#music-of-month)
-    + [명예의 전당](#hall-of-frame)
-  * [Tech Stack](#tech-stack)
-  * [Usage](#usage)
-    + [Clone repository](#clone-repository)
-    + [Install dependencies](#install-dependencies)
-    + [Run Storybook (UI Component view)](#run-storybook--ui-component-view-)
-    + [Run development (Hot Reload)](#run-development--hot-reload-)
-    + [Run code lint check](#run-code-lint-check)
-    + [Run code lint auto fix](#run-code-lint-auto-fix)
-    + [Run development build](#run-development-build)
-    + [Run production build](#run-production-build)
-  * [Todo](#todo)
-  * [Reference](#reference)
-
-## Service Features
-> 서비스 기능 소개
-### Track of best
-> 나만 아는 갓띵곡
-- 다른 사용자들이 등록한 숨겨진 **띵곡**들을 찾아볼 수 있습니다!
-- 태그를 사용하여 원하는 장르, 가수, 분위기 등 다양한 토픽으로 음악을 검색할 수 있습니다.
-- 나만 알고 있는 띵곡이 있다면! 내가 직접 음악 정보를 등록해서 다른 사용자와 공유할 수도 있습니다!
-### Music of month
-> 이달의 명곡
-- 기능 오픈 예정
-### Hall of frame
-> 명예의 전당
-- 기능 오픈 예정
-
 ## Tech Stack
-
-- React + MobX + Styled-component + Axios
+<img src="https://img.shields.io/badge/React v17-#61DAFB?style=flat-square&logo=react&logoColor=white"/></a>&nbsp 
+React + MobX + Styled-component + Axios
 - Using Storybook for testing
 
-## Usage
+## 프로젝트 소개
+- [Star Light 웹 서비스 URL](http://star-light-web.ap-northeast-2.elasticbeanstalk.com)
+
+<h3>"나만 듣는 이 노래, 다른 사람들에게도 알려주고 싶다!" 라는 생각에서 시작된 프로젝트입니다.</h3>
+사람들은 저마다 다른 음악 취향을 가지고 자신만의 특색이 담긴 플레이리스트를 만듭니다. 
+그 안에는 어딜가나 자주 들을 수 있는 곡이 있을 수도 있고, 아주 소수의 사람들만 듣는 곡이 있을 수도 있습니다.
+매일 내 이어폰으로 흘러나오는 그 노래들을 다른 사람과 공유해보는 것은 어떨까요? 
+내가 좋아하는 이 노래를 다른 사람의 플레이리스트에 넣게될 수도 있고 아니면 내 플레이리스트를 채울 다른 음악을 찾을 수도 있을 겁니다!
+
+## 기능 소개
+
+### 나만 아는 갓띵곡
+- 다른 사용자들이 등록한 숨겨진 **띵곡**들을 볼 수 있습니다.
+- **태그**를 사용하여 원하는 장르, 가수, 분위기 등 다양한 토픽으로 음악을 검색할 수 있습니다.
+- 목록 아이템을 클릭하면 상세화면에서 추천자가 작성한 이 노래가 좋은 이유와 음악을 들을 수 있는 유튜브 플레이어가 표시됩니다.
+- 내가 추천하고 싶은 노래가 있다면 새 아이템을 추가할 수 있습니다. 단, 로그인된 사용자만 이용할 수 있는 기능입니다.
+
+### 이달의 명곡
+- 기능 오픈 예정
+
+### 명예의 전당
+- 기능 오픈 예정
+
+## 개발 환경 설정 및 기타 툴 사용방법
 
 ### Clone repository
 
@@ -84,17 +74,17 @@
 
 - `npm run build`
 
-## Todo
+## TODO
 
-- react-testing-library, Jest testing
-- swr || react-query
-- mobx devtools
-- storyboard addon
+- 네비게이션 바 디자인 수정 (반응형을 위해 모바일 뷰에서는 아이콘으로 열었다 닫았다 할 수 있도록 수정)
+- 테스트 환경 구축 (react-testing-library, Jest, Cypress)
+- storyboard에 추가할만한 addon이 더 있을지 알아보기 
+- 초기 렌더링 속도 향상 + SEO를 위해 SSR 도입 생각중 (Next.js)
+- light house 성능 측정
 
 ## Reference
 
 - [Star Light Design in Figma](https://www.figma.com/file/NyRHXYp1ydVb9l4yoHmDtH/Star-Light-Web?node-id=0%3A1)
-  - If you need authorization for figma design, notify this email => "dkdudkc22@gmail.com"
 - [Star Light Storyboard v1.0](https://docs.google.com/presentation/d/1Sp_AaRGX0Djxg1bEWvEA5sCDMwHlt4ju8T6O6NrWqA0/edit?usp=sharing)
 - [Star Light Requirements Specification](https://hackmd.io/@starmango/service-specification)
 - [Star Light 웹 개발 로그](https://hackmd.io/@starmango/development-log)
