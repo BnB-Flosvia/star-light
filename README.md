@@ -6,7 +6,6 @@
 <img src="https://img.shields.io/badge/StyledComponent%20v5.1.1-DB7093?style=plastic&logo=styled-components&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/MobX%20v6.2.0-FF9955?style=plastic&logo=MobX&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/AntDesign%20v4.15.6-0170FE?style=plastic&logo=Ant%20Design&logoColor=white"/>&nbsp;
-<img src="https://img.shields.io/badge/MaterialUI%20v4.11.4-0081CB?style=plastic&logo=Material-UI&logoColor=white"/>&nbsp;
 <img src="https://img.shields.io/badge/Storybook%20v5.3.19-FF4785?style=plastic&logo=Storybook&logoColor=white"/>
 
 ## 🎵 프로젝트 소개
