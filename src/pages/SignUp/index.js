@@ -3,7 +3,6 @@ import styled from "styled-components"
 import SignUpContent from "pages/SignUp/SignUpContent"
 import { withRouter } from "react-router-dom"
 import useSignUpPageData from "utils/hooks/signUp/useSignUpPageData"
-import { backgroundPrimaryColor1 } from "styles/colors"
 import { message } from "antd"
 
 const PageContainer = styled.div`
@@ -12,7 +11,7 @@ const PageContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-  background: ${backgroundPrimaryColor1};
+  background: radial-gradient(ellipse at bottom, #386cad 0%, #161d4b 90%);
 `
 
 function SignUpPage({ history }) {
