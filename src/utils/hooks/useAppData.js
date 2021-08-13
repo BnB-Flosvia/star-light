@@ -5,7 +5,7 @@ function useAppData() {
   const { app } = useStores()
   return useObserver(() => ({
     initialized: app.initialized,
-    checkLocalToken: app.checkLocalToken,
+    checkLocalTokenIsValid: app.checkLocalTokenIsValid,
     nickname: app.nickname,
   }))
 }

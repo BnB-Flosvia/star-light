@@ -7,7 +7,7 @@ import NavigationBar from "components/NavigationBar"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import Header from "components/Header"
 import Footer from "components/Footer"
-import { checkLocalToken } from "authProvider"
+import { checkLocalToken } from "utils/authProvider"
 import { message } from "antd"
 
 const GlobalStyle = createGlobalStyle`
