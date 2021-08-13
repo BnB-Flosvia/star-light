@@ -5,7 +5,7 @@ import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
 import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
 import { useMediaQuery } from "react-responsive"
 import { body2Normal } from "styles/textTheme"
-import { GitHub } from "@material-ui/icons"
+import { GithubOutlined } from "@ant-design/icons"
 
 const Container = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ export default function Footer() {
       <InfoSection>
         <span>BnB-Flosvia ⓒ 2021</span>
         <a href="https://github.com/BnB-Flosvia" target="_blank" rel="noreferrer">
-          <GitHub style={{ color: "#fff" }} />
+          <GithubOutlined style={{ color: "#fff", fontSize: "24px" }} />
         </a>
       </InfoSection>
     </Container>

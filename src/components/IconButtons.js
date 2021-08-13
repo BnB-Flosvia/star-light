@@ -2,14 +2,12 @@ import React from "react"
 import styled from "styled-components"
 import { secondaryColor, primaryTextColor } from "src/styles/colors"
 import {
-  ArrowDropDown,
-  ArrowDropUp,
-  Visibility,
-  VisibilityOff,
-  GitHub,
-  Search,
-  MoreVert,
-} from "@material-ui/icons"
+  CaretDownOutlined,
+  CaretUpOutlined,
+  GithubOutlined,
+  SearchOutlined,
+  MoreOutlined,
+} from "@ant-design/icons"
 import { interactionColor, secondaryTextColor } from "styles/colors"
 
 const SmallButtonContainer = styled.button`
@@ -64,7 +62,7 @@ export const DropdownIconButton = ({ isOpen = false, onClick }) => {
         }
       }}
     >
-      {isOpen ? <ArrowDropUp /> : <ArrowDropDown />}
+      {isOpen ? <CaretUpOutlined /> : <CaretDownOutlined />}
     </SmallButtonContainer>
   )
 }
@@ -79,7 +77,7 @@ export const GitHubIconButton = ({ onClick }) => {
         }
       }}
     >
-      <GitHub />
+      <GithubOutlined />
     </SmallButtonContainer>
   )
 }
@@ -94,21 +92,7 @@ export const SearchIconButton = ({ onClick }) => {
         }
       }}
     >
-      <Search />
-    </MediumButtonContainer>
-  )
-}
-
-export const VisibilityIconButton = ({ isVisible = false, onClick }) => {
-  return (
-    <MediumButtonContainer
-      onClick={() => {
-        if (typeof onClick === "function") {
-          onClick()
-        }
-      }}
-    >
-      {isVisible ? <VisibilityOff /> : <Visibility />}
+      <SearchOutlined style={{ fontSize: "20px" }} />
     </MediumButtonContainer>
   )
 }
@@ -124,7 +108,7 @@ export const MoreVertIconButton = ({ onClick, className }) => {
       color={secondaryTextColor}
       className={className}
     >
-      <MoreVert fontSize="small" />
+      <MoreOutlined />
     </MediumCircularButtonContainer>
   )
 }

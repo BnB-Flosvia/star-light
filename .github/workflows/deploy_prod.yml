@@ -5,7 +5,7 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ dev ]
+    branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -32,15 +32,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.18.3'
-      
+
       - name: Set Api server url
-        run: echo REACT_APP_HOST=${{ secrets.REACT_APP_HOST_DEV }} | tee .env
+        run: echo REACT_APP_HOST=${{ secrets.REACT_APP_HOST_MASTER }} | tee .env
 
       - name: Install packages
         run: npm install
 
       - name: Build
-        run: npm run build:dev
+        run: npm run build
       
       # - name: Copy build to app
       #   run: |
@@ -56,7 +56,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: star-light-web-dev
-          environment_name: star-light-web-dev-node-12
+          environment_name: star-light-web-node-12
           version_label: ${{ github.sha }}
           region: ap-northeast-2
           deployment_package: deploy-web.zip

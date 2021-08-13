@@ -9,7 +9,7 @@ import {
   primaryTextColor,
   secondaryTextColor,
 } from "styles/colors"
-import { ArrowDropDown } from "@material-ui/icons"
+import { CaretDownOutlined } from "@ant-design/icons"
 
 const Container = styled.div`
   .ant-select-selector {
@@ -110,7 +110,7 @@ export default function TagSelectInput({
         size={isSmall ? null : "large"}
         suffixIcon={
           <IconContainer>
-            <ArrowDropDown style={{ color: `${primaryTextColor}` }} />
+            <CaretDownOutlined style={{ color: `${primaryTextColor}` }} />
           </IconContainer>
         }
         dropdownMatchSelectWidth={false}

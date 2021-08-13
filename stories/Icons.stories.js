@@ -1,14 +1,12 @@
 import React from "react"
 import { secondaryColor } from "src/styles/colors"
 import {
-  PersonOutline,
-  ArrowDropDown,
-  ArrowDropUp,
+  CaretDownOutlined,
+  CaretUpOutlined,
+  GithubOutlined,
   Search,
-  Visibility,
-  VisibilityOff,
-  GitHub,
-} from "@material-ui/icons"
+  UserOutlined,
+} from "@ant-design/icons"
 
 export default {
   title: "Icons",
@@ -23,8 +21,8 @@ export function MaterialIcons() {
           marginBottom: "10px",
         }}
       >
-        <ArrowDropDown />
-        <ArrowDropUp />
+        <CaretDownOutlined />
+        <CaretUpOutlined />
       </div>
       <div
         style={{
@@ -37,12 +35,11 @@ export function MaterialIcons() {
       <div
         style={{
           marginBottom: "10px",
+          background: "black",
+          width: "fit-content",
         }}
       >
-        <Visibility />
-        <VisibilityOff />
-        <Visibility style={{ color: `${secondaryColor}` }} />
-        <VisibilityOff style={{ color: `${secondaryColor}` }} />
+        <UserOutlined style={{ color: "#fff" }} />
       </div>
       <div
         style={{
@@ -51,16 +48,7 @@ export function MaterialIcons() {
           width: "fit-content",
         }}
       >
-        <PersonOutline style={{ color: "#fff" }} />
-      </div>
-      <div
-        style={{
-          marginBottom: "10px",
-          background: "black",
-          width: "fit-content",
-        }}
-      >
-        <GitHub style={{ color: "#fff" }} />
+        <GithubOutlined style={{ color: "#fff" }} />
       </div>
     </>
   )
