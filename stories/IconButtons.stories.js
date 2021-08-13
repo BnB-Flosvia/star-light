@@ -5,7 +5,6 @@ import {
   DropdownIconButton,
   GitHubIconButton,
   SearchIconButton,
-  VisibilityIconButton,
 } from "src/components/IconButtons"
 
 export default {
@@ -50,19 +49,12 @@ export function SmallIconButtons() {
 
 // 36*36
 export function MediumIconButtons() {
-  const [isVisible, setIsVisible] = useState(false)
   return (
     <>
       <SectionTitle>Medium size(36*36) icon buttons</SectionTitle>
       <SearchIconButton
         onClick={() => {
           alert("Click search button!")
-        }}
-      />
-      <VisibilityIconButton
-        isVisible={isVisible}
-        onClick={() => {
-          setIsVisible((_isVisible) => !_isVisible)
         }}
       />
     </>
