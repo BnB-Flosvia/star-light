@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { PersonOutline } from "@material-ui/icons"
+import { UserOutlined } from "@ant-design/icons"
 import {
   body1Bold,
   body2Bold,
@@ -117,7 +117,7 @@ export const DarkSmallButton = styled.button`
 export const UserSettingButton = ({ onClick, ref }) => {
   return (
     <CircleButtonContainer onClick={() => onClick()} ref={ref}>
-      <PersonOutline />
+      <UserOutlined />
     </CircleButtonContainer>
   )
 }

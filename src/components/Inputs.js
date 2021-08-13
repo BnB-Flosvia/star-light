@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import {
   primaryTextColor,
@@ -8,7 +8,7 @@ import {
   secondaryTextColor,
 } from "styles/colors"
 import { body2Normal, label2Normal, body3Normal } from "styles/textTheme"
-import { SearchIconButton, VisibilityIconButton } from "components/IconButtons"
+import { SearchIconButton } from "components/IconButtons"
 
 const Input = styled.input`
   display: flex;
@@ -170,6 +170,7 @@ export const PasswordInput = ({
   )
 }
 
+/*
 export const CustomPasswordInput = ({
   labelText,
   errorText,
@@ -244,6 +245,7 @@ export const CustomPasswordInput = ({
     </>
   )
 }
+*/
 
 export const SearchInput = ({
   value,
