@@ -4,6 +4,7 @@ import useStores from "utils/hooks/useStores"
 function useTrackOfBestPageData() {
   const { trackOfBest } = useStores()
   return useObserver(() => ({
+    isInitialized: trackOfBest.isInitialized,
     isLoading: trackOfBest.isLoading,
     isError: trackOfBest.isError,
     isSuccess: trackOfBest.isSuccess,

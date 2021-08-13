@@ -10,10 +10,6 @@ import InfoTooltip from "components/InfoTooltip"
 import { useMediaQuery } from "react-responsive"
 import { isEmpty } from "lodash-es"
 
-const Container = styled.div`
-  padding: ${(props) => (props.isSmall ? "0 20px" : "0")};
-`
-
 const TagSearchSection = styled.div`
   display: flex;
   flex-flow: column;
@@ -37,11 +33,11 @@ const TagSearchSection = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      width: ${(props) => (props.isSmall || props.isMedium ? "38px" : "46px")};
-      height: ${(props) => (props.isSmall || props.isMedium ? "38px" : "46px")};
+      width: ${(props) => (props.isSmall ? "38px" : "46px")};
+      height: ${(props) => (props.isSmall ? "38px" : "46px")};
       border: 1px solid ${primaryTextColor};
       border-radius: 4px;
-      margin-left: ${(props) => (props.isSmall || props.isMedium ? "10px" : "16px")};
+      margin-left: ${(props) => (props.isSmall ? "10px" : "16px")};
       &:hover {
         background: ${lightInteractionColor};
       }
@@ -49,8 +45,7 @@ const TagSearchSection = styled.div`
   }
   .searchedTagText {
     ${(props) => (props.isSmall ? body2Normal : title1Normal)};
-    padding-bottom: ${(props) =>
-      props.isSmall ? "24px" : props.isMedium ? "32px" : "40px"};
+    padding-bottom: ${(props) => (props.isSmall ? "28px" : "40px")};
   }
 `
 
@@ -59,11 +54,11 @@ const ButtonGroupContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  margin: ${(props) =>
-    props.isSmall ? "20px 0 24px" : props.isMedium ? "24px 0 30px" : "28px 0 40px"};
+  margin: ${(props) => (props.isSmall ? "24px 0 30px" : "28px 0 40px")};
 `
 
 export default function HeaderSection({
+  isLoading,
   tagOptions,
   onTagChange,
   onSearch,
@@ -71,11 +66,8 @@ export default function HeaderSection({
   onOrderChange,
   searchedTagList,
 }) {
-  const isSmallMode = useMediaQuery({
-    query: "(max-width: 420px)",
-  })
-  const isMediumMode = useMediaQuery({
-    query: "(min-width: 420px) and (max-width: 768px)",
+  const isSmallOrMediumMode = useMediaQuery({
+    query: "(max-width: 768px)",
   })
 
   // TODO: change order type id
@@ -91,12 +83,16 @@ export default function HeaderSection({
   ]
 
   return (
-    <Container isSmall={isSmallMode}>
-      <TagSearchSection isSmall={isSmallMode} isMedium={isMediumMode}>
-        {!isEmpty(searchedTagList) && (
-          <div className="searchedTagText">
-            {searchedTagList.join(", ")}에 대한 검색결과 🔍
-          </div>
+    <>
+      <TagSearchSection isSmall={isSmallOrMediumMode}>
+        {isLoading ? (
+          <div className="searchedTagText">...검색 중</div>
+        ) : (
+          !isEmpty(searchedTagList) && (
+            <div className="searchedTagText">
+              {searchedTagList.join(", ")}에 대한 검색결과 🔍
+            </div>
+          )
         )}
         <div className="titleSection">
           <span className="title">
@@ -119,21 +115,21 @@ export default function HeaderSection({
             notFoundContent={<div>존재하지 않는 태그명입니다.</div>}
             width={250}
             onChange={onTagChange}
-            isSmall={isSmallMode || isMediumMode}
+            isSmall={isSmallOrMediumMode}
           />
           <div className="searchButton">
             <SearchIconButton onClick={onSearch} />
           </div>
         </div>
       </TagSearchSection>
-      <ButtonGroupContainer isSmall={isSmallMode} isMedium={isMediumMode}>
+      <ButtonGroupContainer isSmall={isSmallOrMediumMode}>
         <RadioButton
           items={orderTypeOptions}
           selectedId={orderType || orderTypeOptions[0]?.id}
           onChange={onOrderChange}
-          isSmall={isSmallMode || isMediumMode}
+          isSmall={isSmallOrMediumMode}
         />
-        {isSmallMode || isMediumMode ? (
+        {isSmallOrMediumMode ? (
           <div />
         ) : (
           <RoundedLinkButton to="/trackOfBest/register">
@@ -141,6 +137,6 @@ export default function HeaderSection({
           </RoundedLinkButton>
         )}
       </ButtonGroupContainer>
-    </Container>
+    </>
   )
 }

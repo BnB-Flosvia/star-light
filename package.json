@@ -6,8 +6,6 @@
     "@ant-design/icons": "latest",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-decorators": "^7.13.15",
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/icons": "^4.11.2",
     "@popperjs/core": "^2.9.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",

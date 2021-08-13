@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import {
   primaryTextColor,
@@ -8,12 +8,11 @@ import {
   secondaryTextColor,
 } from "styles/colors"
 import { body2Normal, label2Normal, body3Normal } from "styles/textTheme"
-import { SearchIconButton, VisibilityIconButton } from "components/IconButtons"
+import { SearchIconButton } from "components/IconButtons"
 
 const Input = styled.input`
   display: flex;
-  max-width: 400px;
-  width: 100%;
+  width: 320px;
   height: fit-content;
   box-sizing: border-box;
   padding: ${(props) => (props.size === "small" ? "14px" : "16px")};
@@ -58,10 +57,11 @@ const SuffixIconInputContainer = styled.div`
 `
 
 const LabelText = styled.div`
-  display: flex;
-  width: 100%;
+  display: inline-block;
   padding-bottom: 10px;
-  ${(props) => (props.size === "small" ? body3Normal : body2Normal)}
+  padding-left: 1px;
+  ${body3Normal}
+  color: ${(props) => props.color};
 `
 
 const ErrorText = styled.div`
@@ -72,6 +72,22 @@ const ErrorText = styled.div`
   color: ${errorColor};
 `
 
+const LengthText = styled.div`
+  display: inline-block;
+  text-align: right;
+  font-size: 13px;
+  padding-top: 6px;
+  padding-right: 4px;
+  color: ${(props) => props.color};
+`
+
+const InputWrapper = styled.div`
+  display: flex;
+  flex-flow: column;
+  width: fit-content;
+  justify-content: flex-end;
+`
+
 export const InputTemplete = ({
   labelText,
   errorText,
@@ -80,22 +96,24 @@ export const InputTemplete = ({
   className,
   currentLength = 0,
   maxLength,
+  color = primaryTextColor,
 }) => {
   const isError = errorText != null
   return (
-    <div className={className} style={{ width: "100%" }}>
-      {labelText && <LabelText size={size}>{labelText}</LabelText>}
-      <div style={{ display: "flex", width: "100%", alignItems: "flex-end" }}>
+    <div className={className} style={{ width: "fit-content" }}>
+      {labelText && (
+        <LabelText size={size} color={color}>
+          {labelText}
+        </LabelText>
+      )}
+      <InputWrapper>
         {inputFn(isError)}
         {maxLength && (
-          <div
-            className="lengthText"
-            style={{ paddingLeft: "12px", whiteSpace: "nowrap" }}
-          >
+          <LengthText color={color}>
             {currentLength} / {maxLength}
-          </div>
+          </LengthText>
         )}
-      </div>
+      </InputWrapper>
       <ErrorText visible={isError}>{errorText || ""}</ErrorText>
     </div>
   )
@@ -112,6 +130,7 @@ export const OutlineInput = ({
   readOnly,
   className,
   maxLength,
+  color,
 }) => {
   const [length, setLength] = useState(0)
   return (
@@ -122,6 +141,7 @@ export const OutlineInput = ({
       errorText={errorText}
       currentLength={length}
       maxLength={maxLength}
+      color={color}
       inputFn={(isError) => {
         return (
           <Input
@@ -149,12 +169,14 @@ export const PasswordInput = ({
   placeholderText,
   size,
   onChange,
+  color,
 }) => {
   return (
     <InputTemplete
       size={size}
       labelText={labelText}
       errorText={errorText}
+      color={color}
       inputFn={(isError) => {
         return (
           <Input
@@ -170,6 +192,7 @@ export const PasswordInput = ({
   )
 }
 
+/*
 export const CustomPasswordInput = ({
   labelText,
   errorText,
@@ -244,6 +267,7 @@ export const CustomPasswordInput = ({
     </>
   )
 }
+*/
 
 export const SearchInput = ({
   value,
