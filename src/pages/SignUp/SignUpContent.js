@@ -1,7 +1,5 @@
 import React, { useCallback } from "react"
 import styled from "styled-components"
-import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
-import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
 import { OutlineInput, PasswordInput } from "components/Inputs"
 import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"
@@ -9,6 +7,7 @@ import { CircleLineSpin } from "components/Spin"
 import useSignUpContentData from "utils/hooks/signUp/useSignUpContentData"
 import { Link } from "react-router-dom"
 import { whiteColor } from "styles/colors"
+import LogoText from "components/LogoText"
 
 const Container = styled.div`
   display: flex;
@@ -43,7 +42,9 @@ export default function SignUpContent() {
 
   return (
     <Container>
-      <Link to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</Link>
+      <Link to="/main">
+        <LogoText isSmall={isSmallMode} />
+      </Link>
       <InputContentSection isSmallMode={isSmallMode} />
     </Container>
   )

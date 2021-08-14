@@ -1,7 +1,5 @@
 import React, { useCallback } from "react"
 import styled from "styled-components"
-import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
-import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
 import { body3Normal, body2Normal, body2Bold, body3Bold } from "styles/textTheme"
 import { whiteColor, primaryColor, errorColor } from "styles/colors"
 import { OutlineInput, PasswordInput } from "components/Inputs"
@@ -10,6 +8,7 @@ import { useMediaQuery } from "react-responsive"
 import { Link } from "react-router-dom"
 import useSignInData from "utils/hooks/signIn/useSignInContentData"
 import { CircleLineSpin } from "components/Spin"
+import LogoText from "components/LogoText"
 
 const Container = styled.div`
   position: relative;
@@ -26,16 +25,18 @@ const Container = styled.div`
     margin-top: 24px;
   }
   a {
-    padding-bottom: 16px;
+    padding-bottom: 20px;
   }
 `
 
+/*
 const TopLabelText = styled.span`
   ${body3Normal}
   text-align: center;
   color: ${whiteColor};
   padding-bottom: 32px;
 `
+*/
 
 const LinkTextSection = styled.div`
   display: flex;
@@ -73,12 +74,14 @@ export default function SignInContent() {
 
   return (
     <Container>
-      <Link to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</Link>
-      {!isSmallMode && (
+      <Link to="/main">
+        <LogoText isSmall={isSmallMode} />
+      </Link>
+      {/*! isSmallMode && (
         <TopLabelText>
           Star Light 서비스를 통해 나만 아는 띵곡을 공유해보세요!
         </TopLabelText>
-      )}
+      ) */}
       <InputContentSection isSmallMode={isSmallMode} />
       <LinkTextSection isSmall={isSmallMode}>
         <LinkText to="/forgotpassword">비밀번호를 잊으셨나요?</LinkText>

@@ -166,7 +166,7 @@ export const label3ExtraBold = css`
 export const logoText = css`
   font-family: "Bad Script", cursive;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 24px;
+  font-size: 40px;
+  line-height: 40px;
   color: ${primaryTextColor};
 `
