@@ -2,11 +2,12 @@
  * Neutral colors, Font color
  */
 
-export const primaryTextColor = "rgba(0, 0, 0, 0.85)"
-export const secondaryTextColor = "rgba(0, 0, 0, 0.45)"
-export const disableColor = "rgba(0, 0, 0, 0.25)"
-export const borderColor = "rgba(0, 0, 0, 0.15)"
-export const dividerColor = "rgba(0, 0, 0, 0.06)"
+export const whiteColor = "#fff"
+export const primaryTextColor = "#262626"
+export const secondaryTextColor = "#8c8c8c"
+export const disableColor = "#bfbfbf"
+export const borderColor = "#d9d9d9"
+export const dividerColor = "#f0f0f0"
 
 // font color
 export const highlightTextColor = "#ac3b61"
@@ -52,3 +53,9 @@ export const darkPrimaryColor3 = "#2D3A75"
 export const backgroundPrimaryColor2 = "#f0f6ff"
 
 export const backgroundPrimaryColor1 = "#f0f7ff"
+
+/**
+ * logo text color
+ */
+
+export const logoTextColor = "#00b3ff"

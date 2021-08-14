@@ -4,7 +4,7 @@ import {
   CaretDownOutlined,
   CaretUpOutlined,
   GithubOutlined,
-  Search,
+  SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons"
 
@@ -29,8 +29,8 @@ export function MaterialIcons() {
           marginBottom: "10px",
         }}
       >
-        <Search />
-        <Search style={{ color: `${secondaryColor}` }} />
+        <SearchOutlined />
+        <SearchOutlined style={{ color: `${secondaryColor}` }} />
       </div>
       <div
         style={{

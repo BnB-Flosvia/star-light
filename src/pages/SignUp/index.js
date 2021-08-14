@@ -4,6 +4,7 @@ import SignUpContent from "pages/SignUp/SignUpContent"
 import { withRouter } from "react-router-dom"
 import useSignUpPageData from "utils/hooks/signUp/useSignUpPageData"
 import { message } from "antd"
+import Particles from "react-particles-js"
 
 const PageContainer = styled.div`
   display: flex;
@@ -12,6 +13,11 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: radial-gradient(ellipse at bottom, #386cad 0%, #161d4b 90%);
+  #tsparticles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 `
 
 function SignUpPage({ history }) {
@@ -38,6 +44,38 @@ function SignUpPage({ history }) {
 
   return (
     <PageContainer>
+      <Particles
+        params={{
+          particles: {
+            number: {
+              value: 60,
+              density: {
+                enable: true,
+                value_area: 1500,
+              },
+            },
+            line_linked: {
+              enable: true,
+              opacity: 0.2,
+            },
+            move: {
+              direction: "right",
+              speed: 0.05,
+            },
+            size: {
+              value: 2,
+            },
+            opacity: {
+              anim: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.05,
+              },
+            },
+          },
+          retina_detect: true,
+        }}
+      />
       <SignUpContent />
     </PageContainer>
   )

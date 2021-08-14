@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { secondaryColor, primaryTextColor } from "src/styles/colors"
+import { secondaryColor, primaryTextColor, whiteColor } from "src/styles/colors"
 import {
   CaretDownOutlined,
   CaretUpOutlined,
@@ -70,7 +70,7 @@ export const DropdownIconButton = ({ isOpen = false, onClick }) => {
 export const GitHubIconButton = ({ onClick }) => {
   return (
     <SmallButtonContainer
-      color="#fff"
+      color={whiteColor}
       onClick={() => {
         if (typeof onClick === "function") {
           onClick()

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { dartBackgroundColor } from "styles/colors"
+import { dartBackgroundColor, whiteColor } from "styles/colors"
 import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
 import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
 import { useMediaQuery } from "react-responsive"
@@ -24,7 +24,7 @@ const InfoSection = styled.div`
   width: fit-content;
   & > span {
     ${body2Normal}
-    color: #fff;
+    color: ${whiteColor};
     padding-right: 24px;
   }
 `
@@ -40,7 +40,7 @@ export default function Footer() {
       <InfoSection>
         <span>BnB-Flosvia ⓒ 2021</span>
         <a href="https://github.com/BnB-Flosvia" target="_blank" rel="noreferrer">
-          <GithubOutlined style={{ color: "#fff", fontSize: "24px" }} />
+          <GithubOutlined style={{ color: `${whiteColor}`, fontSize: "24px" }} />
         </a>
       </InfoSection>
     </Container>

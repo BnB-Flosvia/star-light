@@ -158,3 +158,15 @@ export const label3ExtraBold = css`
   ${label3Normal}
   font-weight: 800;
 `
+
+/**
+ * Logo
+ */
+
+export const logoText = css`
+  font-family: "Bad Script", cursive;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  color: ${primaryTextColor};
+`
