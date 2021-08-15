@@ -3,7 +3,7 @@ import styled from "styled-components"
 import SignInContent from "pages/SignIn/SignInContent"
 import { withRouter } from "react-router-dom"
 import useSignInPageData from "utils/hooks/signIn/useSignInPageData"
-// import { darkPrimaryColor } from "styles/colors"
+import Particles from "react-particles-js"
 
 const PageContainer = styled.div`
   display: flex;
@@ -13,6 +13,11 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(#03030b, #151a44, #335f9e);
+  #tsparticles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 `
 
 function SignInPage({ history }) {
@@ -32,6 +37,35 @@ function SignInPage({ history }) {
 
   return (
     <PageContainer>
+      <Particles
+        params={{
+          particles: {
+            number: {
+              value: 250,
+              density: {
+                enable: false,
+              },
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                speed: 4,
+                size_min: 0.3,
+              },
+            },
+            line_linked: {
+              enable: false,
+            },
+            move: {
+              random: true,
+              speed: 1,
+              direction: "top",
+              out_mode: "out",
+            },
+          },
+        }}
+      />
       <SignInContent />
     </PageContainer>
   )

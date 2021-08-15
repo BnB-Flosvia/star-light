@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { Select, Tag } from "antd"
 import { body2Normal, body3Normal } from "styles/textTheme"
 import {
+  whiteColor,
   borderColor,
   interactionColor,
   primaryColor,
@@ -21,7 +22,7 @@ const Container = styled.div`
   .ant-tag {
     margin-right: 5px;
     ${(props) => (props.isSmall ? body3Normal : body2Normal)};
-    color: #fff;
+    color: ${whiteColor};
     padding: 6px;
   }
 

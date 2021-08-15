@@ -38,7 +38,9 @@
     "react-easy-crop": "^3.5.1",
     "@uiw/react-markdown-preview": "^1.0.9",
     "query-string": "^7.0.0",
-    "http-proxy-middleware": "^2.0.1"
+    "http-proxy-middleware": "^2.0.1",
+    "tsparticles": "^1.33.3",
+    "react-particles-js": "^3.5.3"
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",
