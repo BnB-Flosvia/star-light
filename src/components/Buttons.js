@@ -9,6 +9,7 @@ import {
   body3Normal,
 } from "styles/textTheme"
 import {
+  whiteColor,
   borderColor,
   disableColor,
   primaryColor,
@@ -33,7 +34,7 @@ const Button = styled.button`
     color: ${darkPrimaryColor};
   }
   ${body1Bold}
-  color: #fff;
+  color: ${whiteColor};
 `
 
 const CircleButtonContainer = styled.button`
@@ -50,14 +51,14 @@ const CircleButtonContainer = styled.button`
     background: ${disableColor};
   }
   svg {
-    fill: #fff;
+    fill: ${whiteColor};
   }
 `
 
 export const FullWidthButton = styled(Button)`
   height: ${(props) => (props.size === "small" ? "40px" : "48px")};
   ${(props) => props.size === "small" && body2Bold};
-  color: #fff;
+  color: ${whiteColor};
 `
 
 export const SmallButton = styled(Button)`
@@ -65,7 +66,7 @@ export const SmallButton = styled(Button)`
   height: 40px;
   background: ${darkPrimaryColor};
   ${body3Bold}
-  color: #fff;
+  color: ${whiteColor};
 `
 
 export const RoundedLinkButton = styled(Link)`
@@ -77,7 +78,7 @@ export const RoundedLinkButton = styled(Link)`
   border-radius: 24px;
   background: ${darkPrimaryColor};
   ${(props) => (props.isSmall ? body3Normal : body2Normal)};
-  color: #fff;
+  color: ${whiteColor};
   &:hover {
     font-weight: bold;
     color: ${primaryTextColor};
@@ -104,7 +105,7 @@ export const DarkSmallButton = styled.button`
   align-items: center;
   padding: 14px 18px;
   ${body3Normal}
-  color: #fff;
+  color: ${whiteColor};
   border-radius: 4px;
   background: ${darkPrimaryColor};
   border: none;

@@ -1,8 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import { backgroundColor1 } from "styles/colors"
-import { ReactComponent as MediumLogo } from "assets/MediumLogo.svg"
-import { ReactComponent as SmallLogo } from "assets/SmallLogo.svg"
 import { useMediaQuery } from "react-responsive"
 import { logout, checkLocalToken } from "utils/authProvider"
 import Dropdown from "components/Dropdown"
@@ -10,6 +8,7 @@ import { body2Normal } from "styles/textTheme"
 import { Link, withRouter } from "react-router-dom"
 import useAppData from "utils/hooks/useAppData"
 import { RoundedLinkButton } from "./Buttons"
+import LogoText from "./LogoText"
 
 const Container = styled.div`
   display: flex;
@@ -74,7 +73,9 @@ function Header({ history }) {
   return (
     <Container isSmall={isSmallMode}>
       <div />
-      <LogoLink to="/main">{isSmallMode ? <SmallLogo /> : <MediumLogo />}</LogoLink>
+      <LogoLink to="/main">
+        <LogoText isSmall={isSmallMode} />
+      </LogoLink>
       <UserMenuSection>
         {isLoggedIn ? (
           <>
