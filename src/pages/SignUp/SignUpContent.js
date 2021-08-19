@@ -22,7 +22,6 @@ const Container = styled.div`
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   & > button {
     margin-top: 24px;
   }
@@ -135,7 +134,7 @@ const InputContentSection = ({ isSmallMode }) => {
         {isLoading ? (
           <CircleLineSpin size={isSmallMode ? "small" : "medium"} />
         ) : (
-          <span>가입하기</span>
+          <span style={{ fontSize: "14px", fontWeight: "600" }}>가입하기</span>
         )}
       </FullWidthButton>
     </>

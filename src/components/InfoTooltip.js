@@ -11,7 +11,7 @@ export default function InfoTooltip({ tooltipText }) {
       title={tooltipText}
       overlayStyle={{ fontSize: "11px" }}
     >
-      <InfoCircleOutlined style={{ color: `${primaryColor}`, fontSize: 16 }} />
+      <InfoCircleOutlined style={{ color: `${primaryColor}`, fontSize: "16px" }} />
     </Tooltip>
   )
 }

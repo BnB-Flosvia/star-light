@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { primaryTextColor, lightInteractionColor } from "styles/colors"
+import { primaryTextColor, lightInteractionColor, logoTextColor } from "styles/colors"
 import TagSelectInput from "src/components/TagSelectInput"
 import { body1Normal, body2Normal, title1Normal } from "styles/textTheme"
 import { SearchIconButton } from "components/IconButtons"
@@ -9,6 +9,7 @@ import { RoundedLinkButton } from "components/Buttons"
 import InfoTooltip from "components/InfoTooltip"
 import { useMediaQuery } from "react-responsive"
 import { isEmpty } from "lodash-es"
+import { LoadingOutlined } from "@ant-design/icons"
 
 const TagSearchSection = styled.div`
   display: flex;
@@ -46,6 +47,9 @@ const TagSearchSection = styled.div`
   .searchedTagText {
     ${(props) => (props.isSmall ? body2Normal : title1Normal)};
     padding-bottom: ${(props) => (props.isSmall ? "28px" : "40px")};
+    .infoText {
+      padding-right: 12px;
+    }
   }
 `
 
@@ -86,7 +90,10 @@ export default function HeaderSection({
     <>
       <TagSearchSection isSmall={isSmallOrMediumMode}>
         {isLoading ? (
-          <div className="searchedTagText">...검색 중</div>
+          <div className="searchedTagText">
+            <span className="infoText">...검색 중</span>
+            <LoadingOutlined style={{ color: `${logoTextColor}`, fontSize: "20px" }} />
+          </div>
         ) : (
           !isEmpty(searchedTagList) && (
             <div className="searchedTagText">

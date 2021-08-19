@@ -1,55 +1,59 @@
 import React from "react"
-import { secondaryColor } from "src/styles/colors"
+import styled from "styled-components"
 import {
   CaretDownOutlined,
   CaretUpOutlined,
   GithubOutlined,
   SearchOutlined,
   UserOutlined,
+  InfoCircleOutlined,
+  LoadingOutlined,
+  MenuOutlined,
 } from "@ant-design/icons"
 
 export default {
   title: "Icons",
+  decorators: [
+    (storyFn) => (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          background: "#000",
+        }}
+      >
+        {storyFn()}
+      </div>
+    ),
+  ],
 }
+
+const Section = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background: ${(props) => (props.color ? props.color : "none")};
+  & > span {
+    margin-bottom: 20px;
+  }
+`
 
 export function MaterialIcons() {
   return (
-    <>
-      <div
-        style={{
-          display: "flex",
-          marginBottom: "10px",
-        }}
-      >
-        <CaretDownOutlined />
-        <CaretUpOutlined />
-      </div>
-      <div
-        style={{
-          marginBottom: "10px",
-        }}
-      >
-        <SearchOutlined />
-        <SearchOutlined style={{ color: `${secondaryColor}` }} />
-      </div>
-      <div
-        style={{
-          marginBottom: "10px",
-          background: "black",
-          width: "fit-content",
-        }}
-      >
-        <UserOutlined style={{ color: "#fff" }} />
-      </div>
-      <div
-        style={{
-          marginBottom: "10px",
-          background: "black",
-          width: "fit-content",
-        }}
-      >
-        <GithubOutlined style={{ color: "#fff" }} />
-      </div>
-    </>
+    <Section>
+      <CaretDownOutlined style={{ color: "#fff" }} />
+      <CaretUpOutlined style={{ color: "#fff" }} />
+      <SearchOutlined style={{ color: "#fff", fontSize: "20px" }} />
+      <UserOutlined style={{ color: "#fff", fontSize: "20px" }} />
+      <GithubOutlined style={{ color: "#fff", fontSize: "24px" }} />
+      <InfoCircleOutlined style={{ color: "#fff", fontSize: "16px" }} />
+      <LoadingOutlined style={{ color: "#fff", fontSize: "16px" }} />
+      <LoadingOutlined style={{ color: "#fff", fontSize: "18px" }} />
+      <MenuOutlined style={{ color: "#fff", fontSize: "30px" }} />
+    </Section>
   )
 }

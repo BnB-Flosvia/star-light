@@ -118,7 +118,7 @@ export const DarkSmallButton = styled.button`
 export const UserSettingButton = ({ onClick, ref }) => {
   return (
     <CircleButtonContainer onClick={() => onClick()} ref={ref}>
-      <UserOutlined />
+      <UserOutlined style={{ fontSize: "20px" }} />
     </CircleButtonContainer>
   )
 }
