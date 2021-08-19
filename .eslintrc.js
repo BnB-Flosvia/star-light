@@ -27,8 +27,8 @@ module.exports = {
     ],
     "no-param-reassign": ["error", { props: false }],
     "react/prop-types": "off",
-    "react/jsx-props-no-spreading": "warn",
     "import/no-named-as-default-member": "off",
+    "react/jsx-props-no-spreading": "warn",
     "jsx-a11y/label-has-associated-control": "warn",
     "no-use-before-define": "warn",
     "no-shadow": "warn",
@@ -41,19 +41,13 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    camelcase: "warn",
     // https://stackoverflow.com/q/39114446/2771889
-    "linebreak-style": process.platform === "win32" ? [2, "windows"] : 0,
-
-    // Organize
-    "jsx-a11y/anchor-is-valid": "warn",
-    "import/no-unresolved": "warn",
-    "no-undef": "warn",
+    "linebreak-style": process.platform === "win32" ? ["error", "windows"] : "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/destructuring-assignment": "warn",
+    "no-nested-ternary": "off",
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-static-element-interactions": "warn",
-    "no-nested-ternary": "off",
+    camelcase: "warn",
   },
   overrides: [
     {
