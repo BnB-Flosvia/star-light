@@ -20,7 +20,7 @@ module.exports = {
   },
   rules: {
     "react/jsx-filename-extension": [
-      1,
+      "warn",
       {
         extensions: [".js", ".jsx"],
       },
@@ -46,18 +46,18 @@ module.exports = {
     "linebreak-style": process.platform === "win32" ? [2, "windows"] : 0,
 
     // Organize
-    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/anchor-is-valid": "warn",
     "import/no-unresolved": "off",
     "no-undef": "warn",
     "react/jsx-one-expression-per-line": "off",
-    "react/destructuring-assignment": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
-    "no-nested-ternary": "off",
+    "react/destructuring-assignment": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "no-nested-ternary": "warn",
   },
   overrides: [
     {
-      files: ["*.test.js", "*.spec.js", "*.stories.js", "TestSetup.js"],
+      files: ["*.stories.js"],
       rules: {
         "import/no-extraneous-dependencies": "off",
         "no-unused-expressions": "off",
