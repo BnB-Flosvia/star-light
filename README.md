@@ -87,11 +87,10 @@
 
 ## 📝 TODO
 
-- 네비게이션 바 디자인 수정 (반응형을 위해 모바일 뷰에서는 아이콘으로 열었다 닫았다 할 수 있도록 수정)
 - 테스트 환경 구축 (react-testing-library, Jest, Cypress)
 - storyboard에 추가할만한 addon이 더 있을지 알아보기
 - 초기 렌더링 속도 향상 + SEO를 위해 SSR 도입 생각중 (Next.js)
-- light house 성능 측정
+- light house 성능 측정 후 개선
 
 ## 📘 Reference
 
