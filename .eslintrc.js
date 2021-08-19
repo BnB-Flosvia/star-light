@@ -47,18 +47,19 @@ module.exports = {
 
     // Organize
     "jsx-a11y/anchor-is-valid": "warn",
-    "import/no-unresolved": "off",
+    "import/no-unresolved": "warn",
     "no-undef": "warn",
     "react/jsx-one-expression-per-line": "off",
     "react/destructuring-assignment": "warn",
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-static-element-interactions": "warn",
-    "no-nested-ternary": "warn",
+    "no-nested-ternary": "off",
   },
   overrides: [
     {
       files: ["*.stories.js"],
       rules: {
+        "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "no-unused-expressions": "off",
         "no-alert": "off",

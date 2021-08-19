@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { primaryTextColor, lightInteractionColor } from "styles/colors"
-import TagSelectInput from "src/components/TagSelectInput"
+import TagSelectInput from "components/TagSelectInput"
 import { body1Normal, body2Normal, title1Normal } from "styles/textTheme"
 import { SearchIconButton } from "components/IconButtons"
 import RadioButton from "components/RadioButton"

@@ -1,6 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import { secondaryColor, primaryTextColor, whiteColor } from "src/styles/colors"
+import {
+  secondaryColor,
+  primaryTextColor,
+  whiteColor,
+  interactionColor,
+  secondaryTextColor,
+} from "styles/colors"
 import {
   CaretDownOutlined,
   CaretUpOutlined,
@@ -8,7 +14,6 @@ import {
   SearchOutlined,
   MoreOutlined,
 } from "@ant-design/icons"
-import { interactionColor, secondaryTextColor } from "styles/colors"
 
 const SmallButtonContainer = styled.button`
   display: flex;
