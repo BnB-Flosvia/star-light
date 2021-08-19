@@ -28,11 +28,6 @@ module.exports = {
     "no-param-reassign": ["error", { props: false }],
     "react/prop-types": "off",
     "import/no-named-as-default-member": "off",
-    "react/jsx-props-no-spreading": "warn",
-    "jsx-a11y/label-has-associated-control": "warn",
-    "no-use-before-define": "warn",
-    "no-shadow": "warn",
-    "import/prefer-default-export": "warn",
     "no-unused-vars": [
       "error",
       {
@@ -47,6 +42,8 @@ module.exports = {
     "no-nested-ternary": "off",
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-static-element-interactions": "warn",
+    "no-use-before-define": "warn",
+    "import/prefer-default-export": "warn",
     camelcase: "warn",
   },
   overrides: [
