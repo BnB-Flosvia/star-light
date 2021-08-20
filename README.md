@@ -81,9 +81,9 @@
 
 ### Run code lint auto fix
 
-- fix code style (code formatting)
+- fix code style / code formatting
 - not all problems are fixed.
-- `npm start lint:fix && npm start format`
+- `npm run lint:fix && npm run format`
 
 ## 📝 TODO
 
