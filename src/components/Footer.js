@@ -1,29 +1,42 @@
 import React from "react"
 import styled from "styled-components"
-import { dartBackgroundColor, whiteColor } from "styles/colors"
+import {
+  borderColor,
+  lightBackgroundColor,
+  primaryTextColor,
+  secondaryTextColor,
+} from "styles/colors"
 import { useMediaQuery } from "react-responsive"
 import { body2Normal } from "styles/textTheme"
 import { GithubOutlined } from "@ant-design/icons"
 
-const Container = styled.div`
+const Container = styled.footer`
   display: flex;
-  flex-flow: column;
   width: 100%;
-  flex: ${(props) => (props.isSmall ? "0 0 50px" : "0 0 60px")};
+  flex: ${(props) => (props.isSmall ? "0 0 60px" : "0 0 70px")};
   align-items: center;
   justify-content: center;
-  background: ${dartBackgroundColor};
+  background: ${lightBackgroundColor};
+  padding: 0 0 10px;
+  border-top: 1px solid ${borderColor};
+  margin: 0;
 `
 
 const InfoSection = styled.div`
   display: flex;
   margin-top: 10px;
   align-items: center;
+  height: 100%;
   width: fit-content;
   & > span {
     ${body2Normal}
-    color: ${whiteColor};
-    padding-right: 24px;
+    color: ${secondaryTextColor};
+    padding-right: 12px;
+  }
+  a:hover {
+    svg {
+      fill: ${primaryTextColor};
+    }
   }
 `
 
@@ -35,9 +48,9 @@ export default function Footer() {
   return (
     <Container isSmall={isSmallMode}>
       <InfoSection>
-        <span>BnB-Flosvia ⓒ 2021</span>
+        <span>ⓒ 2021 BnB-Flosvia. All Rights Reserved.</span>
         <a href="https://github.com/BnB-Flosvia" target="_blank" rel="noreferrer">
-          <GithubOutlined style={{ color: `${whiteColor}`, fontSize: "24px" }} />
+          <GithubOutlined style={{ color: `${secondaryTextColor}`, fontSize: "24px" }} />
         </a>
       </InfoSection>
     </Container>

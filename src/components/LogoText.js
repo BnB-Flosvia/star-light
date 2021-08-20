@@ -7,7 +7,8 @@ const LogoContainer = styled.h1`
   margin: 0;
   padding: 0;
   ${logoText};
-  line-height: 56px;
+  font-size: ${(props) => (props.isSmall ? "24px" : "40px")};
+  line-height: ${(props) => (props.isSmall ? "40px" : "56px")};
   color: transparent;
   & > span:nth-child(5n + 1) {
     animation-delay: 0.5s;
@@ -38,10 +39,9 @@ const animate = keyframes`
                  0 0 200px ${logoTextColor},
                  0 0 300px ${logoTextColor},
                  0 0 400px ${logoTextColor};
-  },
+  }
   100% {
     color: ${whiteColor};
-    filter: blur(1px);
     text-shadow: 0 0 10px ${logoTextColor},
                  0 0 20px ${logoTextColor},
                  0 0 40px ${logoTextColor},
@@ -55,12 +55,17 @@ const animate = keyframes`
 
 const LogoWordItem = styled.span`
   display: table-cell;
-  animation: ${animate} 1s linear infinite;
+  animation-name: ${animate};
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
 `
 
-export default function LogoText() {
+export default function LogoText({ isSmall }) {
   return (
-    <LogoContainer>
+    <LogoContainer isSmall={isSmall}>
       <LogoWordItem>S</LogoWordItem>
       <LogoWordItem>t</LogoWordItem>
       <LogoWordItem>a</LogoWordItem>
