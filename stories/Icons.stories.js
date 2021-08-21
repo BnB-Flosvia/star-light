@@ -42,7 +42,7 @@ const Section = styled.div`
   }
 `
 
-export function MaterialIcons() {
+export function AntDesignIcons() {
   return (
     <Section>
       <CaretDownOutlined style={{ color: "#fff" }} />

@@ -13,6 +13,7 @@ import {
 import { MoreVertIconButton } from "components/IconButtons"
 import Dropdown from "components/Dropdown"
 import { Modal } from "antd"
+import DropdownContainer from "components/DropdownContainer"
 
 const { confirm } = Modal
 
@@ -121,9 +122,11 @@ export default function HeaderSection({
             <Dropdown
               className="moreButtonDropdown"
               buildCustomButton={onMoreButtonClick}
-              menus={moreButtonMenu}
               placement="bottom-start"
               offset={[0, 10]}
+              dropdownContainerBuilder={() => {
+                return <DropdownContainer menus={moreButtonMenu} isSmall={isSmallMode} />
+              }}
             />
           )}
         </div>

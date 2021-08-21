@@ -13,6 +13,7 @@ import {
   GithubOutlined,
   SearchOutlined,
   MoreOutlined,
+  MenuOutlined,
 } from "@ant-design/icons"
 
 const SmallButtonContainer = styled.button`
@@ -30,6 +31,16 @@ const SmallButtonContainer = styled.button`
 `
 
 const MediumButtonContainer = styled(SmallButtonContainer)`
+  width: 30px;
+  height: 30px;
+  &:hover {
+    svg {
+      fill: ${secondaryColor};
+    }
+  }
+`
+
+const LargeButtonContainer = styled(SmallButtonContainer)`
   width: 36px;
   height: 36px;
   &:hover {
@@ -90,7 +101,7 @@ export const GitHubIconButton = ({ onClick }) => {
 // 36*36 size
 export const SearchIconButton = ({ onClick }) => {
   return (
-    <MediumButtonContainer
+    <LargeButtonContainer
       onClick={() => {
         if (typeof onClick === "function") {
           onClick()
@@ -98,7 +109,7 @@ export const SearchIconButton = ({ onClick }) => {
       }}
     >
       <SearchOutlined style={{ fontSize: "20px" }} />
-    </MediumButtonContainer>
+    </LargeButtonContainer>
   )
 }
 
@@ -115,5 +126,20 @@ export const MoreVertIconButton = ({ onClick, className }) => {
     >
       <MoreOutlined />
     </MediumCircularButtonContainer>
+  )
+}
+
+export const MenuIconButton = ({ onClick }) => {
+  return (
+    <MediumButtonContainer
+      color="#fff"
+      onClick={() => {
+        if (typeof onClick === "function") {
+          onClick()
+        }
+      }}
+    >
+      <MenuOutlined style={{ fontSize: "24px" }} />
+    </MediumButtonContainer>
   )
 }

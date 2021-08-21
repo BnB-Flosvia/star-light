@@ -3,7 +3,6 @@ import React from "react"
 import styled, { createGlobalStyle } from "styled-components"
 import { PORTAL_ELEMENT_ID } from "components/Portal"
 import { Redirect, Route } from "react-router-dom"
-import NavigationBar from "components/NavigationBar"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import Header from "components/Header"
 import Footer from "components/Footer"
@@ -61,15 +60,6 @@ export default function RouteContainer({
 
   const isAllowed = !requiredLogin || checkLocalToken()
 
-  const onScroll = (_event) => {
-    /*
-    const scrollTop = event?.currentTarget?.scrollTop
-    if (scrollTop > 80) {
-      console.log(scrollTop)
-    }
-    */
-  }
-
   if (!isAllowed) {
     message.error("해당 기능은 로그인 후 이용하실 수 있습니다.")
 
@@ -85,13 +75,12 @@ export default function RouteContainer({
       <GlobalStyle />
       <div id={PORTAL_ELEMENT_ID} />
       <Container>
-        <ScrollContainer onScroll={onScroll}>
+        <ScrollContainer>
           {fullSize ? (
             childComponent
           ) : (
             <>
               <Header />
-              <NavigationBar isFixed={false} />
               <ContentContainer>{childComponent}</ContentContainer>
               {!hiddenFooter && <Footer />}
             </>
