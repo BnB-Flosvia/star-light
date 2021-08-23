@@ -20,7 +20,7 @@ export const lightBackgroundColor = "#f3ebe7"
 export const backgroundColor1 = "#eee2dc"
 export const backgroundColor2 = "#edc7b7"
 export const selectedBackgroundColor = "#e9ab91"
-export const dartBackgroundColor = "#1f2f4d"
+export const darkBackgroundColor = "#1f2f4d"
 
 /**
  * System color

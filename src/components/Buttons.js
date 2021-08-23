@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { UserOutlined } from "@ant-design/icons"
+import { CaretDownOutlined, UserOutlined } from "@ant-design/icons"
 import {
   body1Bold,
   body2Bold,
@@ -11,11 +11,13 @@ import {
 import {
   whiteColor,
   borderColor,
-  disableColor,
   primaryColor,
   primaryTextColor,
   interactionColor,
   darkPrimaryColor,
+  dividerColor,
+  darkBackgroundColor,
+  disableColor,
 } from "styles/colors"
 import { Link } from "react-router-dom"
 
@@ -37,7 +39,28 @@ const Button = styled.button`
   color: ${whiteColor};
 `
 
-const CircleButtonContainer = styled.button`
+const UserSettingButtonWrapper = styled.button`
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  .iconBox {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+  &:hover {
+    background: transparent;
+    border: none;
+  }
+  &:hover .iconBox svg {
+    fill: ${disableColor};
+  }
+`
+
+const CircleButtonContainer = styled.div`
   display: flex;
   width: 30px;
   height: 30px;
@@ -47,9 +70,6 @@ const CircleButtonContainer = styled.button`
   justify-content: center;
   align-items: center;
   background: ${borderColor};
-  &:hover {
-    background: ${disableColor};
-  }
   svg {
     fill: ${whiteColor};
   }
@@ -71,14 +91,16 @@ export const SmallButton = styled(Button)`
 
 export const RoundedLinkButton = styled(Link)`
   display: flex;
-  padding: 12px 24px;
+  padding: 12px 16px;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  border-radius: 24px;
-  background: ${darkPrimaryColor};
+  border-radius: 60px;
+  background: ${darkBackgroundColor};
   ${(props) => (props.isSmall ? body3Normal : body2Normal)};
-  color: ${whiteColor};
+  font-style: normal;
+  font-weight: 400;
+  color: ${dividerColor};
   &:hover {
     font-weight: bold;
     color: ${primaryTextColor};
@@ -117,8 +139,13 @@ export const DarkSmallButton = styled.button`
 
 export const UserSettingButton = ({ onClick, ref }) => {
   return (
-    <CircleButtonContainer onClick={() => onClick()} ref={ref}>
-      <UserOutlined />
-    </CircleButtonContainer>
+    <UserSettingButtonWrapper onClick={() => onClick()} ref={ref}>
+      <CircleButtonContainer className="userMenuButton">
+        <UserOutlined style={{ fontSize: "20px" }} />
+      </CircleButtonContainer>
+      <div className="iconBox">
+        <CaretDownOutlined style={{ color: "#fff" }} />
+      </div>
+    </UserSettingButtonWrapper>
   )
 }

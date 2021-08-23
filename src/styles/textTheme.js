@@ -8,6 +8,7 @@ import { primaryTextColor } from "styles/colors"
 export const title1Normal = css`
   font-family: "Nanum Gothic", sans-serif;
   font-weight: 400;
+  font-style: normal;
   font-size: 20px;
   line-height: 20px;
   color: ${primaryTextColor};

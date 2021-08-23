@@ -7,7 +7,7 @@ import {
   disableColor,
 } from "styles/colors"
 import { body1Normal, body2Normal } from "styles/textTheme"
-import { menus } from "constants/menus"
+import menus from "constants/menus"
 import { useMediaQuery } from "react-responsive"
 import { Link, useLocation } from "react-router-dom"
 import PerfectScrollBar from "react-perfect-scrollbar"

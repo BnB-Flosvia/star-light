@@ -20,19 +20,14 @@ module.exports = {
   },
   rules: {
     "react/jsx-filename-extension": [
-      1,
+      "warn",
       {
         extensions: [".js", ".jsx"],
       },
     ],
     "no-param-reassign": ["error", { props: false }],
     "react/prop-types": "off",
-    "react/jsx-props-no-spreading": "warn",
     "import/no-named-as-default-member": "off",
-    "jsx-a11y/label-has-associated-control": "warn",
-    "no-use-before-define": "warn",
-    "no-shadow": "warn",
-    "import/prefer-default-export": "warn",
     "no-unused-vars": [
       "error",
       {
@@ -41,24 +36,21 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    camelcase: "warn",
     // https://stackoverflow.com/q/39114446/2771889
-    "linebreak-style": process.platform === "win32" ? [2, "windows"] : 0,
-
-    // Organize
-    "jsx-a11y/anchor-is-valid": "off",
-    "import/no-unresolved": "off",
-    "no-undef": "warn",
+    "linebreak-style": process.platform === "win32" ? ["error", "windows"] : "off",
     "react/jsx-one-expression-per-line": "off",
-    "react/destructuring-assignment": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-static-element-interactions": "off",
     "no-nested-ternary": "off",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "no-use-before-define": "warn",
+    "import/prefer-default-export": "warn",
+    camelcase: "warn",
   },
   overrides: [
     {
-      files: ["*.test.js", "*.spec.js", "*.stories.js", "TestSetup.js"],
+      files: ["*.stories.js"],
       rules: {
+        "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "no-unused-expressions": "off",
         "no-alert": "off",

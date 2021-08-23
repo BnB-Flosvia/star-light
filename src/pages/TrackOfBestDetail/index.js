@@ -175,10 +175,9 @@ function TrackOfBestDetailPage({ match, history }) {
         }}
         onReady={onReady}
       />
-      <SimplePointText
-        isSmallMode={isSmallMode}
-        isMediumMode={isMediumMode}
-      >{`"${simplePoint}"`}</SimplePointText>
+      <SimplePointText isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
+        {`"${simplePoint}"`}
+      </SimplePointText>
       <ChoseReasonContainer isSmallMode={isSmallMode} isMediumMode={isMediumMode}>
         <MarkdownPreview source={choseReason || ""} />
       </ChoseReasonContainer>
