@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { secondaryTextColor, borderColor } from "styles/colors"
+import { secondaryTextColor, borderColor, disableColor } from "styles/colors"
 import {
   body1Normal,
   title2Normal,
@@ -123,9 +123,17 @@ export default function HeaderSection({
               className="moreButtonDropdown"
               buildCustomButton={onMoreButtonClick}
               placement="bottom-start"
-              offset={[0, 10]}
+              offset={[-8, 10]}
               dropdownContainerBuilder={() => {
-                return <DropdownContainer menus={moreButtonMenu} isSmall={isSmallMode} />
+                return (
+                  <DropdownContainer
+                    menus={moreButtonMenu}
+                    isSmall={isSmallMode}
+                    position="left"
+                    backgroundColor={disableColor}
+                    borderColor={disableColor}
+                  />
+                )
               }}
             />
           )}

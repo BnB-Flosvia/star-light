@@ -35,12 +35,12 @@
     "validatorjs": "^3.22.1",
     "web-vitals": "^0.2.4",
     "react-youtube": "^7.13.1",
-    "react-easy-crop": "^3.5.1",
     "@uiw/react-markdown-preview": "^1.0.9",
     "query-string": "^7.0.0",
     "http-proxy-middleware": "^2.0.1",
     "tsparticles": "^1.33.3",
-    "react-particles-js": "^3.5.3"
+    "react-particles-js": "^3.5.3",
+    "react-image-crop": "^9.0.2"
   },
   "scripts": {
     "start": "cross-env REACT_APP_ENVIRONMENT=development react-app-rewired start",

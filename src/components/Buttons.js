@@ -58,6 +58,7 @@ const UserSettingButtonWrapper = styled.button`
   &:hover .iconBox svg {
     fill: ${disableColor};
   }
+  padding: 0;
 `
 
 const CircleButtonContainer = styled.div`
