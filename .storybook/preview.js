@@ -3,6 +3,7 @@ import { addDecorator } from "@storybook/react"
 import { MemoryRouter } from "react-router"
 import GlobalFontStyle from "src/styles/fonts/globalStyle"
 import "antd/dist/antd.css"
+import "react-perfect-scrollbar/dist/css/styles.css"
 
 addDecorator((StoryFn) => (
   <MemoryRouter initialEntries={["/"]}>
