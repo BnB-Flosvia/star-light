@@ -3,14 +3,12 @@ import styled from "styled-components"
 import {
   secondaryColor,
   primaryTextColor,
-  whiteColor,
   interactionColor,
   secondaryTextColor,
 } from "styles/colors"
 import {
   CaretDownOutlined,
   CaretUpOutlined,
-  GithubOutlined,
   SearchOutlined,
   MoreOutlined,
   MenuOutlined,
@@ -79,21 +77,6 @@ export const DropdownIconButton = ({ isOpen = false, onClick }) => {
       }}
     >
       {isOpen ? <CaretUpOutlined /> : <CaretDownOutlined />}
-    </SmallButtonContainer>
-  )
-}
-
-export const GitHubIconButton = ({ onClick }) => {
-  return (
-    <SmallButtonContainer
-      color={whiteColor}
-      onClick={() => {
-        if (typeof onClick === "function") {
-          onClick()
-        }
-      }}
-    >
-      <GithubOutlined />
     </SmallButtonContainer>
   )
 }

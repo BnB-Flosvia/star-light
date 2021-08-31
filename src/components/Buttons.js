@@ -9,7 +9,6 @@ import {
   body3Normal,
 } from "styles/textTheme"
 import {
-  whiteColor,
   borderColor,
   primaryColor,
   primaryTextColor,
@@ -36,7 +35,7 @@ const Button = styled.button`
     color: ${darkPrimaryColor};
   }
   ${body1Bold}
-  color: ${whiteColor};
+  color: white;
 `
 
 const UserSettingButtonWrapper = styled.button`
@@ -72,14 +71,14 @@ const CircleButtonContainer = styled.div`
   align-items: center;
   background: ${borderColor};
   svg {
-    fill: ${whiteColor};
+    fill: white;
   }
 `
 
 export const FullWidthButton = styled(Button)`
   height: ${(props) => (props.size === "small" ? "40px" : "48px")};
   ${(props) => props.size === "small" && body2Bold};
-  color: ${whiteColor};
+  color: white;
 `
 
 export const SmallButton = styled(Button)`
@@ -87,7 +86,7 @@ export const SmallButton = styled(Button)`
   height: 40px;
   background: ${darkPrimaryColor};
   ${body3Bold}
-  color: ${whiteColor};
+  color: white;
 `
 
 export const RoundedLinkButton = styled(Link)`
@@ -128,7 +127,7 @@ export const DarkSmallButton = styled.button`
   align-items: center;
   padding: 14px 18px;
   ${body3Normal}
-  color: ${whiteColor};
+  color: white;
   border-radius: 4px;
   background: ${darkPrimaryColor};
   border: none;

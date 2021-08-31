@@ -2,7 +2,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import {
-  whiteColor,
   primaryTextColor,
   secondaryColor,
   errorColor,
@@ -53,7 +52,7 @@ const SuffixIconInputContainer = styled.div`
   border-color: ${(props) =>
     props.isError ? errorColor : props.isFocus ? secondaryColor : primaryTextColor};
   border-radius: 4px;
-  background: ${whiteColor};
+  background: white;
   padding-right: 4px;
 `
 

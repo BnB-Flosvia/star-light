@@ -2,7 +2,6 @@ import RadioButton from "components/RadioButton"
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import styled, { css } from "styled-components"
 import {
-  whiteColor,
   darkPrimaryColor,
   darkPrimaryColor2,
   interactionColor,
@@ -97,7 +96,7 @@ const UploadLabel = styled.label`
   height: 40px;
   border-radius: 4px;
   ${body3Normal}
-  color: ${whiteColor};
+  color: white;
   background: ${darkPrimaryColor};
   &:hover {
     background: ${interactionColor};
