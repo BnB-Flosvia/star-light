@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react"
 import styled, { createGlobalStyle } from "styled-components"
-import { PORTAL_ELEMENT_ID } from "components/Portal"
 import { Redirect, Route } from "react-router-dom"
 import PerfectScrollbar from "react-perfect-scrollbar"
 import Header from "components/Header"
@@ -73,7 +72,6 @@ export default function RouteContainer({
   return (
     <Route path={path} {...props}>
       <GlobalStyle />
-      <div id={PORTAL_ELEMENT_ID} />
       <Container>
         <ScrollContainer>
           {fullSize ? (
