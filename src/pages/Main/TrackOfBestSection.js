@@ -1,5 +1,8 @@
 import React from "react"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { useMediaQuery } from "react-responsive"
+import { borderColor } from "styles/colors"
 import {
   title1Normal,
   title2Normal,
@@ -8,10 +11,7 @@ import {
   body1Normal,
   body2Normal,
 } from "styles/textTheme"
-import { borderColor } from "styles/colors"
 import useTrackOfBestData from "utils/hooks/main/useTrackOfBestData"
-import { useMediaQuery } from "react-responsive"
-import { Link } from "react-router-dom"
 import TrackOfBestGridList from "components/TrackOfBestGridList"
 
 const Container = styled.div`

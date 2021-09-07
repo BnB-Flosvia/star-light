@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
-import styled from "styled-components"
-import SignInContent from "pages/SignIn/SignInContent"
 import { withRouter } from "react-router-dom"
+import styled from "styled-components"
 import useSignInPageData from "utils/hooks/signIn/useSignInPageData"
 import Particles from "react-particles-js"
+import SignInContent from "./SignInContent"
 
 const PageContainer = styled.div`
   display: flex;

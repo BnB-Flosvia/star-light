@@ -1,10 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import YouTube from "react-youtube"
 import { secondaryTextColor } from "styles/colors"
-import { SearchInput } from "components/Inputs"
 import { body2Normal } from "styles/textTheme"
 import youtubeUrlParser from "utils/youtubeUrlParser"
+import YouTube from "react-youtube"
+import { SearchInput } from "components/Inputs"
 
 const YoutubeContentContainer = styled.div`
   display: flex;

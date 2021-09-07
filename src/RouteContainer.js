@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react"
-import styled, { createGlobalStyle } from "styled-components"
 import { Redirect, Route } from "react-router-dom"
+import styled, { createGlobalStyle } from "styled-components"
 import PerfectScrollbar from "react-perfect-scrollbar"
-import Header from "components/Header"
-import Footer from "components/Footer"
 import { checkLocalToken } from "utils/authProvider"
 import { message } from "antd"
+import Header from "components/Header"
+import Footer from "components/Footer"
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -46,6 +46,7 @@ const ScrollContainer = styled(PerfectScrollbar)`
   flex: 1;
 `
 
+// 라우팅되는 페이지의 기본 템플릿
 export default function RouteContainer({
   path,
   fullSize,

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react"
+import { withRouter } from "react-router-dom"
 import styled from "styled-components"
 import { lightBackgroundColor } from "styles/colors"
-import useCreateTrackOfBestPageData from "utils/hooks/createTrackOfBest/useCreateTrackOfBestPageData"
-import { PageLoading } from "components/Spin"
-import { withRouter } from "react-router-dom"
-import { message } from "antd"
-import PageBottomBar from "components/PageBottomBar"
 import { title2Normal } from "styles/textTheme"
+import useCreateTrackOfBestPageData from "utils/hooks/createTrackOfBest/useCreateTrackOfBestPageData"
+import { message } from "antd"
+import { PageLoading } from "components/Spin"
+import PageBottomBar from "components/PageBottomBar"
 import ContentContainer from "./ContentTemplete"
 
 const RowContainer = styled.div`

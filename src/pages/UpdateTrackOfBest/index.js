@@ -1,14 +1,14 @@
 import React, { useEffect } from "react"
-import styled from "styled-components"
-import { lightBackgroundColor, primaryColor, secondaryTextColor } from "styles/colors"
-import { PageLoading } from "components/Spin"
 import { withRouter } from "react-router-dom"
-import { message } from "antd"
-import useUpdateTrackOfBestPageData from "utils/hooks/updateTrackOfBest/useUpdateTrackOfBestPageData"
+import styled from "styled-components"
 import queryString from "query-string"
-import ContentContainer from "pages/CreateTrackOfBest/ContentTemplete"
+import { lightBackgroundColor, primaryColor, secondaryTextColor } from "styles/colors"
 import { body1Normal, body3Normal, title2Normal } from "styles/textTheme"
+import useUpdateTrackOfBestPageData from "utils/hooks/updateTrackOfBest/useUpdateTrackOfBestPageData"
+import { message } from "antd"
+import { PageLoading } from "components/Spin"
 import PageBottomBar from "components/PageBottomBar"
+import ContentContainer from "pages/CreateTrackOfBest/ContentTemplete"
 
 const RowContainer = styled.div`
   flex: 1;

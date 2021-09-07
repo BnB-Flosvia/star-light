@@ -1,27 +1,27 @@
-import { CaretUpOutlined } from "@ant-design/icons"
 import React from "react"
 import styled from "styled-components"
 import { dividerColor, secondaryTextColor, selectedBackgroundColor } from "styles/colors"
 import { body2Normal, body3Normal } from "styles/textTheme"
+import { CaretUpOutlined } from "@ant-design/icons"
 
 const Container = styled.div`
   display: flex;
+  z-index: 1;
   width: ${(props) => (props.isUserMenu ? "150px" : "fit-content")};
   flex-direction: column;
   background-color: ${(props) =>
     props.backgroundColor ? props.backgroundColor : dividerColor};
-  border-radius: 4px;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
   border: 0.5px solid
     ${(props) => (props.borderColor ? props.borderColor : secondaryTextColor)};
+  border-radius: 4px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)}
   & > :first-child {
     border-radius: 4px 4px 0 0;
   }
   & > :last-child {
     border-radius: 0 0 4px 4px;
   }
-  z-index: 1;
-  ${(props) => (props.isSmall ? body3Normal : body2Normal)}
 `
 
 const UserInfoSection = styled.div`
@@ -53,24 +53,25 @@ const DropdownItem = styled.div`
   }
 `
 
-export default function DropdownContainer({
-  icon,
-  nickname,
+// 버튼을 클릭했을 때 나타나는 Card
+export default function PopoverCard({
   menus,
-  isSmall,
   backgroundColor = dividerColor,
   borderColor = secondaryTextColor,
-  position = "right",
+  placement = "right",
+  isSmallView,
+  icon,
+  nickname,
 }) {
   const isUserMenu = nickname != null
 
-  let arrowPositionStyle = {}
-  switch (position) {
+  let arrowPlacementStyle = {}
+  switch (placement) {
     case "right":
-      arrowPositionStyle = { right: 10 }
+      arrowPlacementStyle = { right: 10 }
       break
     case "left":
-      arrowPositionStyle = { left: 10 }
+      arrowPlacementStyle = { left: 10 }
       break
     default:
       break
@@ -80,7 +81,7 @@ export default function DropdownContainer({
     <div className="dropdown-container" style={{ position: "relative" }}>
       <Container
         isUserMenu={isUserMenu}
-        isSmall={isSmall}
+        isSmall={isSmallView}
         backgroundColor={backgroundColor}
         borderColor={borderColor}
       >
@@ -108,7 +109,7 @@ export default function DropdownContainer({
           marginTop: -12,
           fontSize: 20,
           color: backgroundColor,
-          ...arrowPositionStyle,
+          ...arrowPlacementStyle,
         }}
       />
     </div>
