@@ -1,3 +1,4 @@
+import LoadingView from "components/LoadingView"
 import React, { Suspense, lazy } from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
 import RouteContainer from "./RouteContainer"
@@ -12,7 +13,7 @@ const UpdateTrackOfBestPage = lazy(() => import("pages/UpdateTrackOfBest"))
 
 export default function RoutePages() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingView />}>
       <Switch>
         <Route path="/" exact>
           <Redirect to="/main" />

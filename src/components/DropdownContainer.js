@@ -1,20 +1,19 @@
+import { CaretUpOutlined } from "@ant-design/icons"
 import React from "react"
 import styled from "styled-components"
-import {
-  lightBackgroundColor,
-  secondaryTextColor,
-  selectedBackgroundColor,
-} from "styles/colors"
+import { dividerColor, secondaryTextColor, selectedBackgroundColor } from "styles/colors"
 import { body2Normal, body3Normal } from "styles/textTheme"
 
 const Container = styled.div`
   display: flex;
   width: ${(props) => (props.isUserMenu ? "150px" : "fit-content")};
   flex-direction: column;
-  background-color: ${lightBackgroundColor};
+  background-color: ${(props) =>
+    props.backgroundColor ? props.backgroundColor : dividerColor};
   border-radius: 4px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
-  border: 0.5px solid ${secondaryTextColor};
+  border: 0.5px solid
+    ${(props) => (props.borderColor ? props.borderColor : secondaryTextColor)};
   & > :first-child {
     border-radius: 4px 4px 0 0;
   }
@@ -47,28 +46,71 @@ const DropdownItem = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: ${lightBackgroundColor};
+  background-color: ${(props) =>
+    props.backgroundColor ? props.backgroundColor : dividerColor};
   &:hover {
     background-color: ${selectedBackgroundColor};
   }
 `
 
-export default function DropdownContainer({ icon, nickname, menus, isSmall }) {
+export default function DropdownContainer({
+  icon,
+  nickname,
+  menus,
+  isSmall,
+  backgroundColor = dividerColor,
+  borderColor = secondaryTextColor,
+  position = "right",
+}) {
   const isUserMenu = nickname != null
+
+  let arrowPositionStyle = {}
+  switch (position) {
+    case "right":
+      arrowPositionStyle = { right: 10 }
+      break
+    case "left":
+      arrowPositionStyle = { left: 10 }
+      break
+    default:
+      break
+  }
+
   return (
-    <Container isUserMenu={isUserMenu} isSmall={isSmall}>
-      {isUserMenu && (
-        <UserInfoSection>
-          <span className="nicknameBox">
-            {icon}
-            <span className="nickname">{nickname}</span>님
-          </span>
-        </UserInfoSection>
-      )}
-      {menus.map((menu) => {
-        const { onClick, name } = menu
-        return <DropdownItem onClick={() => onClick()}>{name}</DropdownItem>
-      })}
-    </Container>
+    <div className="dropdown-container" style={{ position: "relative" }}>
+      <Container
+        isUserMenu={isUserMenu}
+        isSmall={isSmall}
+        backgroundColor={backgroundColor}
+        borderColor={borderColor}
+      >
+        {isUserMenu && (
+          <UserInfoSection>
+            <span className="nicknameBox">
+              {icon}
+              <span className="nickname">{nickname}</span>님
+            </span>
+          </UserInfoSection>
+        )}
+        {menus.map((menu) => {
+          const { onClick, name } = menu
+          return (
+            <DropdownItem onClick={() => onClick()} backgroundColor={backgroundColor}>
+              {name}
+            </DropdownItem>
+          )
+        })}
+      </Container>
+      <CaretUpOutlined
+        style={{
+          position: "absolute",
+          top: 0,
+          marginTop: -12,
+          fontSize: 20,
+          color: backgroundColor,
+          ...arrowPositionStyle,
+        }}
+      />
+    </div>
   )
 }

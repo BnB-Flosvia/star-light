@@ -1,8 +1,7 @@
 import RadioButton from "components/RadioButton"
-import React, { useState, useEffect, useCallback, useMemo } from "react"
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import styled, { css } from "styled-components"
 import {
-  whiteColor,
   darkPrimaryColor,
   darkPrimaryColor2,
   interactionColor,
@@ -11,10 +10,11 @@ import {
 } from "styles/colors"
 import { body3Normal, body2Normal } from "styles/textTheme"
 import youtubeUrlParser from "utils/youtubeUrlParser"
-import getCroppedImg from "utils/imageCropper"
-import Cropper from "react-easy-crop"
+import getCroppedImg from "utils/getCroppedImage"
 import { Switch } from "antd"
 import { DarkSmallButton } from "components/Buttons"
+import ReactCrop from "react-image-crop"
+import "react-image-crop/dist/ReactCrop.css"
 
 const Container = styled.div`
   display: flex;
@@ -22,10 +22,10 @@ const Container = styled.div`
   width: 100%;
 `
 
-const CroppedImageContainer = styled.div`
+const ImageBoxSection = styled.div`
   display: flex;
   justify-content: flex-start;
-  .imageContainer {
+  .imageWrapper {
     margin-right: 40px;
   }
 `
@@ -57,7 +57,7 @@ const ImageWrapper = styled.div`
   }
 `
 
-const ImageContainer = styled.div`
+const ImageBox = styled.div`
   width: ${(props) => (props.size ? props.size : "240px")};
   height: ${(props) => (props.size ? props.size : "240px")};
   ${(props) => (props.imgUrl ? backgroundImage : null)};
@@ -96,7 +96,7 @@ const UploadLabel = styled.label`
   height: 40px;
   border-radius: 4px;
   ${body3Normal}
-  color: ${whiteColor};
+  color: white;
   background: ${darkPrimaryColor};
   &:hover {
     background: ${interactionColor};
@@ -111,6 +111,8 @@ const FileInput = styled.input`
 
 const CropperContainer = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 300px;
   background: #ddd;
@@ -124,6 +126,9 @@ const CropperContainer = styled.div`
     ${body2Normal}
     color: ${secondaryTextColor};
   }
+  img {
+    max-height: 300px;
+  }
 `
 
 const SwitchSection = styled.div`
@@ -136,9 +141,55 @@ const SwitchSection = styled.div`
   padding-bottom: 14px;
 `
 
+function CropperSection({ isCropMode, url, onChange }) {
+  const imgRef = useRef(null)
+  const [crop, setCrop] = useState({ unit: "px", width: 30, aspect: 1 })
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img
+  }, [])
+
+  const showCroppedImage = useCallback(
+    async (newCroppedAreaPixels) => {
+      try {
+        const newCroppedImage = await getCroppedImg(imgRef, newCroppedAreaPixels)
+        onChange(newCroppedImage)
+      } catch (error) {
+        onChange(null)
+      }
+    },
+    [onChange]
+  )
+
+  const onCropComplete = useCallback(
+    (newCroppedAreaPixels) => {
+      showCroppedImage(newCroppedAreaPixels)
+    },
+    [showCroppedImage]
+  )
+
+  return (
+    isCropMode && (
+      <CropperContainer>
+        {url != null ? (
+          <ReactCrop
+            src={url}
+            crop={crop}
+            onChange={(c) => setCrop(c)}
+            onComplete={(c) => onCropComplete(c)}
+            onImageLoaded={onLoad}
+          />
+        ) : (
+          <div className="placeholder">이미지 자르기가 ON 상태일 경우 표시됩니다.</div>
+        )}
+      </CropperContainer>
+    )
+  )
+}
+
 export default function CoverImageContainer({
-  defaultImage,
-  value: imageBlob,
+  defaultValue,
+  value: imageUrl,
   onChange,
   youtubeUrl,
   imageFile,
@@ -158,28 +209,8 @@ export default function CoverImageContainer({
   })
   const [imageSize, setImageSize] = useState(sizeOptions[0]?.id)
   const [url, setUrl] = useState(null)
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
 
-  const showCroppedImage = useCallback(
-    async (newCroppedAreaPixels) => {
-      try {
-        const newCroppedImage = await getCroppedImg(url, newCroppedAreaPixels)
-        onChange(newCroppedImage)
-      } catch (error) {
-        onChange(null)
-      }
-    },
-    [onChange, url]
-  )
-
-  const onCropComplete = useCallback(
-    (_croppedArea, newCroppedAreaPixels) => {
-      showCroppedImage(newCroppedAreaPixels)
-    },
-    [showCroppedImage]
-  )
-
-  const setCoverImage = (event) => {
+  const setCoverImageToFile = (event) => {
     const newImage = (event?.target?.files || [])[0]
 
     if (newImage != null && setImageFile != null) {
@@ -194,7 +225,7 @@ export default function CoverImageContainer({
     }
   }
 
-  const setDefaultImage = () => {
+  const setCoverImageToDefault = () => {
     if (youtubeUrl != null) {
       const { id, thumbnailUrl } = youtubeUrlParser(youtubeUrl)
       if (id != null) {
@@ -218,16 +249,16 @@ export default function CoverImageContainer({
   }
 
   const imageBoxUrl = useMemo(() => {
-    if (!isCropMode && imageBlob == null) {
+    if (!isCropMode && imageUrl == null) {
       return url
     }
-    return imageBlob
-  }, [imageBlob, isCropMode, url])
+    return imageUrl
+  }, [imageUrl, isCropMode, url])
 
   useEffect(() => {
-    if (defaultImage != null) {
+    if (defaultValue != null) {
       // set default image url (s3)
-      setUrl(defaultImage)
+      setUrl(defaultValue)
     } else if (imageFile instanceof File) {
       const reader = new FileReader()
 
@@ -247,11 +278,10 @@ export default function CoverImageContainer({
       setUrl(null)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultImage, youtubeUrl])
+  }, [defaultValue, youtubeUrl])
 
   return (
     <Container>
-      {/* TODO: Add zoom feature */}
       {url != null && (
         <SwitchSection>
           <span>이미지 자르기</span>
@@ -262,27 +292,11 @@ export default function CoverImageContainer({
           )}
         </SwitchSection>
       )}
-      {isCropMode && (
-        <CropperContainer>
-          {url != null ? (
-            <Cropper
-              image={url}
-              crop={crop}
-              zoom={1}
-              rotation={0}
-              aspect={1}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-            />
-          ) : (
-            <div className="placeholder">이미지 자르기가 ON 상태일 경우 표시됩니다.</div>
-          )}
-        </CropperContainer>
-      )}
-      <CroppedImageContainer>
-        <ImageWrapper className="imageContainer">
-          {url != null ? (
-            <ImageContainer imgUrl={imageBoxUrl} size={imageSize} />
+      <CropperSection isCropMode={isCropMode} url={url} onChange={onChange} />
+      <ImageBoxSection>
+        <ImageWrapper className="imageWrapper">
+          {imageBoxUrl != null ? (
+            <ImageBox imgUrl={imageBoxUrl} size={imageSize} />
           ) : (
             <div className="placeholder">
               커버 이미지로 사용될 이미지가 표시됩니다. 우측에 위치한 사이즈 버튼을
@@ -299,7 +313,7 @@ export default function CoverImageContainer({
             }}
           />
           <div className="fileButtonWrapper">
-            <DarkSmallButton onClick={setDefaultImage}>
+            <DarkSmallButton onClick={setCoverImageToDefault}>
               기본 이미지로 설정
             </DarkSmallButton>
             <UploadLabel htmlFor="upload-cover">이미지 가져오기</UploadLabel>
@@ -308,11 +322,11 @@ export default function CoverImageContainer({
               type="file"
               id="upload-cover"
               name="upload-cover"
-              onChange={setCoverImage}
+              onChange={setCoverImageToFile}
             />
           </div>
         </ButtonGroupWrapper>
-      </CroppedImageContainer>
+      </ImageBoxSection>
     </Container>
   )
 }

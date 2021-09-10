@@ -13,6 +13,7 @@ const Container = styled.div`
   display: flex;
   flex-flow: column;
   max-width: 720px;
+  padding-bottom: 10px;
 `
 
 const SectionContainer = styled.div`
@@ -136,6 +137,27 @@ export default function ContentTemplete({
       required: true,
     },
     {
+      title: "태그 선택",
+      contentBuilder: () => {
+        return (
+          <TagSectionContainer
+            tagOptions={tagOptions}
+            popularTagOptions={popularTagOptions}
+            onChange={(value) => onChange("tag", value)}
+            defaultValue={defaultValue?.tag || form.fields.tag.value || []}
+          />
+        )
+      },
+      infoText: (
+        <span>
+          이 곡에 어울리는 태그를 선택해주세요!
+          <br />
+          태그를 등록하시면 검색 기능, 투표 기능 등을 <br />
+          이용하실 수 있습니다!
+        </span>
+      ),
+    },
+    {
       title: "유튜브 링크 첨부",
       contentBuilder: () => {
         return (
@@ -161,7 +183,7 @@ export default function ContentTemplete({
       contentBuilder: () => {
         return (
           <CoverImageContainer
-            defaultImage={defaultValue?.coverImage}
+            defaultValue={defaultValue?.coverImage}
             onChange={(value) => onChange("coverImageData", value)}
             value={form.fields.coverImageData.value}
             youtubeUrl={form.fields.youtubeUrl.value || defaultValue?.youtubeUrl}
@@ -176,27 +198,6 @@ export default function ContentTemplete({
           목록에서 표시될 커버 이미지를 선택해주세요!
           <br /> 커버 이미지를 선택하지 않을 경우, 유튜브 영상
           <br /> 썸네일로 자동설정됩니다.
-        </span>
-      ),
-    },
-    {
-      title: "태그 선택",
-      contentBuilder: () => {
-        return (
-          <TagSectionContainer
-            tagOptions={tagOptions}
-            popularTagOptions={popularTagOptions}
-            onChange={(value) => onChange("tag", value)}
-            defaultValue={defaultValue?.tag || form.fields.tag.value || []}
-          />
-        )
-      },
-      infoText: (
-        <span>
-          이 곡에 어울리는 태그를 선택해주세요!
-          <br />
-          태그를 등록하시면 검색 기능, 투표 기능 등을 <br />
-          이용하실 수 있습니다!
         </span>
       ),
     },

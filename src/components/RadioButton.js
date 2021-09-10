@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { body2Normal, body3Normal } from "styles/textTheme"
-import { whiteColor, primaryColor, primaryTextColor } from "styles/colors"
+import { primaryColor, primaryTextColor } from "styles/colors"
 
 const Container = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const Button = styled.div`
   padding: 10px 20px;
   box-sizing: border-box;
   border: ${(props) => (props.isSelected ? "none" : `1px solid ${primaryTextColor}`)};
-  color: ${(props) => (props.isSelected ? whiteColor : primaryTextColor)};
+  color: ${(props) => (props.isSelected ? "#fff" : primaryTextColor)};
   font-weight: ${(props) => (props.isSelected ? "700" : "400")};
   background: ${(props) => (props.isSelected ? primaryColor : "none")};
 `

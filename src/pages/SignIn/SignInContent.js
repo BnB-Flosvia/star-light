@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 import styled from "styled-components"
 import { body3Normal, body2Normal, body2Bold, body3Bold } from "styles/textTheme"
-import { whiteColor, primaryColor, errorColor } from "styles/colors"
+import { primaryColor, errorColor } from "styles/colors"
 import { OutlineInput, PasswordInput } from "components/Inputs"
 import { FullWidthButton } from "components/Buttons"
 import { useMediaQuery } from "react-responsive"
@@ -29,15 +29,6 @@ const Container = styled.div`
   }
 `
 
-/*
-const TopLabelText = styled.span`
-  ${body3Normal}
-  text-align: center;
-  color: ${whiteColor};
-  padding-bottom: 32px;
-`
-*/
-
 const LinkTextSection = styled.div`
   display: flex;
   width: 100%;
@@ -53,7 +44,7 @@ const LinkText = styled(Link)`
   text-decoration: none;
   padding-right: 16px;
   ${(props) => (props.isSmall ? body3Normal : body2Normal)}
-  color: ${whiteColor};
+  color: white;
   &:hover {
     color: ${primaryColor};
     cursor: pointer;

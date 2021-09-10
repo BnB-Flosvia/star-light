@@ -2,7 +2,6 @@
  * Neutral colors, Font color
  */
 
-export const whiteColor = "#fff"
 export const primaryTextColor = "#262626"
 export const secondaryTextColor = "#8c8c8c"
 export const disableColor = "#bfbfbf"

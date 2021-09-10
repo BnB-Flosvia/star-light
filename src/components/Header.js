@@ -36,6 +36,7 @@ const HeaderContainer = styled.header`
     props.isSmall ? "0 24px" : props.isMedium ? "0 40px" : "0 56px 0 80px"};
   margin: 0;
   background: ${darkBackgroundColor};
+  z-index: 100;
 `
 
 // Using only desktop mode
@@ -184,7 +185,7 @@ function Header({ history }) {
               className="userMenu"
               type="userSetting"
               menus={userMenu}
-              offset={[0, 10]}
+              offset={[-18, 10]}
               dropdownContainerBuilder={() => {
                 return (
                   <DropdownContainer

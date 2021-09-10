@@ -6,7 +6,6 @@ import { useMediaQuery } from "react-responsive"
 import { CircleLineSpin } from "components/Spin"
 import useSignUpContentData from "utils/hooks/signUp/useSignUpContentData"
 import { Link } from "react-router-dom"
-import { whiteColor } from "styles/colors"
 import LogoText from "components/LogoText"
 
 const Container = styled.div`
@@ -100,7 +99,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="이메일 입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onEmailChange}
-        color={whiteColor}
+        color="#fff"
       />
       <InputSpacingBox isSmall={emailFormatErrorText != null} />
       <PasswordInput
@@ -109,7 +108,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="비밀번호 입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onPwdChange}
-        color={whiteColor}
+        color="#fff"
       />
       <InputSpacingBox isSmall />
       <PasswordInput
@@ -118,7 +117,7 @@ const InputContentSection = ({ isSmallMode }) => {
         placeholderText="비밀번호 재입력"
         size={isSmallMode ? "small" : "medium"}
         onChange={onPwdConfirmChange}
-        color={whiteColor}
+        color="#fff"
       />
       <InputSpacingBox isSmall={pwdConfirmErrorText != null} />
       <OutlineInput
@@ -128,7 +127,7 @@ const InputContentSection = ({ isSmallMode }) => {
         size={isSmallMode ? "small" : "medium"}
         onChange={onNicknameChange}
         maxLength={6}
-        color={whiteColor}
+        color="#fff"
       />
       <FullWidthButton onClick={() => signUp()} size={isSmallMode ? "small" : "medium"}>
         {isLoading ? (
