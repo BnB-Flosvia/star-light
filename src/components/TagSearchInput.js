@@ -14,9 +14,9 @@ import { useClickOutside } from "utils/hooks/useClickOutside"
 
 const InputWrapper = styled.div`
   display: flex;
-  width: 320px;
+  width: ${(props) => (props.isSmall ? "280px" : "320px")};
   box-sizing: border-box;
-  padding: ${(props) => (props.size === "small" ? "6px" : "8px")};
+  padding: 8px;
   padding-left: 0;
   padding-right: 20px;
   margin: 0;
@@ -28,6 +28,7 @@ const InputWrapper = styled.div`
 const Input = styled.input`
   display: flex;
   width: 100%;
+  height: 100%;
   align-items: center;
   box-sizing: border-box;
   padding: 0;
@@ -35,7 +36,7 @@ const Input = styled.input`
   margin-left: 8px;
   border: none;
   background: none;
-  ${(props) => (props.size === "small" ? body3Normal : body2Normal)}
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)}
   &:focus {
     outline: none;
   }
@@ -48,10 +49,8 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
-  margin-left: 11px;
-  padding: 0 10px;
+  padding: 4px;
+  margin-left: 12px;
 `
 
 const DropdownContainer = styled.div`
@@ -61,7 +60,7 @@ const DropdownContainer = styled.div`
   width: 100%;
   border: 1px solid ${disableColor};
   border-radius: 8px;
-  top: 60px;
+  top: ${(props) => `${props.top}px` ?? 0};
   padding: 8px;
   max-height: 160px;
   overflow: hidden;
@@ -72,16 +71,16 @@ const DropdownContainer = styled.div`
 
 const TagItem = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   padding: 10px;
   border-radius: 6px;
+  background: ${(props) => (props.isSelected ? interactionColor : null)};
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)}
+  font-weight: 600;
   &:hover {
     background: ${interactionColor};
   }
-  ${body2Normal}
-  font-weight: 600;
-  background: ${(props) => (props.isSelected ? interactionColor : null)};
-  justify-content: space-between;
 `
 
 const EmptyItemContainer = styled.div`
@@ -89,7 +88,7 @@ const EmptyItemContainer = styled.div`
   width: 100%;
   padding: 10px;
   align-items: center;
-  ${body2Normal}
+  ${(props) => (props.isSmall ? body3Normal : body2Normal)}
   color: ${secondaryTextColor};
   font-weight: 600;
 `
@@ -98,6 +97,7 @@ export default function TagSearchInput({
   tagList = [],
   selectedTagList = [],
   onSelectTag,
+  isSmall,
 }) {
   const [isFocus, setIsFocus] = useState(false)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -106,11 +106,25 @@ export default function TagSearchInput({
     setIsDropdownOpen(false)
   })
 
+  let iconSize
+  let dropdownCardTop
+  if (isSmall) {
+    iconSize = 18
+    // inputHeight = 46
+    // inputHeight + 10
+    dropdownCardTop = 56
+  } else {
+    iconSize = 22
+    // inputHeight = 50
+    // inputHeight + 10
+    dropdownCardTop = 60
+  }
+
   return (
     <div ref={clickOutsideRef} style={{ position: "relative" }}>
-      <InputWrapper isFocus={isFocus}>
+      <InputWrapper isFocus={isFocus} isSmall={isSmall}>
         <IconWrapper>
-          <SearchOutlined style={{ fontSize: 22, color: primaryColor }} />
+          <SearchOutlined style={{ fontSize: iconSize, color: primaryColor }} />
         </IconWrapper>
         <Input
           placeholder="검색하고 싶은 태그명을 입력해주세요"
@@ -126,13 +140,16 @@ export default function TagSearchInput({
           onBlur={(_event) => {
             setIsFocus(false)
           }}
+          isSmall={isSmall}
         />
       </InputWrapper>
       {isDropdownOpen && (
-        <DropdownContainer>
+        <DropdownContainer top={dropdownCardTop}>
           <PerfectScrollbar>
             {searchedTagList.length === 0 ? (
-              <EmptyItemContainer>검색 결과가 존재하지 않습니다.</EmptyItemContainer>
+              <EmptyItemContainer isSmall={isSmall}>
+                검색 결과가 존재하지 않습니다.
+              </EmptyItemContainer>
             ) : (
               searchedTagList.map((selectedTag) => {
                 const isSelected = selectedTagList.includes(selectedTag)
@@ -148,6 +165,7 @@ export default function TagSearchInput({
                         )
                       }
                     }}
+                    isSmall={isSmall}
                   >
                     {selectedTag}
                     {isSelected && <CheckOutlined style={{ color: primaryColor }} />}
