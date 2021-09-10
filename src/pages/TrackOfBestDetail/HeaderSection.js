@@ -10,10 +10,10 @@ import {
   label2Normal,
   body1Bold,
 } from "styles/textTheme"
-import { MoreVertIconButton } from "components/IconButtons"
-import Dropdown from "components/Dropdown"
 import { Modal } from "antd"
-import DropdownContainer from "components/DropdownContainer"
+import { MoreVertIconButton } from "components/IconButtons"
+import Popover from "components/Popover"
+import PopoverCard from "components/Popover/PopoverCard"
 
 const { confirm } = Modal
 
@@ -119,19 +119,19 @@ export default function HeaderSection({
             <span className="boldText">{username}</span>님 추천곡
           </span>
           {!isSmallMode && !isMediumMode && isMine && (
-            <Dropdown
+            <Popover
               className="moreButtonDropdown"
               buildCustomButton={onMoreButtonClick}
               placement="bottom-start"
               offset={[-8, 10]}
               dropdownContainerBuilder={() => {
                 return (
-                  <DropdownContainer
+                  <PopoverCard
                     menus={moreButtonMenu}
-                    isSmall={isSmallMode}
-                    position="left"
+                    placement="left"
                     backgroundColor={disableColor}
                     borderColor={disableColor}
+                    isSmallView={isSmallMode}
                   />
                 )
               }}

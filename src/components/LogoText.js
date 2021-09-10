@@ -1,7 +1,14 @@
 import React from "react"
 import styled, { keyframes } from "styled-components"
+import { Link } from "react-router-dom"
 import { logoTextColor } from "styles/colors"
 import { logoText } from "styles/textTheme"
+
+const LogoLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+`
 
 const LogoContainer = styled.h1`
   margin: 0;
@@ -65,17 +72,19 @@ const LogoWordItem = styled.span`
 
 export default function LogoText({ isSmall }) {
   return (
-    <LogoContainer isSmall={isSmall}>
-      <LogoWordItem>S</LogoWordItem>
-      <LogoWordItem>t</LogoWordItem>
-      <LogoWordItem>a</LogoWordItem>
-      <LogoWordItem>r</LogoWordItem>
-      <LogoWordItem>_</LogoWordItem>
-      <LogoWordItem>l</LogoWordItem>
-      <LogoWordItem>i</LogoWordItem>
-      <LogoWordItem>g</LogoWordItem>
-      <LogoWordItem>h</LogoWordItem>
-      <LogoWordItem>t</LogoWordItem>
-    </LogoContainer>
+    <LogoLink to="/main">
+      <LogoContainer isSmall={isSmall}>
+        <LogoWordItem>S</LogoWordItem>
+        <LogoWordItem>t</LogoWordItem>
+        <LogoWordItem>a</LogoWordItem>
+        <LogoWordItem>r</LogoWordItem>
+        <LogoWordItem>_</LogoWordItem>
+        <LogoWordItem>l</LogoWordItem>
+        <LogoWordItem>i</LogoWordItem>
+        <LogoWordItem>g</LogoWordItem>
+        <LogoWordItem>h</LogoWordItem>
+        <LogoWordItem>t</LogoWordItem>
+      </LogoContainer>
+    </LogoLink>
   )
 }

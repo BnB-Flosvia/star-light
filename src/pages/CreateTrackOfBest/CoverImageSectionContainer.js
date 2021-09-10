@@ -1,6 +1,8 @@
-import RadioButton from "components/RadioButton"
+import "react-image-crop/dist/ReactCrop.css"
+
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import styled, { css } from "styled-components"
+import ReactCrop from "react-image-crop"
 import {
   darkPrimaryColor,
   darkPrimaryColor2,
@@ -13,8 +15,7 @@ import youtubeUrlParser from "utils/youtubeUrlParser"
 import getCroppedImg from "utils/getCroppedImage"
 import { Switch } from "antd"
 import { DarkSmallButton } from "components/Buttons"
-import ReactCrop from "react-image-crop"
-import "react-image-crop/dist/ReactCrop.css"
+import RadioButton from "components/RadioButton"
 
 const Container = styled.div`
   display: flex;

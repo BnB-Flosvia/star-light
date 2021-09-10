@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
-import styled from "styled-components"
-import SignUpContent from "pages/SignUp/SignUpContent"
 import { withRouter } from "react-router-dom"
+import styled from "styled-components"
 import useSignUpPageData from "utils/hooks/signUp/useSignUpPageData"
-import { message } from "antd"
 import Particles from "react-particles-js"
+import { message } from "antd"
+import SignUpContent from "./SignUpContent"
 
 const PageContainer = styled.div`
   display: flex;

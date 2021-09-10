@@ -38,7 +38,7 @@ const Button = styled.button`
   color: white;
 `
 
-const UserSettingButtonWrapper = styled.button`
+const UserSettingButtonContainer = styled.button`
   display: flex;
   align-items: center;
   background: transparent;
@@ -139,13 +139,13 @@ export const DarkSmallButton = styled.button`
 
 export const UserSettingButton = ({ onClick, ref }) => {
   return (
-    <UserSettingButtonWrapper onClick={() => onClick()} ref={ref}>
+    <UserSettingButtonContainer onClick={() => onClick()} ref={ref}>
       <CircleButtonContainer className="userMenuButton">
         <UserOutlined style={{ fontSize: "20px" }} />
       </CircleButtonContainer>
       <div className="iconBox">
         <CaretDownOutlined style={{ color: "#fff" }} />
       </div>
-    </UserSettingButtonWrapper>
+    </UserSettingButtonContainer>
   )
 }

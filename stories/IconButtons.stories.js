@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { title1Bold } from "src/styles/textTheme"
 import {
   DropdownIconButton,
-  GitHubIconButton,
   SearchIconButton,
+  MoreVertIconButton,
+  MenuIconButton,
 } from "src/components/IconButtons"
 
 export default {
@@ -12,51 +12,40 @@ export default {
 }
 
 const Section = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 30vw;
   height: fit-content;
   background: ${(props) => (props.color ? props.color : "none")};
   padding: 20px;
+  & > button {
+    margin-bottom: 20px;
+  }
 `
 
-const SectionTitle = styled.div`
-  ${title1Bold}
-  margin: 10px 0;
-`
-
-// 24*24
-export function SmallIconButtons() {
+export function IconButtons() {
   const [isOpened, setIsOpened] = useState(false)
   return (
-    <>
-      <SectionTitle>Small size(24*24) black icon button</SectionTitle>
-      <Section color="#ededed">
-        <DropdownIconButton
-          isOpen={isOpened}
-          onClick={() => setIsOpened((_isOpened) => !_isOpened)}
-        />
-      </Section>
-      <SectionTitle>Small size(24*24) white icon button</SectionTitle>
-      <Section color="#000">
-        <GitHubIconButton
-          onClick={() => {
-            alert("You click github button!")
-          }}
-        />
-      </Section>
-    </>
-  )
-}
-
-// 36*36
-export function MediumIconButtons() {
-  return (
-    <>
-      <SectionTitle>Medium size(36*36) icon buttons</SectionTitle>
+    <Section color="#ededed">
+      <DropdownIconButton
+        isOpen={isOpened}
+        onClick={() => setIsOpened((_isOpened) => !_isOpened)}
+      />
       <SearchIconButton
         onClick={() => {
-          alert("Click search button!")
+          alert("Click search icon button!")
         }}
       />
-    </>
+      <MoreVertIconButton
+        onClick={() => {
+          alert("Click more vert icon button")
+        }}
+      />
+      <MenuIconButton
+        onClick={() => {
+          alert("Click menu icon button")
+        }}
+      />
+    </Section>
   )
 }

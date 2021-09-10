@@ -48,7 +48,7 @@ const LargeButtonContainer = styled(SmallButtonContainer)`
   }
 `
 
-const MediumCircularButtonContainer = styled.div`
+const MediumCircularButtonContainer = styled.button`
   display: flex;
   width: 25px;
   height: 25px;
@@ -67,9 +67,10 @@ const MediumCircularButtonContainer = styled.div`
 `
 
 // 24*24 size
-export const DropdownIconButton = ({ isOpen = false, onClick }) => {
+export const DropdownIconButton = ({ className, isOpen = false, onClick }) => {
   return (
     <SmallButtonContainer
+      className={className}
       onClick={() => {
         if (typeof onClick === "function") {
           onClick()
@@ -82,9 +83,10 @@ export const DropdownIconButton = ({ isOpen = false, onClick }) => {
 }
 
 // 36*36 size
-export const SearchIconButton = ({ onClick }) => {
+export const SearchIconButton = ({ className, onClick }) => {
   return (
     <LargeButtonContainer
+      className={className}
       onClick={() => {
         if (typeof onClick === "function") {
           onClick()
@@ -96,25 +98,28 @@ export const SearchIconButton = ({ onClick }) => {
   )
 }
 
-export const MoreVertIconButton = ({ onClick, className }) => {
+// 25*25 size
+export const MoreVertIconButton = ({ className, onClick }) => {
   return (
     <MediumCircularButtonContainer
+      className={className}
       onClick={() => {
         if (typeof onClick === "function") {
           onClick()
         }
       }}
       color={secondaryTextColor}
-      className={className}
     >
       <MoreOutlined />
     </MediumCircularButtonContainer>
   )
 }
 
-export const MenuIconButton = ({ onClick }) => {
+// 30*30 size
+export const MenuIconButton = ({ className, onClick }) => {
   return (
     <MediumButtonContainer
+      className={className}
       color="#fff"
       onClick={() => {
         if (typeof onClick === "function") {

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import TrackOfBestSection from "pages/Main/TrackOfBestSection"
+import { lightBackgroundColor } from "styles/colors"
 import useMainPageData from "utils/hooks/main/useMainPageData"
 import { PageLoading } from "components/Spin"
-import { lightBackgroundColor } from "styles/colors"
+import TrackOfBestSection from "./TrackOfBestSection"
 
 const RowContainer = styled.div`
   flex: 1;

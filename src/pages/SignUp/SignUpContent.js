@@ -1,11 +1,11 @@
 import React, { useCallback } from "react"
-import styled from "styled-components"
-import { OutlineInput, PasswordInput } from "components/Inputs"
-import { FullWidthButton } from "components/Buttons"
-import { useMediaQuery } from "react-responsive"
-import { CircleLineSpin } from "components/Spin"
-import useSignUpContentData from "utils/hooks/signUp/useSignUpContentData"
 import { Link } from "react-router-dom"
+import styled from "styled-components"
+import { useMediaQuery } from "react-responsive"
+import useSignUpContentData from "utils/hooks/signUp/useSignUpContentData"
+import { FullWidthButton } from "components/Buttons"
+import { CircleLineSpin } from "components/Spin"
+import { OutlineInput, PasswordInput } from "components/Inputs"
 import LogoText from "components/LogoText"
 
 const Container = styled.div`

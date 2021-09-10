@@ -1,8 +1,9 @@
-import LoadingView from "components/LoadingView"
 import React, { Suspense, lazy } from "react"
 import { Route, Switch, Redirect } from "react-router-dom"
+import LoadingView from "components/LoadingView"
 import RouteContainer from "./RouteContainer"
 
+// 페이지 별로 필요한 자바스크립트 코드만 로드하기 위해 lazy load를 사용하여 코드 스플리팅
 const MainPage = lazy(() => import("pages/Main"))
 const SignInPage = lazy(() => import("pages/SignIn"))
 const SignUpPage = lazy(() => import("pages/SignUp"))
